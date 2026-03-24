@@ -15,6 +15,7 @@ const navLinks = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { setIsOpen: openCart, count } = useCart();
 
   return (
     <>
