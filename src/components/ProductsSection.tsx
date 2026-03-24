@@ -12,7 +12,9 @@ const products = [
   { img: braceletImg, name: "Planetary Bracelet", price: "₹2,100", oldPrice: "₹4,000", badge: "Trending" },
 ];
 
-const ProductsSection = () => (
+const ProductsSection = () => {
+  const { addItem } = useCart();
+  return (
   <section id="shop" className="section-padding cosmic-bg">
     <div className="container mx-auto">
       <motion.div
