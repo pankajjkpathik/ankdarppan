@@ -60,9 +60,12 @@ const ProductsSection = () => {
                 <span className="text-xl font-bold text-primary">{product.price}</span>
                 <span className="text-sm text-muted-foreground line-through">{product.oldPrice}</span>
               </div>
-              <a href="#contact" className="mt-3 block text-center py-2 rounded-lg border border-primary/40 text-primary text-sm font-semibold hover:bg-primary/10 transition-all">
-                Buy Now
-              </a>
+              <button
+                onClick={() => addItem({ name: product.name, price: product.price, priceNum: parseInt(product.price.replace(/[^\d]/g, "")), img: product.img })}
+                className="mt-3 w-full text-center py-2 rounded-lg border border-primary/40 text-primary text-sm font-semibold hover:bg-primary/10 transition-all"
+              >
+                Add to Cart
+              </button>
             </div>
           </motion.div>
         ))}
