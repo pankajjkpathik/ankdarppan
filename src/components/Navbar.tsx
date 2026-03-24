@@ -51,9 +51,15 @@ const Navbar = () => {
             ))}
           </div>
 
-          <a href="#services" className="hidden lg:inline-flex px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all animate-pulse-glow">
-            Book Now
-          </a>
+          <div className="hidden lg:flex items-center gap-3">
+            <button onClick={() => openCart(true)} className="relative p-2 text-foreground hover:text-primary transition-colors">
+              <ShoppingCart className="w-5 h-5" />
+              {count > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{count}</span>}
+            </button>
+            <a href="/book" className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all animate-pulse-glow">
+              Book Now
+            </a>
+          </div>
 
           <button onClick={() => setOpen(!open)} className="lg:hidden text-foreground">
             {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
