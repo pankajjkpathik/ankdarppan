@@ -80,7 +80,7 @@ const Navbar = () => {
                     {link.label}
                   </a>
                 ))}
-                <a href="#services" className="mt-2 text-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">
+                <a href="/book" className="mt-2 text-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">
                   Book Now
                 </a>
               </div>
