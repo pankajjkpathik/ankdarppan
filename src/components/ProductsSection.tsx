@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useCart } from "@/contexts/CartContext";
 import zodiacImg from "@/assets/zodiac-charm.jpg";
 import pendantImg from "@/assets/astro-pendant.jpg";
 import braceletImg from "@/assets/planetary-bracelet.jpg";
@@ -11,7 +12,9 @@ const products = [
   { img: braceletImg, name: "Planetary Bracelet", price: "₹2,100", oldPrice: "₹4,000", badge: "Trending" },
 ];
 
-const ProductsSection = () => (
+const ProductsSection = () => {
+  const { addItem } = useCart();
+  return (
   <section id="shop" className="section-padding cosmic-bg">
     <div className="container mx-auto">
       <motion.div
@@ -57,15 +60,19 @@ const ProductsSection = () => (
                 <span className="text-xl font-bold text-primary">{product.price}</span>
                 <span className="text-sm text-muted-foreground line-through">{product.oldPrice}</span>
               </div>
-              <a href="#contact" className="mt-3 block text-center py-2 rounded-lg border border-primary/40 text-primary text-sm font-semibold hover:bg-primary/10 transition-all">
-                Buy Now
-              </a>
+              <button
+                onClick={() => addItem({ name: product.name, price: product.price, priceNum: parseInt(product.price.replace(/[^\d]/g, "")), img: product.img })}
+                className="mt-3 w-full text-center py-2 rounded-lg border border-primary/40 text-primary text-sm font-semibold hover:bg-primary/10 transition-all"
+              >
+                Add to Cart
+              </button>
             </div>
           </motion.div>
         ))}
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default ProductsSection;
