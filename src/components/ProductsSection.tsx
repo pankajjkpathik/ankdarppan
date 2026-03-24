@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useCart } from "@/contexts/CartContext";
 import zodiacImg from "@/assets/zodiac-charm.jpg";
 import pendantImg from "@/assets/astro-pendant.jpg";
 import braceletImg from "@/assets/planetary-bracelet.jpg";
