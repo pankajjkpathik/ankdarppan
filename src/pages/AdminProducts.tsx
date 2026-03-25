@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { ArrowLeft, Plus, Pencil, Trash2, Upload, Loader2 } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Trash2, Upload, Loader2, LogOut } from "lucide-react";
 
 interface ProductForm {
   name: string;
@@ -127,9 +127,14 @@ const AdminProducts = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <button onClick={() => navigate("/")} className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8">
-          <ArrowLeft className="w-4 h-4" /> Back to Home
-        </button>
+        <div className="flex items-center justify-between mb-8">
+          <button onClick={() => navigate("/")} className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Back to Home
+          </button>
+          <Button variant="outline" size="sm" onClick={async () => { await supabase.auth.signOut(); navigate("/"); }}>
+            <LogOut className="w-4 h-4 mr-2" /> Logout
+          </Button>
+        </div>
 
         <h1 className="text-3xl font-heading font-bold mb-8">
           Manage <span className="gold-text">Products</span>
