@@ -3,6 +3,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Fallback images for products without uploaded images
 import zodiacImg from "@/assets/zodiac-charm.jpg";
