@@ -79,9 +79,7 @@ const ServicesSection = () => (
             <div className="flex items-center justify-between mt-auto">
               <span className="text-2xl font-heading font-bold text-primary">{service.price}</span>
               <a
-                href={service.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/book?service=${encodeURIComponent(service.title)}`}
                 className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:brightness-110 transition-all"
               >
                 Order Now
