@@ -12,6 +12,7 @@ import AdminLogin from "./pages/AdminLogin.tsx";
 import AdminProducts from "./pages/AdminProducts.tsx";
 import OrderTracking from "./pages/OrderTracking.tsx";
 import AdminSignup from "./pages/AdminSignup.tsx";
+import ProductDetail from "./pages/ProductDetail.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
