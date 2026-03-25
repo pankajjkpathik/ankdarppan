@@ -3,6 +3,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Fallback images for products without uploaded images
 import zodiacImg from "@/assets/zodiac-charm.jpg";
@@ -63,23 +64,27 @@ const ProductsSection = () => {
                   transition={{ delay: i * 0.1 }}
                   className="glass-card overflow-hidden group"
                 >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={imgSrc}
-                      alt={product.name}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                      loading="lazy"
-                      width={512}
-                      height={512}
-                    />
-                    {product.badge && (
-                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">
-                        {product.badge}
-                      </span>
-                    )}
-                  </div>
+                  <Link to={`/product/${product.id}`}>
+                    <div className="relative overflow-hidden cursor-pointer">
+                      <img
+                        src={imgSrc}
+                        alt={product.name}
+                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
+                        width={512}
+                        height={512}
+                      />
+                      {product.badge && (
+                        <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">
+                          {product.badge}
+                        </span>
+                      )}
+                    </div>
+                  </Link>
                   <div className="p-4">
-                    <h3 className="font-heading font-semibold text-foreground mb-1">{product.name}</h3>
+                    <Link to={`/product/${product.id}`}>
+                      <h3 className="font-heading font-semibold text-foreground mb-1 hover:text-primary transition-colors">{product.name}</h3>
+                    </Link>
                     {product.description && (
                       <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{product.description}</p>
                     )}
@@ -92,14 +97,15 @@ const ProductsSection = () => {
                       )}
                     </div>
                     <button
-                      onClick={() =>
+                      onClick={(e) => {
+                        e.stopPropagation();
                         addItem({
                           name: product.name,
                           price: priceFormatted,
                           priceNum: product.price,
                           img: imgSrc,
-                        })
-                      }
+                        });
+                      }}
                       className="mt-3 w-full text-center py-2 rounded-lg border border-primary/40 text-primary text-sm font-semibold hover:bg-primary/10 transition-all"
                     >
                       Add to Cart
