@@ -64,11 +64,11 @@ const ContactSection = () => {
 
         <div className="glass-card p-6">
           <h3 className="font-heading font-semibold text-lg mb-4 text-foreground">Send a Message</h3>
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <input type="text" placeholder="Your Name" className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground" />
-            <input type="email" placeholder="Your Email" className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground" />
-            <input type="tel" placeholder="Your Phone" className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground" />
-            <textarea placeholder="Your Message" rows={4} className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground resize-none" />
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <input type="text" placeholder="Your Name *" value={form.name} onChange={(e) => setForm(p => ({ ...p, name: e.target.value }))} className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground" required />
+            <input type="email" placeholder="Your Email *" value={form.email} onChange={(e) => setForm(p => ({ ...p, email: e.target.value }))} className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground" required />
+            <input type="tel" placeholder="Your Phone" value={form.phone} onChange={(e) => setForm(p => ({ ...p, phone: e.target.value }))} className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground" />
+            <textarea placeholder="Your Message *" rows={4} value={form.message} onChange={(e) => setForm(p => ({ ...p, message: e.target.value }))} className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground resize-none" required />
             <button type="submit" className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all">
               Send Message
             </button>
@@ -77,6 +77,7 @@ const ContactSection = () => {
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default ContactSection;
