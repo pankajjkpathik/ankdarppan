@@ -1,7 +1,27 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, Clock, MapPin } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
-const ContactSection = () => (
+const ContactSection = () => {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      toast({ title: "Please fill in all required fields", variant: "destructive" });
+      return;
+    }
+    const subject = encodeURIComponent(`Inquiry from ${form.name}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nMessage:\n${form.message}`
+    );
+    window.location.href = `mailto:contactus@ankdarppan.com?subject=${subject}&body=${body}`;
+    toast({ title: "Opening your email client..." });
+    setForm({ name: "", email: "", phone: "", message: "" });
+  };
+
+  return (
   <section id="contact" className="section-padding">
     <div className="container mx-auto">
       <motion.div
