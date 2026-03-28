@@ -8,16 +8,15 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
+    if (!form.name || !form.message) {
       toast({ title: "Please fill in all required fields", variant: "destructive" });
       return;
     }
-    const subject = encodeURIComponent(`Inquiry from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nMessage:\n${form.message}`
+    const text = encodeURIComponent(
+      `*New Inquiry*\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nMessage:\n${form.message}`
     );
-    window.location.href = `mailto:contactus@ankdarppan.com?subject=${subject}&body=${body}`;
-    toast({ title: "Opening your email client..." });
+    window.open(`https://wa.me/919317365025?text=${text}`, "_blank");
+    toast({ title: "Opening WhatsApp..." });
     setForm({ name: "", email: "", phone: "", message: "" });
   };
 
