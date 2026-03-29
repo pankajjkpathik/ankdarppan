@@ -13,6 +13,9 @@ import AdminDashboard from "./pages/AdminDashboard.tsx";
 import OrderTracking from "./pages/OrderTracking.tsx";
 import AdminSignup from "./pages/AdminSignup.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
+import Shop from "./pages/Shop.tsx";
+import Blog from "./pages/Blog.tsx";
+import BlogPost from "./pages/BlogPost.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
