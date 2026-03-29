@@ -17,13 +17,14 @@ const ProductsSection = () => {
   const { addItem } = useCart();
 
   const { data: products, isLoading } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products-home"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("products")
         .select("*")
         .eq("is_active", true)
-        .order("sort_order");
+        .order("sort_order")
+        .limit(4);
       if (error) throw error;
       return data;
     },
@@ -116,6 +117,15 @@ const ProductsSection = () => {
             })}
           </div>
         )}
+
+        <div className="text-center mt-12">
+          <Link
+            to="/shop"
+            className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all"
+          >
+            View All Products →
+          </Link>
+        </div>
       </div>
     </section>
   );

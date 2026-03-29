@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Menu, X, Phone, Mail, Clock, ShoppingCart } from "lucide-react";
+import { Menu, X, Phone, Mail, Clock, ShoppingCart, Facebook, Instagram, Youtube } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 
 const navLinks = [
@@ -8,7 +9,8 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Calculators", href: "#calculators" },
-  { label: "Shop", href: "#shop" },
+  { label: "Shop", href: "/shop", isRoute: true },
+  { label: "Blog", href: "/blog", isRoute: true },
   { label: "Testimonials", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
 ];
@@ -28,9 +30,9 @@ const Navbar = () => {
             <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-primary" /> +(91) 93173-65025</span>
           </div>
           <div className="flex items-center gap-3">
-            {["facebook", "instagram", "youtube"].map((s) => (
-              <a key={s} href="#" className="text-muted-foreground hover:text-primary transition-colors text-xs uppercase tracking-wider">{s}</a>
-            ))}
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Facebook className="w-4 h-4" /></a>
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Youtube className="w-4 h-4" /></a>
           </div>
         </div>
       </div>
@@ -44,11 +46,17 @@ const Navbar = () => {
           </a>
 
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase">
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              link.isRoute ? (
+                <Link key={link.href} to={link.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase">
+                  {link.label}
+                </Link>
+              ) : (
+                <a key={link.href} href={link.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase">
+                  {link.label}
+                </a>
+              )
+            )}
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
@@ -75,11 +83,17 @@ const Navbar = () => {
               className="lg:hidden border-t border-border/30 overflow-hidden"
             >
               <div className="flex flex-col p-4 gap-3">
-                {navLinks.map((link) => (
-                  <a key={link.href} href={link.href} onClick={() => setOpen(false)} className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
-                    {link.label}
-                  </a>
-                ))}
+                {navLinks.map((link) =>
+                  link.isRoute ? (
+                    <Link key={link.href} to={link.href} onClick={() => setOpen(false)} className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a key={link.href} href={link.href} onClick={() => setOpen(false)} className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
+                      {link.label}
+                    </a>
+                  )
+                )}
                 <a href="/book" className="mt-2 text-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">
                   Book Now
                 </a>

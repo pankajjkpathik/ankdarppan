@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut, ArrowLeft, Package, Briefcase } from "lucide-react";
+import { LogOut, ArrowLeft, Package, Briefcase, FileText } from "lucide-react";
 import AdminProductsTab from "@/components/admin/AdminProductsTab";
 import AdminServicesTab from "@/components/admin/AdminServicesTab";
+import AdminBlogsTab from "@/components/admin/AdminBlogsTab";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -37,12 +38,15 @@ const AdminDashboard = () => {
         </h1>
 
         <Tabs defaultValue="products" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8 bg-secondary/50">
+          <TabsList className="grid w-full grid-cols-3 mb-8 bg-secondary/50">
             <TabsTrigger value="products" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Package className="w-4 h-4" /> Products
             </TabsTrigger>
             <TabsTrigger value="services" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Briefcase className="w-4 h-4" /> Services
+            </TabsTrigger>
+            <TabsTrigger value="blogs" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <FileText className="w-4 h-4" /> Blog
             </TabsTrigger>
           </TabsList>
 
@@ -51,6 +55,9 @@ const AdminDashboard = () => {
           </TabsContent>
           <TabsContent value="services">
             <AdminServicesTab />
+          </TabsContent>
+          <TabsContent value="blogs">
+            <AdminBlogsTab />
           </TabsContent>
         </Tabs>
       </div>

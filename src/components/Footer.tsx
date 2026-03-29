@@ -1,4 +1,4 @@
-import { Phone, Mail } from "lucide-react";
+import { Phone, Mail, Facebook, Instagram, Youtube } from "lucide-react";
 
 const Footer = () => (
   <footer className="border-t border-border/30 bg-secondary/30">
@@ -24,7 +24,12 @@ const Footer = () => (
           <h4 className="font-heading font-semibold text-foreground mb-4">Contact</h4>
           <div className="space-y-2 text-sm text-muted-foreground">
             <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-primary" /> +(91) 93173-65025</p>
-            <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-primary" /> contactus@ankdarppan.com</p>
+          <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-primary" /> contactus@ankdarppan.com</p>
+          </div>
+          <div className="flex items-center gap-4 mt-4">
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Facebook className="w-5 h-5" /></a>
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-5 h-5" /></a>
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Youtube className="w-5 h-5" /></a>
           </div>
         </div>
       </div>
