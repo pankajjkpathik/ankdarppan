@@ -47,9 +47,7 @@ const BlogPost = () => {
                 {format(new Date(blog.created_at), "MMMM d, yyyy")}
               </div>
               <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-8">{blog.title}</h1>
-              <div className="prose prose-invert prose-primary max-w-none text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                {blog.content}
-              </div>
+              <div className="prose prose-invert prose-primary max-w-none text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: blog.content || "" }} />
             </article>
           )}
         </div>

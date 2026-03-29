@@ -30,9 +30,9 @@ const Navbar = () => {
             <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-primary" /> +(91) 93173-65025</span>
           </div>
           <div className="flex items-center gap-3">
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Facebook className="w-4 h-4" /></a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-4 h-4" /></a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Youtube className="w-4 h-4" /></a>
+            <a href="https://www.facebook.com/profile.php?id=61572864015133" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors"><Facebook className="w-4 h-4" /></a>
+            <a href="https://www.instagram.com/ankdarppan/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="https://www.youtube.com/channel/UC8zAQ2jW03afza46M56UjcA" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors"><Youtube className="w-4 h-4" /></a>
           </div>
         </div>
       </div>
