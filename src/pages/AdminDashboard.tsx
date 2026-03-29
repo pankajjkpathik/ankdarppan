@@ -39,7 +39,7 @@ const AdminDashboard = () => {
         </h1>
 
         <Tabs defaultValue="products" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-secondary/50">
+          <TabsList className="grid w-full grid-cols-4 mb-8 bg-secondary/50">
             <TabsTrigger value="products" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Package className="w-4 h-4" /> Products
             </TabsTrigger>
@@ -48,6 +48,9 @@ const AdminDashboard = () => {
             </TabsTrigger>
             <TabsTrigger value="blogs" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <FileText className="w-4 h-4" /> Blog
+            </TabsTrigger>
+            <TabsTrigger value="orders" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <ShoppingBag className="w-4 h-4" /> Orders
             </TabsTrigger>
           </TabsList>
 
@@ -59,6 +62,9 @@ const AdminDashboard = () => {
           </TabsContent>
           <TabsContent value="blogs">
             <AdminBlogsTab />
+          </TabsContent>
+          <TabsContent value="orders">
+            <AdminOrdersTab />
           </TabsContent>
         </Tabs>
       </div>

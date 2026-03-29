@@ -159,7 +159,22 @@ const AdminBlogsTab = () => {
         </div>
         <div className="space-y-1.5">
           <Label>Content</Label>
-          <Textarea name="content" value={form.content} onChange={handleChange} placeholder="Full blog content..." className="bg-secondary/50 border-border" rows={10} />
+          <div className="bg-secondary/50 rounded-lg border border-border [&_.ql-toolbar]:border-border [&_.ql-container]:border-border [&_.ql-editor]:min-h-[200px] [&_.ql-editor]:text-foreground [&_.ql-snow_.ql-stroke]:stroke-foreground [&_.ql-snow_.ql-fill]:fill-foreground [&_.ql-snow_.ql-picker-label]:text-foreground [&_.ql-snow_.ql-picker-options]:bg-background [&_.ql-snow_.ql-picker-options]:border-border">
+            <ReactQuill
+              theme="snow"
+              value={form.content}
+              onChange={(val) => setForm((p) => ({ ...p, content: val }))}
+              modules={{
+                toolbar: [
+                  [{ header: [1, 2, 3, false] }],
+                  ["bold", "italic", "underline", "strike"],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                  ["blockquote", "link", "image"],
+                  ["clean"],
+                ],
+              }}
+            />
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <input type="checkbox" id="blog_published" checked={form.is_published} onChange={(e) => setForm((p) => ({ ...p, is_published: e.target.checked }))} className="rounded border-border" />
