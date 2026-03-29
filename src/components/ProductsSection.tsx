@@ -5,7 +5,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// Fallback images for products without uploaded images
 import zodiacImg from "@/assets/zodiac-charm.jpg";
 import pendantImg from "@/assets/astro-pendant.jpg";
 import braceletImg from "@/assets/planetary-bracelet.jpg";
@@ -67,18 +66,9 @@ const ProductsSection = () => {
                 >
                   <Link to={`/product/${product.id}`}>
                     <div className="relative overflow-hidden cursor-pointer">
-                      <img
-                        src={imgSrc}
-                        alt={product.name}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                        loading="lazy"
-                        width={512}
-                        height={512}
-                      />
+                      <img src={imgSrc} alt={product.name} className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" width={512} height={512} />
                       {product.badge && (
-                        <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">
-                          {product.badge}
-                        </span>
+                        <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">{product.badge}</span>
                       )}
                     </div>
                   </Link>
@@ -86,27 +76,13 @@ const ProductsSection = () => {
                     <Link to={`/product/${product.id}`}>
                       <h3 className="font-heading font-semibold text-foreground mb-1 hover:text-primary transition-colors">{product.name}</h3>
                     </Link>
-                    {product.description && (
-                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{product.description}</p>
-                    )}
+                    {product.description && <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{product.description}</p>}
                     <div className="flex items-center gap-2">
                       <span className="text-xl font-bold text-primary">{priceFormatted}</span>
-                      {product.old_price && (
-                        <span className="text-sm text-muted-foreground line-through">
-                          ₹{product.old_price.toLocaleString("en-IN")}
-                        </span>
-                      )}
+                      {product.old_price && <span className="text-sm text-muted-foreground line-through">₹{product.old_price.toLocaleString("en-IN")}</span>}
                     </div>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addItem({
-                          name: product.name,
-                          price: priceFormatted,
-                          priceNum: product.price,
-                          img: imgSrc,
-                        });
-                      }}
+                      onClick={(e) => { e.stopPropagation(); addItem({ name: product.name, price: priceFormatted, priceNum: product.price, img: imgSrc }); }}
                       className="mt-3 w-full text-center py-2 rounded-lg border border-primary/40 text-primary text-sm font-semibold hover:bg-primary/10 transition-all"
                     >
                       Add to Cart
@@ -119,10 +95,7 @@ const ProductsSection = () => {
         )}
 
         <div className="text-center mt-12">
-          <Link
-            to="/shop"
-            className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all"
-          >
+          <Link to="/shop" className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all">
             View All Products →
           </Link>
         </div>

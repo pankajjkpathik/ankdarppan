@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const stats = [
@@ -33,12 +34,9 @@ const HeroSection = () => (
         </p>
 
         <div className="flex flex-wrap gap-4 mb-12">
-          <a href="/book" className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-base hover:brightness-110 transition-all shadow-lg shadow-primary/25">
+          <Link to="/book" className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-base hover:brightness-110 transition-all shadow-lg shadow-primary/25">
             Book Consultation
-          </a>
-          <a href="#about" className="px-8 py-3.5 rounded-full border border-foreground/20 text-foreground font-semibold text-base hover:border-primary hover:text-primary transition-all">
-            Explore More
-          </a>
+          </Link>
         </div>
       </motion.div>
 

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Grid3X3, BookOpen, Heart, Smartphone, Gem, FileText, Star, Sparkles, Eye, Moon, Loader2, LucideIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const iconMap: Record<string, LucideIcon> = {
   Grid3X3, BookOpen, Heart, Smartphone, Gem, FileText, Star, Sparkles, Eye, Moon,
@@ -9,9 +10,9 @@ const iconMap: Record<string, LucideIcon> = {
 
 const ServicesSection = () => {
   const { data: services, isLoading } = useQuery({
-    queryKey: ["services"],
+    queryKey: ["services-home"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("services").select("*").eq("is_active", true).order("sort_order");
+      const { data, error } = await supabase.from("services").select("*").eq("is_active", true).order("sort_order").limit(3);
       if (error) throw error;
       return data;
     },
@@ -66,6 +67,15 @@ const ServicesSection = () => {
             })}
           </div>
         )}
+
+        <div className="text-center mt-12">
+          <Link
+            to="/services"
+            className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all"
+          >
+            View All Services →
+          </Link>
+        </div>
       </div>
     </section>
   );

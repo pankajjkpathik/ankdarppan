@@ -1,23 +1,33 @@
 import { useState } from "react";
 import { Menu, X, Phone, Mail, Clock, ShoppingCart, Facebook, Instagram, Youtube } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Calculators", href: "#calculators" },
+  { label: "Home", href: "/", isRoute: true },
+  { label: "About", href: "/about", isRoute: true },
+  { label: "Services", href: "/services", isRoute: true },
   { label: "Shop", href: "/shop", isRoute: true },
   { label: "Blog", href: "/blog", isRoute: true },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/#contact", isHash: true },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { setIsOpen: openCart, count } = useCart();
+  const location = useLocation();
+
+  const handleNavClick = (link: typeof navLinks[0]) => {
+    setOpen(false);
+    if (link.isHash) {
+      if (location.pathname === "/") {
+        const el = document.getElementById("contact");
+        el?.scrollIntoView({ behavior: "smooth" });
+      }
+      // If not on home, the Link to="/#contact" will navigate home, then we scroll
+    }
+  };
 
   return (
     <>
@@ -40,23 +50,22 @@ const Navbar = () => {
       {/* Main nav */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/30">
         <div className="container mx-auto flex items-center justify-between py-4 px-4">
-          <a href="#home" className="flex items-center gap-2">
-            <span className="text-2xl font-heading font-bold gold-text">ॐ</span>
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/logo.png" alt="Ank Darppan" className="w-10 h-10 rounded-full" />
             <span className="text-xl font-heading font-semibold gold-text">Ank Darppan</span>
-          </a>
+          </Link>
 
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) =>
-              link.isRoute ? (
-                <Link key={link.href} to={link.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase">
-                  {link.label}
-                </Link>
-              ) : (
-                <a key={link.href} href={link.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase">
-                  {link.label}
-                </a>
-              )
-            )}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => handleNavClick(link)}
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
@@ -64,9 +73,9 @@ const Navbar = () => {
               <ShoppingCart className="w-5 h-5" />
               {count > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{count}</span>}
             </button>
-            <a href="/book" className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all animate-pulse-glow">
+            <Link to="/book" className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all animate-pulse-glow">
               Book Now
-            </a>
+            </Link>
           </div>
 
           <button onClick={() => setOpen(!open)} className="lg:hidden text-foreground">
@@ -83,20 +92,19 @@ const Navbar = () => {
               className="lg:hidden border-t border-border/30 overflow-hidden"
             >
               <div className="flex flex-col p-4 gap-3">
-                {navLinks.map((link) =>
-                  link.isRoute ? (
-                    <Link key={link.href} to={link.href} onClick={() => setOpen(false)} className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
-                      {link.label}
-                    </Link>
-                  ) : (
-                    <a key={link.href} href={link.href} onClick={() => setOpen(false)} className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
-                      {link.label}
-                    </a>
-                  )
-                )}
-                <a href="/book" className="mt-2 text-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={() => handleNavClick(link)}
+                    className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Link to="/book" onClick={() => setOpen(false)} className="mt-2 text-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">
                   Book Now
-                </a>
+                </Link>
               </div>
             </motion.div>
           )}
