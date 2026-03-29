@@ -117,6 +117,15 @@ const ProductsSection = () => {
             })}
           </div>
         )}
+
+        <div className="text-center mt-12">
+          <Link
+            to="/shop"
+            className="inline-block px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all"
+          >
+            View All Products →
+          </Link>
+        </div>
       </div>
     </section>
   );

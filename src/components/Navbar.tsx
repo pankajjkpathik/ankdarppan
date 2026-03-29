@@ -83,11 +83,17 @@ const Navbar = () => {
               className="lg:hidden border-t border-border/30 overflow-hidden"
             >
               <div className="flex flex-col p-4 gap-3">
-                {navLinks.map((link) => (
-                  <a key={link.href} href={link.href} onClick={() => setOpen(false)} className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
-                    {link.label}
-                  </a>
-                ))}
+                {navLinks.map((link) =>
+                  link.isRoute ? (
+                    <Link key={link.href} to={link.href} onClick={() => setOpen(false)} className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a key={link.href} href={link.href} onClick={() => setOpen(false)} className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
+                      {link.label}
+                    </a>
+                  )
+                )}
                 <a href="/book" className="mt-2 text-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">
                   Book Now
                 </a>
