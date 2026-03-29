@@ -17,13 +17,14 @@ const ProductsSection = () => {
   const { addItem } = useCart();
 
   const { data: products, isLoading } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products-home"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("products")
         .select("*")
         .eq("is_active", true)
-        .order("sort_order");
+        .order("sort_order")
+        .limit(4);
       if (error) throw error;
       return data;
     },
