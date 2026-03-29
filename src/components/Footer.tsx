@@ -1,4 +1,4 @@
-import { Phone, Mail } from "lucide-react";
+import { Phone, Mail, Facebook, Instagram, Youtube } from "lucide-react";
 
 const Footer = () => (
   <footer className="border-t border-border/30 bg-secondary/30">
