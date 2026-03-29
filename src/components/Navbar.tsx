@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Menu, X, Phone, Mail, Clock, ShoppingCart } from "lucide-react";
+import { Menu, X, Phone, Mail, Clock, ShoppingCart, Facebook, Instagram, Youtube } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 
 const navLinks = [
