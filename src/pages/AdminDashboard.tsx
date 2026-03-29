@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut, ArrowLeft, Package, Briefcase } from "lucide-react";
+import { LogOut, ArrowLeft, Package, Briefcase, FileText } from "lucide-react";
 import AdminProductsTab from "@/components/admin/AdminProductsTab";
 import AdminServicesTab from "@/components/admin/AdminServicesTab";
+import AdminBlogsTab from "@/components/admin/AdminBlogsTab";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
