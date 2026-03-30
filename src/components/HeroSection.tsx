@@ -52,7 +52,7 @@ const HeroSection = () => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8"
+        className="grid grid-cols-3 gap-4 mt-8 w-full"
       >
         {stats.map((stat) => (
           <div key={stat.label} className="glass-card p-4 text-center">
