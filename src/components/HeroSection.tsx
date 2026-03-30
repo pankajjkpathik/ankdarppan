@@ -3,16 +3,21 @@ import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const stats = [
-  { value: "25+", label: "Years Experience" },
-  { value: "5000+", label: "Satisfied Clients" },
+  { value: "5+", label: "Years Experience" },
+  { value: "500+", label: "Satisfied Clients" },
   { value: "98%", label: "Accuracy Rate" },
-  { value: "15+", label: "Countries Served" },
 ];
 
 const HeroSection = () => (
   <section id="home" className="relative min-h-[90vh] flex items-center overflow-hidden">
     <div className="absolute inset-0">
-      <img src={heroBg} alt="Mystical numerology background" className="w-full h-full object-cover" width={1920} height={1080} />
+      <img
+        src={heroBg}
+        alt="Mystical numerology background"
+        className="w-full h-full object-cover"
+        width={1920}
+        height={1080}
+      />
       <div className="absolute inset-0 bg-background/70" />
       <div className="absolute inset-0 cosmic-bg opacity-40" />
     </div>
@@ -26,15 +31,18 @@ const HeroSection = () => (
       >
         <p className="text-primary font-display text-xl md:text-2xl italic mb-4">Trust our Experience</p>
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight mb-6">
-          Start Control of Your{" "}
-          <span className="gold-text">Professional Destiny</span>
+          Start Control of Your <span className="gold-text">Professional Destiny</span>
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 font-light leading-relaxed">
-          Discover your true path with expert numerological guidance. Our personalized consultations reveal hidden opportunities and guide you through life's challenges.
+          Discover your true path with expert numerological guidance. Our personalized consultations reveal hidden
+          opportunities and guide you through life's challenges.
         </p>
 
         <div className="flex flex-wrap gap-4 mb-12">
-          <Link to="/book" className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-base hover:brightness-110 transition-all shadow-lg shadow-primary/25">
+          <Link
+            to="/book"
+            className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-base hover:brightness-110 transition-all shadow-lg shadow-primary/25"
+          >
             Book Consultation
           </Link>
         </div>
