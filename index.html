@@ -24,6 +24,19 @@
 
   <body>
     <div id="root"></div>
+    <script>
+      // Handle 404.html redirect fallback for static hosts
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var redirect = params.get('redirect');
+        if (redirect) {
+          params.delete('redirect');
+          var remaining = params.toString();
+          var newUrl = redirect + (remaining ? '?' + remaining : '') + window.location.hash;
+          window.history.replaceState(null, '', newUrl);
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
