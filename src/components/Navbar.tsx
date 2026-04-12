@@ -1,8 +1,17 @@
-import { useState } from "react";
-import { Menu, X, Phone, Mail, Clock, ShoppingCart, Facebook, Instagram, Youtube } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Phone, Mail, Clock, ShoppingCart, Facebook, Instagram, Youtube, User, LogOut, LogIn } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "@/hooks/use-toast";
 
 const navLinks = [
   { label: "Home", href: "/", isRoute: true },
@@ -17,6 +26,40 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { setIsOpen: openCart, count } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState<{ email?: string; name?: string } | null>(null);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser({
+          email: session.user.email,
+          name: session.user.user_metadata?.full_name || session.user.email?.split("@")[0],
+        });
+      } else {
+        setUser(null);
+      }
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser({
+          email: session.user.email,
+          name: session.user.user_metadata?.full_name || session.user.email?.split("@")[0],
+        });
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    toast({ title: "Logged out successfully" });
+    navigate("/");
+  };
 
   const handleNavClick = (link: typeof navLinks[0]) => {
     setOpen(false);
@@ -25,7 +68,6 @@ const Navbar = () => {
         const el = document.getElementById("contact");
         el?.scrollIntoView({ behavior: "smooth" });
       }
-      // If not on home, the Link to="/#contact" will navigate home, then we scroll
     }
   };
 
@@ -69,18 +111,61 @@ const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
+            {/* Cart */}
             <button onClick={() => openCart(true)} className="relative p-2 text-foreground hover:text-primary transition-colors">
               <ShoppingCart className="w-5 h-5" />
               {count > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{count}</span>}
             </button>
+
+            {/* User menu */}
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-2 px-3 py-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-sm">
+                    <User className="w-4 h-4 text-primary" />
+                    <span className="text-foreground max-w-[120px] truncate">{user.name}</span>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <div className="px-2 py-1.5">
+                    <p className="text-sm font-medium truncate">{user.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/order-tracking" className="cursor-pointer">
+                      My Orders
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="text-destructive cursor-pointer">
+                    <LogOut className="w-4 h-4 mr-2" /> Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                to="/auth"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-sm text-foreground"
+              >
+                <LogIn className="w-4 h-4 text-primary" /> Login
+              </Link>
+            )}
+
             <Link to="/book" className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all animate-pulse-glow">
               Book Now
             </Link>
           </div>
 
-          <button onClick={() => setOpen(!open)} className="lg:hidden text-foreground">
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <button onClick={() => openCart(true)} className="relative p-2 text-foreground hover:text-primary transition-colors">
+              <ShoppingCart className="w-5 h-5" />
+              {count > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{count}</span>}
+            </button>
+            <button onClick={() => setOpen(!open)} className="text-foreground">
+              {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         <AnimatePresence>
@@ -102,6 +187,27 @@ const Navbar = () => {
                     {link.label}
                   </Link>
                 ))}
+
+                {/* Mobile user section */}
+                {user ? (
+                  <div className="border-t border-border/30 pt-3 mt-1 space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-foreground">
+                      <User className="w-4 h-4 text-primary" />
+                      <span className="truncate">{user.name}</span>
+                    </div>
+                    <Link to="/order-tracking" onClick={() => setOpen(false)} className="block text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
+                      My Orders
+                    </Link>
+                    <button onClick={() => { handleLogout(); setOpen(false); }} className="flex items-center gap-2 text-sm py-2 text-destructive">
+                      <LogOut className="w-4 h-4" /> Logout
+                    </button>
+                  </div>
+                ) : (
+                  <Link to="/auth" onClick={() => setOpen(false)} className="flex items-center gap-2 text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
+                    <LogIn className="w-4 h-4" /> Login / Sign Up
+                  </Link>
+                )}
+
                 <Link to="/book" onClick={() => setOpen(false)} className="mt-2 text-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">
                   Book Now
                 </Link>
