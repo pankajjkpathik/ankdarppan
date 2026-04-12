@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogOut, ArrowLeft, Package, Briefcase, FileText, ShoppingBag } from "lucide-react";
+import AdminDashboardTab from "./AdminDashboardTab";
 import AdminProductsTab from "@/components/admin/AdminProductsTab";
 import AdminServicesTab from "@/components/admin/AdminServicesTab";
 import AdminBlogsTab from "@/components/admin/AdminBlogsTab";
@@ -38,35 +39,39 @@ const AdminDashboard = () => {
           Admin <span className="gold-text">Dashboard</span>
         </h1>
 
-        <Tabs defaultValue="products" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8 bg-secondary/50">
-            <TabsTrigger value="products" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Package className="w-4 h-4" /> Products
-            </TabsTrigger>
-            <TabsTrigger value="services" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Briefcase className="w-4 h-4" /> Services
-            </TabsTrigger>
-            <TabsTrigger value="blogs" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <FileText className="w-4 h-4" /> Blog
-            </TabsTrigger>
-            <TabsTrigger value="orders" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <ShoppingBag className="w-4 h-4" /> Orders
-            </TabsTrigger>
-          </TabsList>
+<Tabs defaultValue="dashboard" className="w-full">
 
-          <TabsContent value="products">
-            <AdminProductsTab />
-          </TabsContent>
-          <TabsContent value="services">
-            <AdminServicesTab />
-          </TabsContent>
-          <TabsContent value="blogs">
-            <AdminBlogsTab />
-          </TabsContent>
-          <TabsContent value="orders">
-            <AdminOrdersTab />
-          </TabsContent>
-        </Tabs>
+  <TabsList className="grid w-full grid-cols-5 mb-8 bg-secondary/50">
+
+    <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+    <TabsTrigger value="products">Products</TabsTrigger>
+    <TabsTrigger value="services">Services</TabsTrigger>
+    <TabsTrigger value="blogs">Blog</TabsTrigger>
+    <TabsTrigger value="orders">Orders</TabsTrigger>
+
+  </TabsList>
+
+  <TabsContent value="dashboard">
+    <AdminDashboardTab />
+  </TabsContent>
+
+  <TabsContent value="products">
+    <AdminProductsTab />
+  </TabsContent>
+
+  <TabsContent value="services">
+    <AdminServicesTab />
+  </TabsContent>
+
+  <TabsContent value="blogs">
+    <AdminBlogsTab />
+  </TabsContent>
+
+  <TabsContent value="orders">
+    <AdminOrdersTab />
+  </TabsContent>
+
+</Tabs>
       </div>
     </div>
   );
