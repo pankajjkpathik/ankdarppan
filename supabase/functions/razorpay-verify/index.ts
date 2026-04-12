@@ -54,9 +54,9 @@ serve(async (req) => {
       JSON.stringify({ verified: true }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
-  } catch (e) {
+  } catch (e: unknown) {
     console.error(e);
-    return new Response(JSON.stringify({ error: e.message, verified: false }), {
+    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error", verified: false }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
