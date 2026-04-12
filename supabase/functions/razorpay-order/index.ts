@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { items, total, customer_name, customer_phone, customer_email } = await req.json();
+    const { items, total, customer_name, customer_phone, customer_email, user_id } = await req.json();
 
     const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID")!;
     const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET")!;
@@ -55,6 +55,7 @@ serve(async (req) => {
       customer_name,
       customer_phone,
       customer_email,
+      user_id,
       status: "created",
     });
 
