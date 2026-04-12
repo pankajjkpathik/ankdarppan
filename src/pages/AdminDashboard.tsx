@@ -16,11 +16,11 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 // --- Imports matching your file list ---
-import AdminDashboardTab from "./AdminDashboardTab";
-import AdminOrdersTab from "./AdminOrdersTab";
-import AdminProductsTab from "./AdminProductsTab";
-import AdminBlogsTab from "./AdminBlogsTab";
-import AdminServicesTab from "./AdminServicesTab";
+import AdminDashboardTab from "components/admin/AdminDashboardTab.tsx"; // Added .tsx
+import AdminOrdersTab from "components/admin/AdminOrdersTab.tsx";
+import AdminProductsTab from "components/admin/AdminProductsTab.tsx";
+import AdminBlogsTab from "components/admin/AdminBlogsTab.tsx";
+import AdminServicesTab from "components/admin/AdminServicesTab.tsx";
 
 const navigation = [
   { name: "Dashboard", icon: LayoutDashboard, id: "dashboard" },
