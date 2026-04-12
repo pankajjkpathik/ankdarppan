@@ -29,7 +29,7 @@ const testimonials = [
   },
   {
     name: "Roheika Verma",
-    location: "Solan,
+    location: "Solan",
     text: "The personalized approach and deep insights from Ank Darppan set them apart. The accuracy of the reading and practical remedies have truly improved my personal and professional life.",
   },
 ];
