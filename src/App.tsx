@@ -23,6 +23,7 @@ import RefundPolicy from "./pages/RefundPolicy.tsx";
 import TermsAndConditions from "./pages/TermsAndConditions.tsx";
 import Auth from "./pages/Auth.tsx";
 import MyAccount from "./pages/MyAccount.tsx";
+import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
