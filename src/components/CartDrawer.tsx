@@ -59,10 +59,11 @@ const CartDrawer = () => {
       } = await supabase.auth.getUser();
 
       if (!user) {
+        setIsOpen(false);
+        navigate("/auth", { state: { from: "/shop" } });
         toast({
           title: "Login Required",
-          description: "Please login to continue checkout",
-          variant: "destructive",
+          description: "Please login or create an account to checkout",
         });
         setLoading(false);
         return;
