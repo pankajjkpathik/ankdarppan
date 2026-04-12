@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-const SHIPPING_INDIA = 100;
+const SHIPPING_INDIA = 0;
 
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeItem, updateQty, total, clearCart } = useCart();
@@ -219,9 +219,9 @@ const CartDrawer = () => {
                     <RadioGroupItem value="india" id="ship-india" />
                     <Label htmlFor="ship-india" className="flex-1 cursor-pointer">
                       <span className="text-sm font-medium">India</span>
-                      <span className="text-xs text-muted-foreground block">Standard shipping — ₹{SHIPPING_INDIA}</span>
+                      <span className="text-xs text-muted-foreground block">Free Shipping</span>
                     </Label>
-                    <span className="text-primary font-bold text-sm">₹{SHIPPING_INDIA}</span>
+                    <span className="text-green-600 font-bold text-sm">FREE</span>
                   </div>
                   <div className="flex items-center space-x-2 glass-card p-3 rounded-lg">
                     <RadioGroupItem value="foreign" id="ship-foreign" />
@@ -242,7 +242,7 @@ const CartDrawer = () => {
               </div>
               <div className="flex justify-between text-sm text-muted-foreground">
                 <span>Shipping</span>
-                <span>{shippingType === "india" ? `₹${SHIPPING_INDIA}` : "On Actual"}</span>
+                <span className={shippingType === "india" ? "text-green-600 font-semibold" : ""}>{shippingType === "india" ? "FREE" : "On Actual"}</span>
               </div>
               <div className="flex justify-between font-bold text-lg border-t pt-2">
                 <span>Total</span>
