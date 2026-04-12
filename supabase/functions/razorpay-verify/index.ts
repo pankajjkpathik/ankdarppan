@@ -4,20 +4,27 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 serve(async (req) => {
+  // ✅ Handle CORS
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature
+    } = await req.json();
 
-    const secret = Deno.env.get("RAZORPAY_KEY_SECRET")!;
+    const secret = Deno.env.get("RAZORPAY_KEY_SECRET");
 
-    // Verify signature using HMAC SHA256
+    // ✅ Verify signature
     const encoder = new TextEncoder();
+
     const key = await crypto.subtle.importKey(
       "raw",
       encoder.encode(secret),
@@ -27,38 +34,58 @@ serve(async (req) => {
     );
 
     const data = `${razorpay_order_id}|${razorpay_payment_id}`;
-    const signatureBuffer = await crypto.subtle.sign("HMAC", key, encoder.encode(data));
+
+    const signatureBuffer = await crypto.subtle.sign(
+      "HMAC",
+      key,
+      encoder.encode(data)
+    );
+
     const expectedSignature = Array.from(new Uint8Array(signatureBuffer))
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
 
     if (expectedSignature !== razorpay_signature) {
-      return new Response(JSON.stringify({ error: "Invalid signature", verified: false }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Invalid signature", verified: false }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
     }
 
-    // Update order status
+    // ✅ Update order
     const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+      Deno.env.get("SUPABASE_URL"),
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
     );
 
     await supabase
       .from("orders")
-      .update({ razorpay_payment_id, status: "paid" })
+      .update({
+        razorpay_payment_id,
+        status: "paid",
+        updated_at: new Date().toISOString(),
+      })
       .eq("razorpay_order_id", razorpay_order_id);
 
     return new Response(
       JSON.stringify({ verified: true }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
     );
-  } catch (e: unknown) {
-    console.error(e);
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error", verified: false }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+
+  } catch (e) {
+    console.error("VERIFY ERROR:", e);
+
+    return new Response(
+      JSON.stringify({ error: e.message, verified: false }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
+    );
   }
 });
