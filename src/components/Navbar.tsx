@@ -133,6 +133,11 @@ const Navbar = () => {
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
+                    <Link to="/my-account" className="cursor-pointer">
+                      My Account
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link to="/order-tracking" className="cursor-pointer">
                       My Orders
                     </Link>
@@ -195,6 +200,9 @@ const Navbar = () => {
                       <User className="w-4 h-4 text-primary" />
                       <span className="truncate">{user.name}</span>
                     </div>
+                    <Link to="/my-account" onClick={() => setOpen(false)} className="block text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
+                      My Account
+                    </Link>
                     <Link to="/order-tracking" onClick={() => setOpen(false)} className="block text-sm py-2 text-muted-foreground hover:text-primary transition-colors">
                       My Orders
                     </Link>
