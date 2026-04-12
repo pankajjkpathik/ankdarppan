@@ -17,6 +17,7 @@ declare global {
 
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeItem, updateQty, total, clearCart } = useCart();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [customerName, setCustomerName] = useState("");
