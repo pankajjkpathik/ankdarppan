@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogOut, ArrowLeft, Package, Briefcase, FileText, ShoppingBag } from "lucide-react";
-import AdminDashboardTab from "./AdminDashboardTab";
+import AdminDashboardTab from "@/components/admin/AdminDashboardTab";
 import AdminProductsTab from "@/components/admin/AdminProductsTab";
 import AdminServicesTab from "@/components/admin/AdminServicesTab";
 import AdminBlogsTab from "@/components/admin/AdminBlogsTab";
