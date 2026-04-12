@@ -4,20 +4,28 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 serve(async (req) => {
+  // ✅ Handle CORS
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const { items, total, customer_name, customer_phone, customer_email, user_id } = await req.json();
+    const {
+      items,
+      total,
+      customer_name,
+      customer_phone,
+      customer_email
+    } = await req.json();
 
-    const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID")!;
-    const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET")!;
+    const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID");
+    const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET");
 
-    // Create Razorpay order
+    // ✅ Create Razorpay order
     const rpRes = await fetch("https://api.razorpay.com/v1/orders", {
       method: "POST",
       headers: {
@@ -25,7 +33,7 @@ serve(async (req) => {
         Authorization: "Basic " + btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`),
       },
       body: JSON.stringify({
-        amount: total * 100, // paise
+        amount: total * 100,
         currency: "INR",
         receipt: `order_${Date.now()}`,
       }),
@@ -34,18 +42,22 @@ serve(async (req) => {
     if (!rpRes.ok) {
       const err = await rpRes.text();
       console.error("Razorpay error:", err);
-      return new Response(JSON.stringify({ error: "Failed to create order" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+
+      return new Response(
+        JSON.stringify({ error: "Failed to create order" }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
     }
 
     const rpOrder = await rpRes.json();
 
-    // Save order in DB
+    // ✅ Save in Supabase
     const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+      Deno.env.get("SUPABASE_URL"),
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
     );
 
     await supabase.from("orders").insert({
@@ -55,19 +67,29 @@ serve(async (req) => {
       customer_name,
       customer_phone,
       customer_email,
-      user_id,
       status: "created",
+      created_at: new Date().toISOString(),
     });
 
     return new Response(
-      JSON.stringify({ order_id: rpOrder.id, key_id: RAZORPAY_KEY_ID }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({
+        order_id: rpOrder.id,
+        key_id: RAZORPAY_KEY_ID,
+      }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
     );
-  } catch (e: unknown) {
-    console.error(e);
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+
+  } catch (e) {
+    console.error("ORDER ERROR:", e);
+
+    return new Response(
+      JSON.stringify({ error: e.message }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
+    );
   }
 });
