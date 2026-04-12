@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { items, total, customer_name, customer_phone, customer_email } = await req.json();
+    const { items, total, customer_name, customer_phone, customer_email, user_id } = await req.json();
 
     const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID")!;
     const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET")!;
@@ -55,6 +55,7 @@ serve(async (req) => {
       customer_name,
       customer_phone,
       customer_email,
+      user_id,
       status: "created",
     });
 
@@ -62,9 +63,9 @@ serve(async (req) => {
       JSON.stringify({ order_id: rpOrder.id, key_id: RAZORPAY_KEY_ID }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
-  } catch (e) {
+  } catch (e: unknown) {
     console.error(e);
-    return new Response(JSON.stringify({ error: e.message }), {
+    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
