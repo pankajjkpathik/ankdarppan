@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,36 @@ const CartDrawer = () => {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
+  const [prefilled, setPrefilled] = useState(false);
+
+  // Auto-fill user details when cart opens
+  useEffect(() => {
+    if (!isOpen || prefilled) return;
+
+    const fetchProfile = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) return;
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("full_name, phone, email")
+        .eq("user_id", session.user.id)
+        .single();
+
+      if (profile) {
+        setCustomerName(profile.full_name || session.user.user_metadata?.full_name || "");
+        setCustomerPhone(profile.phone || "");
+        setCustomerEmail(profile.email || session.user.email || "");
+        setPrefilled(true);
+      } else {
+        setCustomerName(session.user.user_metadata?.full_name || "");
+        setCustomerEmail(session.user.email || "");
+        setPrefilled(true);
+      }
+    };
+
+    fetchProfile();
+  }, [isOpen, prefilled]);
 
   // ---------------- LOAD RAZORPAY ----------------
   const loadRazorpayScript = (): Promise<boolean> => {
