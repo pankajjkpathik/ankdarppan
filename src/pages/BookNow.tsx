@@ -16,12 +16,12 @@ declare global {
 }
 
 const servicesList = [
-  { name: "Loshu Grid Report", price: 671 },
-  { name: "Vedic Numerology Report", price: 671 },
-  { name: "Marriage Compatibility", price: 941 },
+  { name: "Loshu Grid Report", price: 941 },
   { name: "Mobile Number Consultation", price: 581 },
+  { name: "Marriage Compatibility", price: 941 },
+  { name: "Lal Kitab Remedies", price: 554 },
+  { name: "Name Compatibility Report", price: 891 },
   { name: "Crystal & Rudraksh Consultation", price: 941 },
-  { name: "Name Analysis & Correction", price: 671 },
 ];
 
 const BookNow = () => {
