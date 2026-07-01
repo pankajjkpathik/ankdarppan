@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import { fbTrack } from "@/lib/fbpixel";
 
 export interface CartItem {
   name: string;
