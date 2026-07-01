@@ -89,6 +89,13 @@ const CartDrawer = () => {
 
     setLoading(true);
 
+    fbTrack("InitiateCheckout", {
+      value: grandTotal,
+      currency: "INR",
+      num_items: items.reduce((s, i) => s + i.qty, 0),
+      content_ids: items.map((i) => i.name),
+    });
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
