@@ -146,6 +146,14 @@ const CartDrawer = () => {
             return;
           }
 
+          fbTrack("Purchase", {
+            value: grandTotal,
+            currency: "INR",
+            content_ids: items.map((i) => i.name),
+            num_items: items.reduce((s, i) => s + i.qty, 0),
+            order_id: response.razorpay_order_id,
+          });
+
           toast({ title: "Payment Successful 🎉", description: "Your order has been placed successfully!" });
           clearCart();
           setIsOpen(false);
