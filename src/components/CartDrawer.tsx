@@ -9,6 +9,7 @@ import { useCart } from "@/contexts/CartContext";
 import { Minus, Plus, Trash2, ShoppingCart, Loader2, CreditCard, Truck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { fbTrack } from "@/lib/fbpixel";
 
 declare global {
   interface Window {
