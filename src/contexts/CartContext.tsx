@@ -40,6 +40,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       return [...prev, { ...item, qty: 1 }];
     });
     setIsOpen(true);
+    fbTrack("AddToCart", {
+      content_name: item.name,
+      content_type: "product",
+      value: item.priceNum,
+      currency: "INR",
+    });
   };
 
   const removeItem = (name: string) => setItems((prev) => prev.filter((i) => i.name !== name));
