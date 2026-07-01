@@ -45,6 +45,7 @@ const Auth = () => {
       } else if (mode === "login") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        fbTrack("Login", { method: "email" });
         toast({ title: "Welcome back! 🎉" });
         navigate(redirectTo, { replace: true });
       } else {
@@ -57,6 +58,8 @@ const Auth = () => {
           },
         });
         if (error) throw error;
+        fbTrack("CompleteRegistration", { method: "email", status: true });
+        fbTrack("SignUp", { method: "email" });
         toast({
           title: "Account created!",
           description: "Please check your email to verify your account.",
