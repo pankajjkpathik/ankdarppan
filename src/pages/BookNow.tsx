@@ -121,6 +121,14 @@ const BookNow = () => {
             toast({ title: "Payment verification failed", variant: "destructive" });
             return;
           }
+          fbTrack("Purchase", {
+            value: totalPrice,
+            currency: "INR",
+            content_ids: selected,
+            num_items: selected.length,
+            content_category: "consultation",
+            order_id: response.razorpay_order_id,
+          });
           toast({ title: "Booking Confirmed! 🎉", description: "Your consultation has been booked successfully." });
           navigate(`/order-tracking?id=${response.razorpay_order_id}`);
         },
