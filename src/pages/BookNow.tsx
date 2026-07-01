@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Loader2, CreditCard } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { fbTrack } from "@/lib/fbpixel";
 
 declare global {
   interface Window {
@@ -68,6 +69,15 @@ const BookNow = () => {
       const loaded = await loadRazorpayScript();
       if (!loaded) throw new Error("Failed to load payment gateway");
 
+      fbTrack("InitiateCheckout", {
+        value: totalPrice,
+        currency: "INR",
+        content_ids: selected,
+        num_items: selected.length,
+        content_category: "consultation",
+      });
+
+
       const items = selected.map((name) => {
         const s = servicesList.find((sv) => sv.name === name)!;
         return { name: s.name, qty: 1, price: s.price };
@@ -111,6 +121,14 @@ const BookNow = () => {
             toast({ title: "Payment verification failed", variant: "destructive" });
             return;
           }
+          fbTrack("Purchase", {
+            value: totalPrice,
+            currency: "INR",
+            content_ids: selected,
+            num_items: selected.length,
+            content_category: "consultation",
+            order_id: response.razorpay_order_id,
+          });
           toast({ title: "Booking Confirmed! 🎉", description: "Your consultation has been booked successfully." });
           navigate(`/order-tracking?id=${response.razorpay_order_id}`);
         },

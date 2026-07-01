@@ -9,6 +9,7 @@ import { useCart } from "@/contexts/CartContext";
 import { Minus, Plus, Trash2, ShoppingCart, Loader2, CreditCard, Truck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { fbTrack } from "@/lib/fbpixel";
 
 declare global {
   interface Window {
@@ -88,6 +89,13 @@ const CartDrawer = () => {
 
     setLoading(true);
 
+    fbTrack("InitiateCheckout", {
+      value: grandTotal,
+      currency: "INR",
+      num_items: items.reduce((s, i) => s + i.qty, 0),
+      content_ids: items.map((i) => i.name),
+    });
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
@@ -137,6 +145,14 @@ const CartDrawer = () => {
             toast({ title: "Payment verification failed", variant: "destructive" });
             return;
           }
+
+          fbTrack("Purchase", {
+            value: grandTotal,
+            currency: "INR",
+            content_ids: items.map((i) => i.name),
+            num_items: items.reduce((s, i) => s + i.qty, 0),
+            order_id: response.razorpay_order_id,
+          });
 
           toast({ title: "Payment Successful 🎉", description: "Your order has been placed successfully!" });
           clearCart();
