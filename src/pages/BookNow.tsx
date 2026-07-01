@@ -69,6 +69,15 @@ const BookNow = () => {
       const loaded = await loadRazorpayScript();
       if (!loaded) throw new Error("Failed to load payment gateway");
 
+      fbTrack("InitiateCheckout", {
+        value: totalPrice,
+        currency: "INR",
+        content_ids: selected,
+        num_items: selected.length,
+        content_category: "consultation",
+      });
+
+
       const items = selected.map((name) => {
         const s = servicesList.find((sv) => sv.name === name)!;
         return { name: s.name, qty: 1, price: s.price };
