@@ -10,7 +10,8 @@ import {
   LogOut,
   Menu,
   X,
-  User
+  User,
+  Ticket
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -21,14 +22,17 @@ import AdminOrdersTab from "@/components/admin/AdminOrdersTab.tsx";
 import AdminProductsTab from "@/components/admin/AdminProductsTab.tsx";
 import AdminBlogsTab from "@/components/admin/AdminBlogsTab.tsx";
 import AdminServicesTab from "@/components/admin/AdminServicesTab.tsx";
+import AdminCouponsTab from "@/components/admin/AdminCouponsTab.tsx";
 
 const navigation = [
   { name: "Dashboard", icon: LayoutDashboard, id: "dashboard" },
   { name: "Orders", icon: ShoppingBag, id: "orders" },
   { name: "Products", icon: Package, id: "products" },
   { name: "Services", icon: Wrench, id: "services" },
+  { name: "Coupons", icon: Ticket, id: "coupons" },
   { name: "Blog", icon: FileText, id: "blogs" },
 ];
+
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
