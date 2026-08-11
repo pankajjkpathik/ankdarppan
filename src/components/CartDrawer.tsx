@@ -30,9 +30,68 @@ const CartDrawer = () => {
   const [prefilled, setPrefilled] = useState(false);
   const [shippingCountry, setShippingCountry] = useState("India");
   const [shippingType, setShippingType] = useState<"india" | "foreign">("india");
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [couponLoading, setCouponLoading] = useState(false);
 
   const shippingCost = shippingType === "india" ? SHIPPING_INDIA : 0; // foreign = on actual (entered manually or TBD)
-  const grandTotal = total + shippingCost;
+
+  const computeDiscount = (coupon: any, subtotal: number) => {
+    if (!coupon) return 0;
+    let d = coupon.discount_type === "percent"
+      ? Math.floor((subtotal * coupon.discount_value) / 100)
+      : coupon.discount_value;
+    if (coupon.max_discount) d = Math.min(d, coupon.max_discount);
+    return Math.min(d, subtotal);
+  };
+
+  const discount = computeDiscount(appliedCoupon, total);
+  const grandTotal = Math.max(total - discount, 0) + shippingCost;
+
+  const applyCoupon = async () => {
+    const code = couponCode.trim().toUpperCase();
+    if (!code) return;
+    setCouponLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("coupons")
+        .select("*")
+        .eq("code", code)
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) {
+        toast({ title: "Invalid coupon", description: "This code doesn't exist or is no longer active", variant: "destructive" });
+        return;
+      }
+      if (data.expires_at && new Date(data.expires_at) < new Date()) {
+        toast({ title: "Coupon expired", variant: "destructive" });
+        return;
+      }
+      if (data.usage_limit != null && data.times_used >= data.usage_limit) {
+        toast({ title: "Coupon limit reached", variant: "destructive" });
+        return;
+      }
+      if (total < (data.min_order_amount || 0)) {
+        toast({ title: "Minimum order not met", description: `This coupon needs a subtotal of ₹${data.min_order_amount}`, variant: "destructive" });
+        return;
+      }
+
+      setAppliedCoupon(data);
+      toast({ title: "Coupon applied 🎉", description: `You saved ₹${computeDiscount(data, total)}` });
+    } catch (e: any) {
+      toast({ title: "Could not apply coupon", description: e.message, variant: "destructive" });
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode("");
+  };
+
 
   // Auto-fill user details when cart opens
   useEffect(() => {
