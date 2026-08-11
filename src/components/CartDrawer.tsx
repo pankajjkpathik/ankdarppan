@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCart } from "@/contexts/CartContext";
-import { Minus, Plus, Trash2, ShoppingCart, Loader2, CreditCard, Truck } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart, Loader2, CreditCard, Truck, Ticket } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { fbTrack } from "@/lib/fbpixel";
@@ -30,9 +30,68 @@ const CartDrawer = () => {
   const [prefilled, setPrefilled] = useState(false);
   const [shippingCountry, setShippingCountry] = useState("India");
   const [shippingType, setShippingType] = useState<"india" | "foreign">("india");
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [couponLoading, setCouponLoading] = useState(false);
 
   const shippingCost = shippingType === "india" ? SHIPPING_INDIA : 0; // foreign = on actual (entered manually or TBD)
-  const grandTotal = total + shippingCost;
+
+  const computeDiscount = (coupon: any, subtotal: number) => {
+    if (!coupon) return 0;
+    let d = coupon.discount_type === "percent"
+      ? Math.floor((subtotal * coupon.discount_value) / 100)
+      : coupon.discount_value;
+    if (coupon.max_discount) d = Math.min(d, coupon.max_discount);
+    return Math.min(d, subtotal);
+  };
+
+  const discount = computeDiscount(appliedCoupon, total);
+  const grandTotal = Math.max(total - discount, 0) + shippingCost;
+
+  const applyCoupon = async () => {
+    const code = couponCode.trim().toUpperCase();
+    if (!code) return;
+    setCouponLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("coupons")
+        .select("*")
+        .eq("code", code)
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) {
+        toast({ title: "Invalid coupon", description: "This code doesn't exist or is no longer active", variant: "destructive" });
+        return;
+      }
+      if (data.expires_at && new Date(data.expires_at) < new Date()) {
+        toast({ title: "Coupon expired", variant: "destructive" });
+        return;
+      }
+      if (data.usage_limit != null && data.times_used >= data.usage_limit) {
+        toast({ title: "Coupon limit reached", variant: "destructive" });
+        return;
+      }
+      if (total < (data.min_order_amount || 0)) {
+        toast({ title: "Minimum order not met", description: `This coupon needs a subtotal of ₹${data.min_order_amount}`, variant: "destructive" });
+        return;
+      }
+
+      setAppliedCoupon(data);
+      toast({ title: "Coupon applied 🎉", description: `You saved ₹${computeDiscount(data, total)}` });
+    } catch (e: any) {
+      toast({ title: "Could not apply coupon", description: e.message, variant: "destructive" });
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode("");
+  };
+
 
   // Auto-fill user details when cart opens
   useEffect(() => {
@@ -120,6 +179,9 @@ const CartDrawer = () => {
           user_id: user.id,
           shipping_cost: shippingCost,
           shipping_type: shippingType,
+          coupon_code: appliedCoupon?.code || null,
+          discount,
+
         },
       });
 
@@ -252,10 +314,46 @@ const CartDrawer = () => {
             </div>
 
             <div className="border-t pt-4 mt-4 space-y-3">
+              {/* Coupon */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-heading font-semibold flex items-center gap-2">
+                  <Ticket className="w-4 h-4 text-primary" /> Coupon Code
+                </h4>
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between glass-card p-3 rounded-lg">
+                    <div>
+                      <p className="text-sm font-semibold text-primary tracking-wide">{appliedCoupon.code}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {appliedCoupon.discount_type === "percent" ? `${appliedCoupon.discount_value}% off` : `₹${appliedCoupon.discount_value} off`}
+                      </p>
+                    </div>
+                    <Button variant="ghost" size="sm" onClick={removeCoupon}>Remove</Button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Enter coupon code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      className="uppercase"
+                    />
+                    <Button variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()}>
+                      {couponLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                    </Button>
+                  </div>
+                )}
+              </div>
+
               <div className="flex justify-between text-sm text-muted-foreground">
                 <span>Subtotal</span>
                 <span>₹{total}</span>
               </div>
+              {discount > 0 && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Discount</span>
+                  <span className="text-green-600 font-semibold">-₹{discount}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm text-muted-foreground">
                 <span>Shipping</span>
                 <span className={shippingType === "india" ? "text-green-600 font-semibold" : ""}>{shippingType === "india" ? "FREE" : "On Actual"}</span>
@@ -263,9 +361,10 @@ const CartDrawer = () => {
               <div className="flex justify-between font-bold text-lg border-t pt-2">
                 <span>Total</span>
                 <span className="text-primary">
-                  {shippingType === "india" ? `₹${grandTotal}` : `₹${total} + Shipping`}
+                  {shippingType === "india" ? `₹${grandTotal}` : `₹${Math.max(total - discount, 0)} + Shipping`}
                 </span>
               </div>
+
 
               <Button onClick={handleCheckout} disabled={loading} className="w-full">
                 {loading ? <Loader2 className="animate-spin mr-2" /> : <CreditCard className="mr-2" />}
