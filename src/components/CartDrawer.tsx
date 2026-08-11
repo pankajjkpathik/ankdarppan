@@ -311,10 +311,46 @@ const CartDrawer = () => {
             </div>
 
             <div className="border-t pt-4 mt-4 space-y-3">
+              {/* Coupon */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-heading font-semibold flex items-center gap-2">
+                  <Ticket className="w-4 h-4 text-primary" /> Coupon Code
+                </h4>
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between glass-card p-3 rounded-lg">
+                    <div>
+                      <p className="text-sm font-semibold text-primary tracking-wide">{appliedCoupon.code}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {appliedCoupon.discount_type === "percent" ? `${appliedCoupon.discount_value}% off` : `₹${appliedCoupon.discount_value} off`}
+                      </p>
+                    </div>
+                    <Button variant="ghost" size="sm" onClick={removeCoupon}>Remove</Button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Enter coupon code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      className="uppercase"
+                    />
+                    <Button variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()}>
+                      {couponLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                    </Button>
+                  </div>
+                )}
+              </div>
+
               <div className="flex justify-between text-sm text-muted-foreground">
                 <span>Subtotal</span>
                 <span>₹{total}</span>
               </div>
+              {discount > 0 && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Discount</span>
+                  <span className="text-green-600 font-semibold">-₹{discount}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm text-muted-foreground">
                 <span>Shipping</span>
                 <span className={shippingType === "india" ? "text-green-600 font-semibold" : ""}>{shippingType === "india" ? "FREE" : "On Actual"}</span>
@@ -322,9 +358,10 @@ const CartDrawer = () => {
               <div className="flex justify-between font-bold text-lg border-t pt-2">
                 <span>Total</span>
                 <span className="text-primary">
-                  {shippingType === "india" ? `₹${grandTotal}` : `₹${total} + Shipping`}
+                  {shippingType === "india" ? `₹${grandTotal}` : `₹${Math.max(total - discount, 0)} + Shipping`}
                 </span>
               </div>
+
 
               <Button onClick={handleCheckout} disabled={loading} className="w-full">
                 {loading ? <Loader2 className="animate-spin mr-2" /> : <CreditCard className="mr-2" />}
