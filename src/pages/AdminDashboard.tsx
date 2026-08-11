@@ -50,9 +50,11 @@ const AdminDashboard = () => {
       case "orders": return <AdminOrdersTab />;
       case "products": return <AdminProductsTab />;
       case "services": return <AdminServicesTab />;
+      case "coupons": return <AdminCouponsTab />;
       case "blogs": return <AdminBlogsTab />;
       default: return <AdminDashboardTab />;
     }
+
   };
 
   return (
