@@ -179,6 +179,9 @@ const CartDrawer = () => {
           user_id: user.id,
           shipping_cost: shippingCost,
           shipping_type: shippingType,
+          coupon_code: appliedCoupon?.code || null,
+          discount,
+
         },
       });
 
