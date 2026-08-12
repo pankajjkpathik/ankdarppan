@@ -30,7 +30,8 @@ const AdminOrdersTab = () => {
       const { data, error } = await supabase
         .from("orders")
         .select(`
-          *
+          *,
+          profiles:user_id (*)
         `)
         .order("created_at", { ascending: false });
       
@@ -108,7 +109,7 @@ const AdminOrdersTab = () => {
                       </span>
                     </div>
                     <p className="text-base text-white font-medium">
-                      {order.customer_name || "Guest User"}
+                      {order.profiles?.full_name || order.customer_name || "Guest User"}
                     </p>
                     <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
                       <span className="text-primary font-semibold">₹{order.total}</span>
@@ -153,9 +154,9 @@ const AdminOrdersTab = () => {
               <div className="grid grid-cols-2 gap-2">
                 <div><span className="text-muted-foreground">ID:</span> <span className="font-mono text-xs">{selectedOrder.id.slice(0, 8)}</span></div>
                 <div><span className="text-muted-foreground">Status:</span> {selectedOrder.status}</div>
-                <div><span className="text-muted-foreground">Name:</span> {selectedOrder.customer_name || "-"}</div>
-                <div><span className="text-muted-foreground">Phone:</span> {selectedOrder.customer_phone || "-"}</div>
-                <div className="col-span-2"><span className="text-muted-foreground">Email:</span> {selectedOrder.customer_email || "-"}</div>
+                <div><span className="text-muted-foreground">Name:</span> {selectedOrder.profiles?.full_name || selectedOrder.customer_name || "-"}</div>
+                <div><span className="text-muted-foreground">Phone:</span> {selectedOrder.profiles?.phone || selectedOrder.customer_phone || "-"}</div>
+                <div className="col-span-2"><span className="text-muted-foreground">Email:</span> {selectedOrder.profiles?.email || selectedOrder.customer_email || "-"}</div>
                 <div><span className="text-muted-foreground">Total:</span> ₹{selectedOrder.total}</div>
                 <div><span className="text-muted-foreground">Date:</span> {format(new Date(selectedOrder.created_at), "dd MMM yyyy, hh:mm a")}</div>
                 {selectedOrder.coupon_code && (
