@@ -132,8 +132,20 @@ const BookNow = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.phone || !form.dob || !form.address || selected.length === 0) {
-      toast({ title: "Please fill required fields (*) and select at least one service", variant: "destructive" });
+    
+    const errors: string[] = [];
+    if (!form.name.trim()) errors.push("Full Name");
+    if (!form.phone.trim()) errors.push("Phone Number");
+    if (!form.dob) errors.push("Date of Birth");
+    if (!form.address.trim()) errors.push("Address");
+    if (selected.length === 0) errors.push("At least one service");
+
+    if (errors.length > 0) {
+      toast({ 
+        title: "Incomplete Booking Details", 
+        description: `Please provide: ${errors.join(", ")}`, 
+        variant: "destructive" 
+      });
       return;
     }
 
@@ -246,11 +258,11 @@ const BookNow = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="name">Full Name *</Label>
-                  <Input name="name" id="name" required value={form.name} onChange={handleChange} placeholder="Your full name" className="bg-secondary/50 border-border" />
+                  <Input name="name" id="name" required value={form.name} onChange={handleChange} placeholder="Your full name" className={cn("bg-secondary/50 border-border", !form.name && loading ? "border-destructive" : "")} />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="phone">Phone Number *</Label>
-                  <Input name="phone" id="phone" type="tel" required value={form.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" className="bg-secondary/50 border-border" />
+                  <Input name="phone" id="phone" type="tel" required value={form.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" className={cn("bg-secondary/50 border-border", !form.phone && loading ? "border-destructive" : "")} />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="email">Email</Label>
@@ -258,7 +270,7 @@ const BookNow = () => {
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="dob">Date of Birth *</Label>
-                  <Input name="dob" id="dob" type="date" required value={form.dob} onChange={handleChange} className="bg-secondary/50 border-border" />
+                  <Input name="dob" id="dob" type="date" required value={form.dob} onChange={handleChange} className={cn("bg-secondary/50 border-border", !form.dob && loading ? "border-destructive" : "")} />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="tob">Time of Birth</Label>
@@ -270,7 +282,7 @@ const BookNow = () => {
                 </div>
                 <div className="space-y-1.5 sm:col-span-2">
                   <Label htmlFor="address">Address *</Label>
-                  <Textarea name="address" id="address" required value={form.address} onChange={handleChange} placeholder="Your full address" className="bg-secondary/50 border-border" rows={2} />
+                  <Textarea name="address" id="address" required value={form.address} onChange={handleChange} placeholder="Your full address" className={cn("bg-secondary/50 border-border", !form.address && loading ? "border-destructive" : "")} rows={2} />
                 </div>
               </div>
             </div>
