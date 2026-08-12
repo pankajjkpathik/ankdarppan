@@ -15,15 +15,22 @@ const statusConfig: Record<string, { icon: React.ElementType; color: string; lab
 
 const OrderTracking = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [order, setOrder] = useState<any>(null);
   const [notFound, setNotFound] = useState(false);
+  const isConfirmed = searchParams.get("confirmed") === "true";
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
+  useEffect(() => {
+    const id = searchParams.get("id");
+    if (id) {
+      setQuery(id);
+      fetchOrder(id);
+    }
+  }, [searchParams]);
 
+  const fetchOrder = async (id: string) => {
     setLoading(true);
     setOrder(null);
     setNotFound(false);
@@ -32,7 +39,7 @@ const OrderTracking = () => {
       const { data, error } = await supabase
         .from("orders")
         .select("*")
-        .or(`razorpay_order_id.eq.${query.trim()},razorpay_payment_id.eq.${query.trim()}`)
+        .or(`razorpay_order_id.eq.${id.trim()},razorpay_payment_id.eq.${id.trim()}`)
         .maybeSingle();
 
       if (error) throw error;
@@ -46,6 +53,12 @@ const OrderTracking = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    fetchOrder(query);
   };
 
   const status = order ? statusConfig[order.status] || statusConfig.pending : null;
