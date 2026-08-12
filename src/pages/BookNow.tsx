@@ -10,6 +10,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { fbTrack } from "@/lib/fbpixel";
 
+import { cn } from "@/lib/utils";
+
 declare global {
   interface Window {
     Razorpay: any;
