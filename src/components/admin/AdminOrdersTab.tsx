@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/supabaseClient";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Package, Eye, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const statusColors: Record<string, string> = {
+  created: "bg-slate-500/20 text-slate-400",
   pending: "bg-yellow-500/20 text-yellow-400",
   paid: "bg-green-500/20 text-green-400",
   shipped: "bg-blue-500/20 text-blue-400",
@@ -78,6 +79,7 @@ const AdminOrdersTab = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="created">Created</SelectItem>
                         <SelectItem value="pending">Pending</SelectItem>
                         <SelectItem value="paid">Paid</SelectItem>
                         <SelectItem value="shipped">Shipped</SelectItem>
