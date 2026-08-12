@@ -109,7 +109,7 @@ const AdminOrdersTab = () => {
                       </span>
                     </div>
                     <p className="text-base text-white font-medium">
-                      {order.customer_name || "Guest User"}
+                      {order.profiles?.full_name || order.customer_name || "Guest User"}
                     </p>
                     <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
                       <span className="text-primary font-semibold">₹{order.total}</span>
