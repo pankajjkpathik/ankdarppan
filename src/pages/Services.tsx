@@ -57,7 +57,10 @@ const Services = () => {
                     <h3 className="text-lg font-heading font-semibold mb-2 text-foreground">{service.title}</h3>
                     <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{service.description}</p>
                     <div className="flex items-center justify-between mt-auto">
-                      <span className="text-2xl font-heading font-bold text-primary">₹{service.price.toLocaleString("en-IN")}</span>
+                      <div className="flex flex-col">
+                        <span className="text-2xl font-heading font-bold text-primary">₹{service.price.toLocaleString("en-IN")}</span>
+                        {service.old_price && <span className="text-muted-foreground line-through text-xs">₹{service.old_price.toLocaleString("en-IN")}</span>}
+                      </div>
                       <a
                         href={`/book?service=${encodeURIComponent(service.title)}`}
                         className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:brightness-110 transition-all"

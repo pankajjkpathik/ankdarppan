@@ -25,7 +25,10 @@ const AdminOrdersTab = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("orders")
-        .select("*")
+        .select(`
+          *,
+          profiles(full_name, phone, email)
+        `)
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -108,7 +111,29 @@ const AdminOrdersTab = () => {
                 <div className="col-span-2"><span className="text-muted-foreground">Email:</span> {selectedOrder.customer_email || "-"}</div>
                 <div><span className="text-muted-foreground">Total:</span> ₹{selectedOrder.total}</div>
                 <div><span className="text-muted-foreground">Date:</span> {format(new Date(selectedOrder.created_at), "dd MMM yyyy, hh:mm a")}</div>
+                {selectedOrder.coupon_code && (
+                  <div className="col-span-2 text-primary font-medium">
+                    Coupon: {selectedOrder.coupon_code} (-₹{selectedOrder.discount})
+                  </div>
+                )}
+                {selectedOrder.shipping_cost > 0 && (
+                  <div className="col-span-2 text-muted-foreground">
+                    Shipping: ₹{selectedOrder.shipping_cost} ({selectedOrder.shipping_type})
+                  </div>
+                )}
               </div>
+              {selectedOrder.booking_details && (
+                <div className="space-y-2 p-3 bg-secondary/30 rounded-lg">
+                  <h4 className="font-heading text-xs uppercase tracking-wider text-primary">Consultation Details</h4>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    {selectedOrder.booking_details.dob && <div><span className="text-muted-foreground">DOB:</span> {selectedOrder.booking_details.dob}</div>}
+                    {selectedOrder.booking_details.tob && <div><span className="text-muted-foreground">TOB:</span> {selectedOrder.booking_details.tob}</div>}
+                    {selectedOrder.booking_details.pob && <div className="col-span-2"><span className="text-muted-foreground">POB:</span> {selectedOrder.booking_details.pob}</div>}
+                    {selectedOrder.booking_details.address && <div className="col-span-2"><span className="text-muted-foreground">Address:</span> {selectedOrder.booking_details.address}</div>}
+                    {selectedOrder.booking_details.notes && <div className="col-span-2 italic mt-1">"{selectedOrder.booking_details.notes}"</div>}
+                  </div>
+                </div>
+              )}
               {selectedOrder.razorpay_payment_id && (
                 <div><span className="text-muted-foreground">Payment ID:</span> <span className="font-mono text-xs">{selectedOrder.razorpay_payment_id}</span></div>
               )}

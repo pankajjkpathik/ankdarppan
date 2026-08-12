@@ -181,7 +181,6 @@ const CartDrawer = () => {
           shipping_type: shippingType,
           coupon_code: appliedCoupon?.code || null,
           discount,
-
         },
       });
 
