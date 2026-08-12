@@ -29,6 +29,7 @@ const BookNow = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [form, setForm] = useState({
     name: "", dob: "", tob: "", pob: "", address: "", phone: "", email: "", notes: "",
+    partnerName: "", partnerDob: "", partnerTob: "", partnerPob: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -135,12 +136,22 @@ const BookNow = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    const isMarriageCompatibility = selected.some(name => 
+      name.toLowerCase().includes('marriage') || 
+      name.toLowerCase().includes('compatibility')
+    );
+    
     const errors: string[] = [];
     if (!form.name.trim()) errors.push("Full Name");
     if (!form.phone.trim()) errors.push("Phone Number");
     if (!form.dob) errors.push("Date of Birth");
     if (!form.address.trim()) errors.push("Address");
     if (selected.length === 0) errors.push("At least one service");
+
+    if (isMarriageCompatibility) {
+      if (!form.partnerName.trim()) errors.push("Partner's Name");
+      if (!form.partnerDob) errors.push("Partner's Date of Birth");
+    }
 
     if (errors.length > 0) {
       toast({ 
@@ -192,6 +203,12 @@ const BookNow = () => {
             pob: form.pob,
             address: form.address,
             notes: form.notes,
+            partner_details: isMarriageCompatibility ? {
+              name: form.partnerName,
+              dob: form.partnerDob,
+              tob: form.partnerTob,
+              pob: form.partnerPob,
+            } : null,
           },
         },
       });
@@ -288,6 +305,30 @@ const BookNow = () => {
                 </div>
               </div>
             </div>
+
+            {selected.some(name => name.toLowerCase().includes('marriage') || name.toLowerCase().includes('compatibility')) && (
+              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="glass-card p-6 space-y-4 border-primary/30">
+                <h2 className="font-heading font-semibold text-lg text-primary">Partner's Details</h2>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="partnerName">Partner's Full Name *</Label>
+                    <Input name="partnerName" id="partnerName" value={form.partnerName} onChange={handleChange} placeholder="Partner's name" className={cn("bg-secondary/50 border-border", !form.partnerName && loading ? "border-destructive" : "")} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="partnerDob">Partner's Date of Birth *</Label>
+                    <Input name="partnerDob" id="partnerDob" type="date" value={form.partnerDob} onChange={handleChange} className={cn("bg-secondary/50 border-border", !form.partnerDob && loading ? "border-destructive" : "")} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="partnerTob">Partner's Time of Birth</Label>
+                    <Input name="partnerTob" id="partnerTob" type="time" value={form.partnerTob} onChange={handleChange} className="bg-secondary/50 border-border" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="partnerPob">Partner's Place of Birth</Label>
+                    <Input name="partnerPob" id="partnerPob" value={form.partnerPob} onChange={handleChange} placeholder="City, State" className="bg-secondary/50 border-border" />
+                  </div>
+                </div>
+              </motion.div>
+            )}
 
             <div className="glass-card p-6 space-y-4">
               <h2 className="font-heading font-semibold text-lg text-foreground">Select Services *</h2>

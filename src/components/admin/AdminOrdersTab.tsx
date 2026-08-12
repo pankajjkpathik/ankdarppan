@@ -97,7 +97,7 @@ const AdminOrdersTab = () => {
   const exportToCSV = () => {
     if (!orders?.length) return;
     
-    const headers = ["Order ID", "Date", "Customer Name", "Email", "Phone", "Status", "Total", "Items", "DOB", "TOB", "POB", "Address", "Notes"];
+    const headers = ["Order ID", "Date", "Customer Name", "Email", "Phone", "Status", "Total", "Items", "DOB", "TOB", "POB", "Address", "Notes", "Partner Name", "Partner DOB", "Partner TOB", "Partner POB"];
     const rows = orders.map(order => [
       order.id.slice(0, 8),
       format(new Date(order.created_at), "yyyy-MM-dd HH:mm"),
@@ -111,7 +111,11 @@ const AdminOrdersTab = () => {
       order.booking_details?.tob || "-",
       order.booking_details?.pob || "-",
       order.booking_details?.address || "-",
-      order.booking_details?.notes || "-"
+      order.booking_details?.notes || "-",
+      order.booking_details?.partner_details?.name || "-",
+      order.booking_details?.partner_details?.dob || "-",
+      order.booking_details?.partner_details?.tob || "-",
+      order.booking_details?.partner_details?.pob || "-"
     ]);
 
     const csvContent = [
@@ -357,6 +361,29 @@ const AdminOrdersTab = () => {
                       <div className="space-y-1 bg-white/5 p-2 rounded sm:col-span-2 border-l-2 border-primary/50">
                         <p className="text-[10px] text-muted-foreground uppercase font-semibold">Additional Notes</p>
                         <p className="text-white italic">"{selectedOrder.booking_details.notes}"</p>
+                      </div>
+                    )}
+                    {selectedOrder.booking_details.partner_details && (
+                      <div className="col-span-2 space-y-2 mt-2 pt-2 border-t border-white/10">
+                        <h4 className="font-heading text-[10px] uppercase tracking-wider text-primary">Partner's Details</h4>
+                        <div className="grid grid-cols-2 gap-3 text-xs">
+                          <div className="space-y-1 bg-white/5 p-2 rounded">
+                            <p className="text-[10px] text-muted-foreground uppercase font-semibold">Partner Name</p>
+                            <p className="text-white">{selectedOrder.booking_details.partner_details.name}</p>
+                          </div>
+                          <div className="space-y-1 bg-white/5 p-2 rounded">
+                            <p className="text-[10px] text-muted-foreground uppercase font-semibold">Partner DOB</p>
+                            <p className="text-white">{selectedOrder.booking_details.partner_details.dob}</p>
+                          </div>
+                          <div className="space-y-1 bg-white/5 p-2 rounded">
+                            <p className="text-[10px] text-muted-foreground uppercase font-semibold">Partner TOB</p>
+                            <p className="text-white">{selectedOrder.booking_details.partner_details.tob || "-"}</p>
+                          </div>
+                          <div className="space-y-1 bg-white/5 p-2 rounded">
+                            <p className="text-[10px] text-muted-foreground uppercase font-semibold">Partner POB</p>
+                            <p className="text-white">{selectedOrder.booking_details.partner_details.pob || "-"}</p>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
