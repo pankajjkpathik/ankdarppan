@@ -19,7 +19,13 @@ serve(async (req) => {
       total,
       customer_name,
       customer_phone,
-      customer_email
+      customer_email,
+      user_id,
+      shipping_cost,
+      shipping_type,
+      coupon_code,
+      discount,
+      booking_details
     } = await req.json();
 
     const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID");
@@ -60,16 +66,27 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
     );
 
-    await supabase.from("orders").insert({
+    const { error: insertError } = await supabase.from("orders").insert({
       razorpay_order_id: rpOrder.id,
       total,
       items,
       customer_name,
       customer_phone,
       customer_email,
+      user_id,
+      shipping_cost,
+      shipping_type,
+      coupon_code,
+      discount,
+      booking_details,
       status: "created",
       created_at: new Date().toISOString(),
     });
+
+    if (insertError) {
+      console.error("Supabase insert error:", insertError);
+      // We still return the order_id so the user can pay, but we should probably know why it failed
+    }
 
     return new Response(
       JSON.stringify({

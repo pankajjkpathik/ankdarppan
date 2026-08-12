@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Loader2, CreditCard } from "lucide-react";
+import { ArrowLeft, Loader2, CreditCard, Ticket } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { fbTrack } from "@/lib/fbpixel";
@@ -16,29 +16,102 @@ declare global {
   }
 }
 
-const servicesList = [
-  { name: "Loshu Grid Report", price: 941 },
-  { name: "Mobile Number Consultation", price: 581 },
-  { name: "Marriage Compatibility", price: 941 },
-  { name: "Lal Kitab Remedies", price: 554 },
-  { name: "Name Compatibility Report", price: 891 },
-  { name: "Crystal & Rudraksh Consultation", price: 941 },
-];
-
 const BookNow = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const preselected = searchParams.get("service");
 
-  const [selected, setSelected] = useState<string[]>(
-    preselected && servicesList.some((s) => s.name === preselected) ? [preselected] : []
-  );
+  const [servicesList, setServicesList] = useState<any[]>([]);
+  const [dbLoading, setDbLoading] = useState(true);
+
+  const [selected, setSelected] = useState<string[]>([]);
   const [form, setForm] = useState({
     name: "", dob: "", tob: "", pob: "", address: "", phone: "", email: "", notes: "",
   });
   const [loading, setLoading] = useState(false);
 
-  const totalPrice = servicesList.filter((s) => selected.includes(s.name)).reduce((a, s) => a + s.price, 0);
+  // Coupon state
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [couponLoading, setCouponLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const { data, error } = await supabase.from("services").select("*").eq("is_active", true).order("sort_order");
+      if (!error && data) {
+        setServicesList(data);
+        if (preselected && data.some((s) => s.title === preselected)) {
+          setSelected([preselected]);
+        }
+      }
+      setDbLoading(false);
+    };
+    fetchServices();
+  }, [preselected]);
+
+  // Prefill user details
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data: profile } = await supabase.from("profiles").select("*").eq("user_id", user.id).maybeSingle();
+      if (profile) {
+        setForm(prev => ({
+          ...prev,
+          name: profile.full_name || prev.name,
+          phone: profile.phone || prev.phone,
+          email: profile.email || user.email || prev.email,
+          address: profile.shipping_address_line1 ? `${profile.shipping_address_line1}, ${profile.shipping_city || ''}` : prev.address
+        }));
+      } else {
+        setForm(prev => ({ ...prev, name: user.user_metadata?.full_name || prev.name, email: user.email || prev.email }));
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const subtotal = servicesList.filter((s) => selected.includes(s.title)).reduce((a, s) => a + s.price, 0);
+
+  const computeDiscount = (coupon: any, amount: number) => {
+    if (!coupon) return 0;
+    let d = coupon.discount_type === "percent"
+      ? Math.floor((amount * coupon.discount_value) / 100)
+      : coupon.discount_value;
+    if (coupon.max_discount) d = Math.min(d, coupon.max_discount);
+    return Math.min(d, amount);
+  };
+
+  const discount = computeDiscount(appliedCoupon, subtotal);
+  const grandTotal = Math.max(subtotal - discount, 0);
+
+  const applyCoupon = async () => {
+    const code = couponCode.trim().toUpperCase();
+    if (!code) return;
+    setCouponLoading(true);
+    try {
+      const { data, error } = await supabase.from("coupons").select("*").eq("code", code).eq("is_active", true).maybeSingle();
+      if (error) throw error;
+      if (!data) {
+        toast({ title: "Invalid coupon", variant: "destructive" });
+        return;
+      }
+      if (data.expires_at && new Date(data.expires_at) < new Date()) {
+        toast({ title: "Coupon expired", variant: "destructive" });
+        return;
+      }
+      if (subtotal < (data.min_order_amount || 0)) {
+        toast({ title: "Min order not met", description: `Minimum ₹${data.min_order_amount} required`, variant: "destructive" });
+        return;
+      }
+      setAppliedCoupon(data);
+      toast({ title: "Coupon applied 🎉" });
+    } catch (e: any) {
+      toast({ title: "Error", description: e.message, variant: "destructive" });
+    } finally {
+      setCouponLoading(false);
+    }
+  };
 
   const toggleService = (name: string) =>
     setSelected((prev) => prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name]);
@@ -69,27 +142,36 @@ const BookNow = () => {
       const loaded = await loadRazorpayScript();
       if (!loaded) throw new Error("Failed to load payment gateway");
 
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        navigate("/auth", { state: { from: "/book-now" } });
+        toast({ title: "Login Required", description: "Please login to book a consultation" });
+        setLoading(false);
+        return;
+      }
+
       fbTrack("InitiateCheckout", {
-        value: totalPrice,
+        value: grandTotal,
         currency: "INR",
         content_ids: selected,
         num_items: selected.length,
-        content_category: "consultation",
       });
 
-
       const items = selected.map((name) => {
-        const s = servicesList.find((sv) => sv.name === name)!;
-        return { name: s.name, qty: 1, price: s.price };
+        const s = servicesList.find((sv) => sv.title === name)!;
+        return { name: s.title, qty: 1, price: s.price };
       });
 
       const { data, error } = await supabase.functions.invoke("razorpay-order", {
         body: {
           items,
-          total: totalPrice,
+          total: grandTotal,
           customer_name: form.name,
           customer_phone: form.phone,
           customer_email: form.email,
+          user_id: user.id,
+          coupon_code: appliedCoupon?.code || null,
+          discount: discount,
           booking_details: {
             dob: form.dob,
             tob: form.tob,
@@ -104,7 +186,7 @@ const BookNow = () => {
 
       const options = {
         key: data.key_id,
-        amount: totalPrice * 100,
+        amount: grandTotal * 100,
         currency: "INR",
         name: "Ank Darppan",
         description: `Booking: ${selected.join(", ")}`,
@@ -122,11 +204,10 @@ const BookNow = () => {
             return;
           }
           fbTrack("Purchase", {
-            value: totalPrice,
+            value: grandTotal,
             currency: "INR",
             content_ids: selected,
             num_items: selected.length,
-            content_category: "consultation",
             order_id: response.razorpay_order_id,
           });
           toast({ title: "Booking Confirmed! 🎉", description: "Your consultation has been booked successfully." });
@@ -160,7 +241,6 @@ const BookNow = () => {
           <p className="text-muted-foreground mb-8">Fill in your details, select services, and pay securely via Razorpay.</p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Personal Details */}
             <div className="glass-card p-6 space-y-4">
               <h2 className="font-heading font-semibold text-lg text-foreground">Personal Details</h2>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -195,42 +275,71 @@ const BookNow = () => {
               </div>
             </div>
 
-            {/* Services */}
             <div className="glass-card p-6 space-y-4">
               <h2 className="font-heading font-semibold text-lg text-foreground">Select Services *</h2>
-              <div className="grid sm:grid-cols-2 gap-3">
-                {servicesList.map((s) => (
-                  <button
-                    type="button"
-                    key={s.name}
-                    onClick={() => toggleService(s.name)}
-                    className={`text-left p-4 rounded-xl border transition-all ${
-                      selected.includes(s.name)
-                        ? "border-primary bg-primary/10 shadow-[0_0_15px_-3px_hsl(var(--primary)/0.3)]"
-                        : "border-border bg-secondary/30 hover:border-primary/40"
-                    }`}
-                  >
-                    <span className="text-sm font-semibold text-foreground">{s.name}</span>
-                    <span className="block text-primary font-bold mt-1">₹{s.price}</span>
-                  </button>
-                ))}
-              </div>
+              {dbLoading ? (
+                <div className="flex justify-center py-4"><Loader2 className="animate-spin text-primary" /></div>
+              ) : (
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {servicesList.map((s) => (
+                    <button
+                      type="button"
+                      key={s.title}
+                      onClick={() => toggleService(s.title)}
+                      className={`text-left p-4 rounded-xl border transition-all ${
+                        selected.includes(s.title)
+                          ? "border-primary bg-primary/10 shadow-[0_0_15px_-3px_hsl(var(--primary)/0.3)]"
+                          : "border-border bg-secondary/30 hover:border-primary/40"
+                      }`}
+                    >
+                      <span className="text-sm font-semibold text-foreground">{s.title}</span>
+                      <div className="mt-1 flex items-center gap-2">
+                        <span className="text-primary font-bold">₹{s.price}</span>
+                        {s.old_price && <span className="text-muted-foreground line-through text-xs">₹{s.old_price}</span>}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Notes */}
+            <div className="glass-card p-6 space-y-4">
+              <h2 className="font-heading font-semibold text-lg text-foreground flex items-center gap-2">
+                <Ticket className="w-4 h-4 text-primary" /> Coupon Code
+              </h2>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Enter code"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                  className="uppercase bg-secondary/50 border-border"
+                  disabled={!!appliedCoupon}
+                />
+                {appliedCoupon ? (
+                  <Button type="button" variant="ghost" onClick={() => { setAppliedCoupon(null); setCouponCode(""); }}>Remove</Button>
+                ) : (
+                  <Button type="button" variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()}>
+                    {couponLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                  </Button>
+                )}
+              </div>
+              {appliedCoupon && (
+                <p className="text-xs text-green-600 font-semibold">Applied: {appliedCoupon.code} (-₹{discount})</p>
+              )}
+            </div>
+
             <div className="glass-card p-6 space-y-4">
               <h2 className="font-heading font-semibold text-lg text-foreground">Additional Notes</h2>
-              <Textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Any specific questions or concerns..." className="bg-secondary/50 border-border" rows={3} />
+              <Textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Any specific questions..." className="bg-secondary/50 border-border" rows={3} />
             </div>
 
-            {/* Total & Submit */}
             {selected.length > 0 && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="glass-card p-6 flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{selected.length} service(s) selected</p>
-                  <p className="text-2xl font-heading font-bold text-primary">₹{totalPrice.toLocaleString("en-IN")}</p>
+                  <p className="text-sm text-muted-foreground">{selected.length} service(s)</p>
+                  <p className="text-2xl font-heading font-bold text-primary">₹{grandTotal.toLocaleString("en-IN")}</p>
                 </div>
-                <Button type="submit" size="lg" disabled={loading} className="bg-primary text-primary-foreground font-semibold px-8 animate-pulse-glow">
+                <Button type="submit" size="lg" disabled={loading} className="bg-primary text-primary-foreground font-semibold px-8">
                   {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <CreditCard className="w-4 h-4 mr-2" />}
                   {loading ? "Processing..." : "Pay with Razorpay"}
                 </Button>
