@@ -21,9 +21,10 @@ const AdminOrdersTab = () => {
   const queryClient = useQueryClient();
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
 
-  const { data: orders, isLoading } = useQuery({
+  const { data: orders, isLoading, error } = useQuery({
     queryKey: ["admin-orders"],
     queryFn: async () => {
+      console.log("Fetching admin orders...");
       const { data, error } = await supabase
         .from("orders")
         .select(`
@@ -31,7 +32,12 @@ const AdminOrdersTab = () => {
           profiles(full_name, phone, email)
         `)
         .order("created_at", { ascending: false });
-      if (error) throw error;
+      
+      if (error) {
+        console.error("Supabase error fetching orders:", error);
+        throw error;
+      }
+      console.log("Fetched orders:", data?.length);
       return data;
     },
   });
