@@ -132,8 +132,8 @@ const BookNow = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.phone || selected.length === 0) {
-      toast({ title: "Please fill required fields and select at least one service", variant: "destructive" });
+    if (!form.name || !form.phone || !form.dob || !form.address || selected.length === 0) {
+      toast({ title: "Please fill required fields (*) and select at least one service", variant: "destructive" });
       return;
     }
 
@@ -269,8 +269,8 @@ const BookNow = () => {
                   <Input name="pob" id="pob" value={form.pob} onChange={handleChange} placeholder="City, State" className="bg-secondary/50 border-border" />
                 </div>
                 <div className="space-y-1.5 sm:col-span-2">
-                  <Label htmlFor="address">Address</Label>
-                  <Textarea name="address" id="address" value={form.address} onChange={handleChange} placeholder="Your full address" className="bg-secondary/50 border-border" rows={2} />
+                  <Label htmlFor="address">Address *</Label>
+                  <Textarea name="address" id="address" required value={form.address} onChange={handleChange} placeholder="Your full address" className="bg-secondary/50 border-border" rows={2} />
                 </div>
               </div>
             </div>

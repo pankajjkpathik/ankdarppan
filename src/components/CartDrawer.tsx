@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCart } from "@/contexts/CartContext";
 import { Minus, Plus, Trash2, ShoppingCart, Loader2, CreditCard, Truck, Ticket } from "lucide-react";
@@ -27,6 +28,10 @@ const CartDrawer = () => {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
+  const [dob, setDob] = useState("");
+  const [tob, setTob] = useState("");
+  const [pob, setPob] = useState("");
+  const [shippingAddress, setShippingAddress] = useState("");
   const [prefilled, setPrefilled] = useState(false);
   const [shippingCountry, setShippingCountry] = useState("India");
   const [shippingType, setShippingType] = useState<"india" | "foreign">("india");
@@ -111,6 +116,10 @@ const CartDrawer = () => {
         setCustomerName(profile.full_name || session.user.user_metadata?.full_name || "");
         setCustomerPhone(profile.phone || "");
         setCustomerEmail(profile.email || session.user.email || "");
+        setShippingAddress(profile.shipping_address_line1 || "");
+        setDob((profile as any).dob || "");
+        setTob((profile as any).tob || "");
+        setPob((profile as any).pob || "");
         const country = (profile as any).shipping_country || "India";
         setShippingCountry(country);
         setShippingType(country.toLowerCase() === "india" ? "india" : "foreign");
@@ -137,8 +146,8 @@ const CartDrawer = () => {
   };
 
   const handleCheckout = async () => {
-    if (!customerName || !customerPhone) {
-      toast({ title: "Missing Details", description: "Please enter your name and phone number", variant: "destructive" });
+    if (!customerName || !customerPhone || !dob || !shippingAddress) {
+      toast({ title: "Missing Details", description: "Please fill all required fields (*), including birth date and delivery address.", variant: "destructive" });
       return;
     }
 
@@ -181,6 +190,12 @@ const CartDrawer = () => {
           shipping_type: shippingType,
           coupon_code: appliedCoupon?.code || null,
           discount,
+          booking_details: {
+            dob,
+            tob,
+            pob,
+            address: shippingAddress,
+          },
         },
       });
 
@@ -221,6 +236,10 @@ const CartDrawer = () => {
           setCustomerName("");
           setCustomerPhone("");
           setCustomerEmail("");
+          setDob("");
+          setTob("");
+          setPob("");
+          setShippingAddress("");
         },
         prefill: { name: customerName, contact: customerPhone, email: customerEmail },
         theme: { color: "#D4A843" },
@@ -274,12 +293,33 @@ const CartDrawer = () => {
                 </div>
               ))}
 
-              {/* Customer Details */}
+              {/* Customer & Birth Details */}
               <div className="space-y-3 pt-2">
-                <h4 className="text-sm font-heading font-semibold">Your Details</h4>
-                <Input placeholder="Name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
-                <Input placeholder="Phone" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
-                <Input placeholder="Email" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
+                <h4 className="text-sm font-heading font-semibold">Numerology Report Details</h4>
+                <div className="grid grid-cols-1 gap-3">
+                  <Input placeholder="Full Name *" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                  <Input placeholder="Phone Number *" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
+                  <Input placeholder="Email Address" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
+                  
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] uppercase text-muted-foreground">Date of Birth *</Label>
+                      <Input type="date" value={dob} onChange={(e) => setDob(e.target.value)} className="text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] uppercase text-muted-foreground">Time of Birth</Label>
+                      <Input type="time" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs" />
+                    </div>
+                  </div>
+                  
+                  <Input placeholder="Place of Birth" value={pob} onChange={(e) => setPob(e.target.value)} />
+                  <Textarea 
+                    placeholder="Full Delivery Address (for physical reports/products) *" 
+                    value={shippingAddress} 
+                    onChange={(e) => setShippingAddress(e.target.value)} 
+                    className="min-h-[80px] text-xs bg-secondary/20 border-white/10"
+                  />
+                </div>
               </div>
 
               {/* Shipping */}
