@@ -117,9 +117,9 @@ const CartDrawer = () => {
         setCustomerPhone(profile.phone || "");
         setCustomerEmail(profile.email || session.user.email || "");
         setShippingAddress(profile.shipping_address_line1 || "");
-        setDob(profile.dob || "");
-        setTob(profile.tob || "");
-        setPob(profile.pob || "");
+        setDob((profile as any).dob || "");
+        setTob((profile as any).tob || "");
+        setPob((profile as any).pob || "");
         const country = (profile as any).shipping_country || "India";
         setShippingCountry(country);
         setShippingType(country.toLowerCase() === "india" ? "india" : "foreign");
