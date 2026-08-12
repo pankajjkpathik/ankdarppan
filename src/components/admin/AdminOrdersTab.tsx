@@ -15,6 +15,8 @@ const statusColors: Record<string, string> = {
   shipped: "bg-blue-500/20 text-blue-400 border border-blue-500/30",
   delivered: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
   cancelled: "bg-destructive/20 text-destructive border border-destructive/30",
+  captured: "bg-green-500/20 text-green-400 border border-green-500/30",
+  failed: "bg-destructive/20 text-destructive border border-destructive/30",
 };
 
 const AdminOrdersTab = () => {
@@ -121,11 +123,13 @@ const AdminOrdersTab = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="created">Order Initiated</SelectItem>
+                        <SelectItem value="captured">Payment Captured</SelectItem>
                         <SelectItem value="pending">Pending Review</SelectItem>
                         <SelectItem value="paid">Payment Received</SelectItem>
                         <SelectItem value="shipped">Order Shipped</SelectItem>
                         <SelectItem value="delivered">Order Fulfilled</SelectItem>
                         <SelectItem value="cancelled">Order Cancelled</SelectItem>
+                        <SelectItem value="failed">Payment Failed</SelectItem>
                       </SelectContent>
                     </Select>
                     <Button size="icon" variant="ghost" onClick={() => setSelectedOrder(order)}>
