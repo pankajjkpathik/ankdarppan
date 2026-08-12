@@ -28,8 +28,7 @@ const AdminOrdersTab = () => {
       const { data, error } = await supabase
         .from("orders")
         .select(`
-          *,
-          profiles(full_name, phone, email)
+          *
         `)
         .order("created_at", { ascending: false });
       
