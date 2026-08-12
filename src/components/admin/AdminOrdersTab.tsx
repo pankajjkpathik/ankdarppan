@@ -113,15 +113,6 @@ const AdminOrdersTab = () => {
       order.booking_details?.address || "-",
       order.booking_details?.notes || "-"
     ]);
-      order.id.slice(0, 8),
-      format(new Date(order.created_at), "yyyy-MM-dd HH:mm"),
-      order.profiles?.full_name || order.customer_name || "Guest",
-      order.profiles?.email || order.customer_email || "-",
-      order.profiles?.phone || order.customer_phone || "-",
-      order.status,
-      order.total,
-      (Array.isArray(order.items) ? order.items : []).map((i: any) => `${i.name} (${i.qty})`).join("; ")
-    ]);
 
     const csvContent = [
       headers.join(","),
@@ -155,12 +146,6 @@ const AdminOrdersTab = () => {
       format(new Date(order.created_at), "dd MMM yy"),
       order.status.toUpperCase(),
       (Array.isArray(order.items) ? order.items : []).map((i: any) => i.name).join(", "),
-      `INR ${order.total}`
-    ]);
-      order.id.slice(0, 8),
-      order.profiles?.full_name || order.customer_name || "Guest",
-      format(new Date(order.created_at), "dd MMM yy"),
-      order.status.toUpperCase(),
       `INR ${order.total}`
     ]);
 
