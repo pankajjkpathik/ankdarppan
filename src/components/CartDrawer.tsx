@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCart } from "@/contexts/CartContext";
 import { Minus, Plus, Trash2, ShoppingCart, Loader2, CreditCard, Truck, Ticket } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { fbTrack } from "@/lib/fbpixel";
@@ -146,8 +147,18 @@ const CartDrawer = () => {
   };
 
   const handleCheckout = async () => {
-    if (!customerName || !customerPhone || !dob || !shippingAddress) {
-      toast({ title: "Missing Details", description: "Please fill all required fields (*), including birth date and delivery address.", variant: "destructive" });
+    const errors: string[] = [];
+    if (!customerName.trim()) errors.push("Full Name");
+    if (!customerPhone.trim()) errors.push("Phone Number");
+    if (!dob) errors.push("Date of Birth");
+    if (!shippingAddress.trim()) errors.push("Delivery Address");
+
+    if (errors.length > 0) {
+      toast({ 
+        title: "Missing Required Fields", 
+        description: `Please provide: ${errors.join(", ")}`, 
+        variant: "destructive" 
+      });
       return;
     }
 
@@ -297,14 +308,42 @@ const CartDrawer = () => {
               <div className="space-y-3 pt-2">
                 <h4 className="text-sm font-heading font-semibold">Numerology Report Details</h4>
                 <div className="grid grid-cols-1 gap-3">
-                  <Input placeholder="Full Name *" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
-                  <Input placeholder="Phone Number *" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
-                  <Input placeholder="Email Address" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
+                  <div className="space-y-1">
+                    <Label className="text-xs">Full Name *</Label>
+                    <Input 
+                      placeholder="e.g. John Doe" 
+                      value={customerName} 
+                      onChange={(e) => setCustomerName(e.target.value)} 
+                      className={!customerName && loading ? "border-destructive" : ""}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Phone Number *</Label>
+                    <Input 
+                      placeholder="e.g. +91 98765 43210" 
+                      value={customerPhone} 
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                      className={!customerPhone && loading ? "border-destructive" : ""}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Email Address</Label>
+                    <Input 
+                      placeholder="e.g. john@example.com" 
+                      value={customerEmail} 
+                      onChange={(e) => setCustomerEmail(e.target.value)} 
+                    />
+                  </div>
                   
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
                       <Label className="text-[10px] uppercase text-muted-foreground">Date of Birth *</Label>
-                      <Input type="date" value={dob} onChange={(e) => setDob(e.target.value)} className="text-xs" />
+                      <Input 
+                        type="date" 
+                        value={dob} 
+                        onChange={(e) => setDob(e.target.value)} 
+                        className={cn("text-xs", !dob && loading ? "border-destructive" : "")} 
+                      />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-[10px] uppercase text-muted-foreground">Time of Birth</Label>
@@ -312,13 +351,20 @@ const CartDrawer = () => {
                     </div>
                   </div>
                   
-                  <Input placeholder="Place of Birth" value={pob} onChange={(e) => setPob(e.target.value)} />
-                  <Textarea 
-                    placeholder="Full Delivery Address (for physical reports/products) *" 
-                    value={shippingAddress} 
-                    onChange={(e) => setShippingAddress(e.target.value)} 
-                    className="min-h-[80px] text-xs bg-secondary/20 border-white/10"
-                  />
+                  <div className="space-y-1">
+                    <Label className="text-xs">Place of Birth</Label>
+                    <Input placeholder="e.g. New Delhi, India" value={pob} onChange={(e) => setPob(e.target.value)} />
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <Label className="text-xs">Delivery Address *</Label>
+                    <Textarea 
+                      placeholder="House No, Street, Landmark, City, State, ZIP *" 
+                      value={shippingAddress} 
+                      onChange={(e) => setShippingAddress(e.target.value)} 
+                      className={cn("min-h-[80px] text-xs bg-secondary/20 border-white/10", !shippingAddress && loading ? "border-destructive" : "")}
+                    />
+                  </div>
                 </div>
               </div>
 
