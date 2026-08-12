@@ -12,13 +12,14 @@ interface ServiceForm {
   title: string;
   description: string;
   price: string;
+  old_price: string;
   icon: string;
   link: string;
   sort_order: string;
   is_active: boolean;
 }
 
-const emptyForm: ServiceForm = { title: "", description: "", price: "", icon: "FileText", link: "", sort_order: "0", is_active: true };
+const emptyForm: ServiceForm = { title: "", description: "", price: "", old_price: "", icon: "FileText", link: "", sort_order: "0", is_active: true };
 
 const iconOptions = ["Grid3X3", "BookOpen", "Heart", "Smartphone", "Gem", "FileText", "Star", "Sparkles", "Eye", "Moon"];
 
@@ -52,6 +53,7 @@ const AdminServicesTab = () => {
         title: form.title,
         description: form.description || null,
         price: parseInt(form.price),
+        old_price: form.old_price ? parseInt(form.old_price) : null,
         icon: form.icon || "FileText",
         link: form.link || null,
         sort_order: parseInt(form.sort_order) || 0,
@@ -85,6 +87,7 @@ const AdminServicesTab = () => {
       title: s.title,
       description: s.description || "",
       price: String(s.price),
+      old_price: s.old_price ? String(s.old_price) : "",
       icon: s.icon || "FileText",
       link: s.link || "",
       sort_order: String(s.sort_order),
@@ -119,6 +122,10 @@ const AdminServicesTab = () => {
           <div className="space-y-1.5">
             <Label>Price (₹) *</Label>
             <Input name="price" type="number" value={form.price} onChange={handleChange} placeholder="671" className="bg-secondary/50 border-border" required />
+          </div>
+          <div className="space-y-1.5">
+            <Label>Old Price (₹)</Label>
+            <Input name="old_price" type="number" value={form.old_price} onChange={handleChange} placeholder="999" className="bg-secondary/50 border-border" />
           </div>
           <div className="space-y-1.5">
             <Label>Icon</Label>
@@ -170,6 +177,7 @@ const AdminServicesTab = () => {
                 <h3 className="font-semibold text-foreground truncate">{s.title}</h3>
                 <div className="flex items-center gap-2 text-sm">
                   <span className="text-primary font-bold">₹{s.price.toLocaleString("en-IN")}</span>
+                  {s.old_price && <span className="text-muted-foreground line-through text-xs">₹{s.old_price.toLocaleString("en-IN")}</span>}
                   {!s.is_active && <span className="px-2 py-0.5 rounded-full bg-destructive/20 text-destructive text-xs">Inactive</span>}
                 </div>
               </div>

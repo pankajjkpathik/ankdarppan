@@ -100,42 +100,57 @@ export type Database = {
       }
       orders: {
         Row: {
+          booking_details: Json | null
+          coupon_code: string | null
           created_at: string
           customer_email: string | null
           customer_name: string | null
           customer_phone: string | null
+          discount: number | null
           id: string
           items: Json
           razorpay_order_id: string | null
           razorpay_payment_id: string | null
+          shipping_cost: number | null
+          shipping_type: string | null
           status: string
           total: number
           updated_at: string
           user_id: string | null
         }
         Insert: {
+          booking_details?: Json | null
+          coupon_code?: string | null
           created_at?: string
           customer_email?: string | null
           customer_name?: string | null
           customer_phone?: string | null
+          discount?: number | null
           id?: string
           items?: Json
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
+          shipping_cost?: number | null
+          shipping_type?: string | null
           status?: string
           total: number
           updated_at?: string
           user_id?: string | null
         }
         Update: {
+          booking_details?: Json | null
+          coupon_code?: string | null
           created_at?: string
           customer_email?: string | null
           customer_name?: string | null
           customer_phone?: string | null
+          discount?: number | null
           id?: string
           items?: Json
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
+          shipping_cost?: number | null
+          shipping_type?: string | null
           status?: string
           total?: number
           updated_at?: string
@@ -259,6 +274,7 @@ export type Database = {
           id: string
           is_active: boolean
           link: string | null
+          old_price: number | null
           price: number
           sort_order: number
           title: string
@@ -271,6 +287,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           link?: string | null
+          old_price?: number | null
           price: number
           sort_order?: number
           title: string
@@ -283,6 +300,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           link?: string | null
+          old_price?: number | null
           price?: number
           sort_order?: number
           title?: string
