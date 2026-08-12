@@ -225,7 +225,7 @@ const BookNow = () => {
             order_id: response.razorpay_order_id,
           });
           toast({ title: "Booking Confirmed! 🎉", description: "Your consultation has been booked successfully." });
-          navigate(`/order-tracking?id=${response.razorpay_order_id}`);
+          navigate(`/order-tracking?id=${response.razorpay_order_id}&confirmed=true`);
         },
         prefill: { name: form.name, contact: form.phone, email: form.email },
         theme: { color: "#D4A843" },

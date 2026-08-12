@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
-import { ArrowLeft, Search, Loader2, Package, CheckCircle, Clock, XCircle } from "lucide-react";
+import { ArrowLeft, Search, Loader2, Package, CheckCircle, Clock, XCircle, User, Calendar, MapPin } from "lucide-react";
 
 const statusConfig: Record<string, { icon: React.ElementType; color: string; label: string }> = {
   paid: { icon: CheckCircle, color: "text-green-500", label: "Payment Successful" },
@@ -15,15 +15,22 @@ const statusConfig: Record<string, { icon: React.ElementType; color: string; lab
 
 const OrderTracking = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [order, setOrder] = useState<any>(null);
   const [notFound, setNotFound] = useState(false);
+  const isConfirmed = searchParams.get("confirmed") === "true";
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
+  useEffect(() => {
+    const id = searchParams.get("id");
+    if (id) {
+      setQuery(id);
+      fetchOrder(id);
+    }
+  }, [searchParams]);
 
+  const fetchOrder = async (id: string) => {
     setLoading(true);
     setOrder(null);
     setNotFound(false);
@@ -32,7 +39,7 @@ const OrderTracking = () => {
       const { data, error } = await supabase
         .from("orders")
         .select("*")
-        .or(`razorpay_order_id.eq.${query.trim()},razorpay_payment_id.eq.${query.trim()}`)
+        .or(`razorpay_order_id.eq.${id.trim()},razorpay_payment_id.eq.${id.trim()}`)
         .maybeSingle();
 
       if (error) throw error;
@@ -46,6 +53,12 @@ const OrderTracking = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    fetchOrder(query);
   };
 
   const status = order ? statusConfig[order.status] || statusConfig.pending : null;
@@ -83,37 +96,84 @@ const OrderTracking = () => {
         )}
 
         {order && status && (
-          <div className="glass-card p-6 mt-6 space-y-4">
-            <div className="flex items-center gap-3">
-              <status.icon className={`w-8 h-8 ${status.color}`} />
-              <div>
-                <h3 className="font-heading font-bold text-foreground text-lg">{status.label}</h3>
-                <p className="text-xs text-muted-foreground">
-                  {new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+          <div className="space-y-6 mt-6">
+            {isConfirmed && (
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-6 rounded-2xl text-center">
+                <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-8 h-8 text-emerald-500" />
+                </div>
+                <h2 className="text-xl font-heading font-bold text-white mb-2">Order Confirmed!</h2>
+                <p className="text-muted-foreground text-sm">
+                  Your payment has been received and your consultation/order is now being processed.
                 </p>
               </div>
-            </div>
-
-            <div className="border-t border-border pt-4 space-y-2 text-sm">
-              {order.customer_name && <div className="flex justify-between"><span className="text-muted-foreground">Name</span><span className="text-foreground">{order.customer_name}</span></div>}
-              {order.razorpay_order_id && <div className="flex justify-between"><span className="text-muted-foreground">Order ID</span><span className="text-foreground font-mono text-xs">{order.razorpay_order_id}</span></div>}
-              {order.razorpay_payment_id && <div className="flex justify-between"><span className="text-muted-foreground">Payment ID</span><span className="text-foreground font-mono text-xs">{order.razorpay_payment_id}</span></div>}
-              <div className="flex justify-between"><span className="text-muted-foreground">Total</span><span className="text-primary font-bold">₹{order.total.toLocaleString("en-IN")}</span></div>
-            </div>
-
-            {Array.isArray(order.items) && order.items.length > 0 && (
-              <div className="border-t border-border pt-4">
-                <h4 className="text-sm font-semibold text-foreground mb-2">Items</h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
-                  {(order.items as any[]).map((item: any, i: number) => (
-                    <li key={i} className="flex justify-between">
-                      <span>{item.name} × {item.qty}</span>
-                      <span>₹{(item.price * item.qty).toLocaleString("en-IN")}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             )}
+
+            <div className="glass-card p-6 space-y-4">
+              <div className="flex items-center gap-3">
+                <status.icon className={`w-8 h-8 ${status.color}`} />
+                <div>
+                  <h3 className="font-heading font-bold text-foreground text-lg">{status.label}</h3>
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-border pt-4 space-y-2 text-sm">
+                {order.customer_name && <div className="flex justify-between"><span className="text-muted-foreground">Name</span><span className="text-foreground">{order.customer_name}</span></div>}
+                {order.razorpay_order_id && <div className="flex justify-between"><span className="text-muted-foreground">Order ID</span><span className="text-foreground font-mono text-xs">{order.razorpay_order_id}</span></div>}
+                {order.razorpay_payment_id && <div className="flex justify-between"><span className="text-muted-foreground">Payment ID</span><span className="text-foreground font-mono text-xs">{order.razorpay_payment_id}</span></div>}
+                <div className="flex justify-between"><span className="text-muted-foreground">Total</span><span className="text-primary font-bold">₹{order.total.toLocaleString("en-IN")}</span></div>
+              </div>
+
+              {order.booking_details && (
+                <div className="border-t border-border pt-4 space-y-3">
+                  <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <User className="w-4 h-4 text-primary" /> Captured Numerology Details
+                  </h4>
+                  <div className="grid grid-cols-1 gap-2 text-xs">
+                    <div className="flex items-center gap-2 p-2 rounded bg-secondary/30">
+                      <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
+                      <div>
+                        <p className="text-[10px] uppercase text-muted-foreground">Birth Date & Time</p>
+                        <p className="text-foreground font-medium">
+                          {order.booking_details.dob} {order.booking_details.tob && `@ ${order.booking_details.tob}`}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 p-2 rounded bg-secondary/30">
+                      <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
+                      <div>
+                        <p className="text-[10px] uppercase text-muted-foreground">Place of Birth</p>
+                        <p className="text-foreground font-medium">{order.booking_details.pob || "Not specified"}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2 p-2 rounded bg-secondary/30">
+                      <Package className="w-3.5 h-3.5 text-muted-foreground mt-0.5" />
+                      <div>
+                        <p className="text-[10px] uppercase text-muted-foreground">Delivery Address</p>
+                        <p className="text-foreground font-medium">{order.booking_details.address}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {Array.isArray(order.items) && order.items.length > 0 && (
+                <div className="border-t border-border pt-4">
+                  <h4 className="text-sm font-semibold text-foreground mb-2">Items</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    {(order.items as any[]).map((item: any, i: number) => (
+                      <li key={i} className="flex justify-between">
+                        <span>{item.name} × {item.qty}</span>
+                        <span>₹{(item.price * item.qty).toLocaleString("en-IN")}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

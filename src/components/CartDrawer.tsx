@@ -244,6 +244,9 @@ const CartDrawer = () => {
           toast({ title: "Payment Successful 🎉", description: "Your order has been placed successfully!" });
           clearCart();
           setIsOpen(false);
+          // Redirect to order tracking to show confirmation summary
+          navigate(`/order-tracking?id=${response.razorpay_order_id}&confirmed=true`);
+          
           setCustomerName("");
           setCustomerPhone("");
           setCustomerEmail("");
