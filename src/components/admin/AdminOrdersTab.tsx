@@ -56,6 +56,24 @@ const AdminOrdersTab = () => {
     }
   };
 
+  if (error) {
+    return (
+      <div className="glass-card p-8 text-center border-destructive/20">
+        <X className="w-12 h-12 text-destructive mx-auto mb-4 opacity-50" />
+        <p className="text-destructive font-medium">Error loading orders</p>
+        <p className="text-sm text-muted-foreground mt-1">{(error as any).message}</p>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="mt-4"
+          onClick={() => queryClient.invalidateQueries({ queryKey: ["admin-orders"] })}
+        >
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return <div className="flex justify-center py-10"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>;
   }
