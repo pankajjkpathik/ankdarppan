@@ -9,12 +9,12 @@ import { format } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const statusColors: Record<string, string> = {
-  created: "bg-slate-500/20 text-slate-400",
-  pending: "bg-yellow-500/20 text-yellow-400",
-  paid: "bg-green-500/20 text-green-400",
-  shipped: "bg-blue-500/20 text-blue-400",
-  delivered: "bg-emerald-500/20 text-emerald-400",
-  cancelled: "bg-destructive/20 text-destructive",
+  created: "bg-slate-500/20 text-slate-400 border border-slate-500/30",
+  pending: "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30",
+  paid: "bg-green-500/20 text-green-400 border border-green-500/30",
+  shipped: "bg-blue-500/20 text-blue-400 border border-blue-500/30",
+  delivered: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
+  cancelled: "bg-destructive/20 text-destructive border border-destructive/30",
 };
 
 const AdminOrdersTab = () => {
