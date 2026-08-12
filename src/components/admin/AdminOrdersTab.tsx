@@ -4,10 +4,12 @@ import { supabase } from "@/lib/supabaseClient";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Package, Eye, X, Download, FileSpreadsheet, FileText as FilePdf } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -61,6 +63,31 @@ const AdminOrdersTab = () => {
         return;
       }
       toast({ title: `Order marked as ${status}` });
+      queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    }
+  };
+
+  const updateReportStatus = async (orderId: string, reportStatus: string) => {
+    try {
+      // We use booking_details JSON to store report delivery status
+      const { data: order } = await supabase.from("orders").select("booking_details").eq("id", orderId).single();
+      const updatedDetails = {
+        ...(order?.booking_details || {}),
+        report_delivery_status: reportStatus,
+        report_delivery_updated_at: new Date().toISOString()
+      };
+
+      const { error } = await supabase.from("orders").update({ 
+        booking_details: updatedDetails 
+      }).eq("id", orderId);
+
+      if (error) {
+        toast({ title: "Error updating report status", description: error.message, variant: "destructive" });
+        return;
+      }
+      toast({ title: `Report marked as ${reportStatus}` });
       queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
@@ -185,7 +212,7 @@ const AdminOrdersTab = () => {
             const items = Array.isArray(order.items) ? order.items : [];
             return (
               <div key={order.id} className="glass-card p-5 border-white/5 hover:border-white/10 transition-colors">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 flex-wrap mb-2">
                       <span className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 bg-white/5 rounded text-muted-foreground">
@@ -194,6 +221,16 @@ const AdminOrdersTab = () => {
                       <span className={`px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider ${statusColors[order.status] || statusColors.pending}`}>
                         {order.status}
                       </span>
+                      {order.booking_details?.report_delivery_status && (
+                        <span className={cn(
+                          "px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider",
+                          order.booking_details.report_delivery_status === "Sent" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" :
+                          order.booking_details.report_delivery_status === "Failed" ? "bg-red-500/20 text-red-400 border border-red-500/30" :
+                          "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                        )}>
+                          Report: {order.booking_details.report_delivery_status}
+                        </span>
+                      )}
                     </div>
                     <p className="text-base text-white font-medium">
                       {order.profiles?.full_name || order.customer_name || "Guest User"}
@@ -205,22 +242,43 @@ const AdminOrdersTab = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Select value={order.status} onValueChange={(val) => updateStatus(order.id, val)}>
-                      <SelectTrigger className="w-32 h-8 text-xs bg-secondary/50 border-border">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="created">Order Initiated</SelectItem>
-                        <SelectItem value="captured">Payment Captured</SelectItem>
-                        <SelectItem value="pending">Pending Review</SelectItem>
-                        <SelectItem value="paid">Payment Received</SelectItem>
-                        <SelectItem value="shipped">Order Shipped</SelectItem>
-                        <SelectItem value="delivered">Order Fulfilled</SelectItem>
-                        <SelectItem value="cancelled">Order Cancelled</SelectItem>
-                        <SelectItem value="failed">Payment Failed</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Button size="icon" variant="ghost" onClick={() => setSelectedOrder(order)}>
+                    <div className="flex flex-col gap-1">
+                      <Label className="text-[10px] text-muted-foreground uppercase px-1">Order Status</Label>
+                      <Select value={order.status} onValueChange={(val) => updateStatus(order.id, val)}>
+                        <SelectTrigger className="w-32 h-8 text-xs bg-secondary/50 border-border">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="created">Order Initiated</SelectItem>
+                          <SelectItem value="captured">Payment Captured</SelectItem>
+                          <SelectItem value="pending">Pending Review</SelectItem>
+                          <SelectItem value="paid">Payment Received</SelectItem>
+                          <SelectItem value="shipped">Order Shipped</SelectItem>
+                          <SelectItem value="delivered">Order Fulfilled</SelectItem>
+                          <SelectItem value="cancelled">Order Cancelled</SelectItem>
+                          <SelectItem value="failed">Payment Failed</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="flex flex-col gap-1">
+                      <Label className="text-[10px] text-muted-foreground uppercase px-1">Report Status</Label>
+                      <Select 
+                        value={order.booking_details?.report_delivery_status || "Pending"} 
+                        onValueChange={(val) => updateReportStatus(order.id, val)}
+                      >
+                        <SelectTrigger className="w-32 h-8 text-xs bg-secondary/50 border-border">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Pending">Pending</SelectItem>
+                          <SelectItem value="Sent">Sent</SelectItem>
+                          <SelectItem value="Failed">Failed</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <Button size="icon" variant="ghost" className="mt-4" onClick={() => setSelectedOrder(order)}>
                       <Eye className="w-4 h-4" />
                     </Button>
                   </div>
