@@ -37,13 +37,17 @@ const AdminOrdersTab = () => {
   });
 
   const updateStatus = async (orderId: string, status: string) => {
-    const { error } = await supabase.from("orders").update({ status }).eq("id", orderId);
-    if (error) {
-      toast({ title: "Error updating status", description: error.message, variant: "destructive" });
-      return;
+    try {
+      const { error } = await supabase.from("orders").update({ status }).eq("id", orderId);
+      if (error) {
+        toast({ title: "Error updating status", description: error.message, variant: "destructive" });
+        return;
+      }
+      toast({ title: `Order marked as ${status}` });
+      queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
     }
-    toast({ title: `Order marked as ${status}` });
-    queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
   };
 
   if (isLoading) {
@@ -51,27 +55,41 @@ const AdminOrdersTab = () => {
   }
 
   return (
-    <div>
-      <h2 className="font-heading font-semibold text-lg text-foreground mb-4">All Orders ({orders?.length || 0})</h2>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="font-heading font-semibold text-lg text-white">All Orders ({orders?.length || 0})</h2>
+      </div>
 
       {!orders?.length ? (
-        <p className="text-muted-foreground text-center py-10">No orders yet.</p>
+        <div className="glass-card p-12 text-center">
+          <Package className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-20" />
+          <p className="text-muted-foreground text-lg">No orders yet.</p>
+          <p className="text-sm text-muted-foreground/60 mt-1">When customers place orders, they will appear here.</p>
+        </div>
       ) : (
         <div className="space-y-3">
           {orders.map((order) => {
             const items = Array.isArray(order.items) ? order.items : [];
             return (
-              <div key={order.id} className="glass-card p-4">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+              <div key={order.id} className="glass-card p-5 border-white/5 hover:border-white/10 transition-colors">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-xs text-muted-foreground">#{order.id.slice(0, 8)}</span>
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[order.status] || statusColors.pending}`}>
+                    <div className="flex items-center gap-3 flex-wrap mb-2">
+                      <span className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 bg-white/5 rounded text-muted-foreground">
+                        #{order.id.slice(0, 8)}
+                      </span>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider ${statusColors[order.status] || statusColors.pending}`}>
                         {order.status}
                       </span>
                     </div>
-                    <p className="text-sm text-foreground mt-1 font-medium">{order.customer_name || "Guest"} · ₹{order.total}</p>
-                    <p className="text-xs text-muted-foreground">{format(new Date(order.created_at), "dd MMM yyyy, hh:mm a")}</p>
+                    <p className="text-base text-white font-medium">
+                      {order.customer_name || "Guest User"}
+                    </p>
+                    <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
+                      <span className="text-primary font-semibold">₹{order.total}</span>
+                      <span>•</span>
+                      <span>{format(new Date(order.created_at), "dd MMM, hh:mm a")}</span>
+                    </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Select value={order.status} onValueChange={(val) => updateStatus(order.id, val)}>
@@ -79,12 +97,12 @@ const AdminOrdersTab = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="created">Created</SelectItem>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="paid">Paid</SelectItem>
-                        <SelectItem value="shipped">Shipped</SelectItem>
-                        <SelectItem value="delivered">Delivered</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                        <SelectItem value="created">Order Initiated</SelectItem>
+                        <SelectItem value="pending">Pending Review</SelectItem>
+                        <SelectItem value="paid">Payment Received</SelectItem>
+                        <SelectItem value="shipped">Order Shipped</SelectItem>
+                        <SelectItem value="delivered">Order Fulfilled</SelectItem>
+                        <SelectItem value="cancelled">Order Cancelled</SelectItem>
                       </SelectContent>
                     </Select>
                     <Button size="icon" variant="ghost" onClick={() => setSelectedOrder(order)}>
