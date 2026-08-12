@@ -112,13 +112,17 @@ export default function AdminDashboardTab() {
                 tickFormatter={(value) => `₹${value}`}
               />
               <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: '#0f172a', 
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: '12px',
-                  color: '#fff'
+                content={({ active, payload, label }) => {
+                  if (active && payload && payload.length) {
+                    return (
+                      <div className="bg-[#0f172a] border border-white/10 p-3 rounded-xl shadow-xl">
+                        <p className="text-xs text-muted-foreground mb-1">{label}</p>
+                        <p className="text-sm font-bold text-primary">₹{Number(payload[0].value).toLocaleString('en-IN')}</p>
+                      </div>
+                    );
+                  }
+                  return null;
                 }}
-                itemStyle={{ color: '#D4A843' }}
               />
               <Area 
                 type="monotone" 

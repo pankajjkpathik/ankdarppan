@@ -147,7 +147,7 @@ const CartDrawer = () => {
 
   const handleCheckout = async () => {
     if (!customerName || !customerPhone || !dob || !shippingAddress) {
-      toast({ title: "Missing Details", description: "Please fill all required fields (*), including birth date and address.", variant: "destructive" });
+      toast({ title: "Missing Details", description: "Please fill all required fields (*), including birth date and delivery address.", variant: "destructive" });
       return;
     }
 
@@ -317,7 +317,7 @@ const CartDrawer = () => {
                     placeholder="Full Delivery Address (for physical reports/products) *" 
                     value={shippingAddress} 
                     onChange={(e) => setShippingAddress(e.target.value)} 
-                    className="min-h-[80px] text-xs bg-secondary/20"
+                    className="min-h-[80px] text-xs bg-secondary/20 border-white/10"
                   />
                 </div>
               </div>
