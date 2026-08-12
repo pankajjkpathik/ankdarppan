@@ -2,11 +2,20 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Package, Eye, X } from "lucide-react";
+import { Loader2, Package, Eye, X, Download, FileSpreadsheet, FileText as FilePdf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
+declare module "jspdf" {
+  interface jsPDF {
+    autoTable: (options: any) => jsPDF;
+  }
+}
 
 const statusColors: Record<string, string> = {
   created: "bg-slate-500/20 text-slate-400 border border-slate-500/30",
@@ -58,6 +67,68 @@ const AdminOrdersTab = () => {
     }
   };
 
+  const exportToCSV = () => {
+    if (!orders?.length) return;
+    
+    const headers = ["Order ID", "Date", "Customer Name", "Email", "Phone", "Status", "Total", "Items"];
+    const rows = orders.map(order => [
+      order.id.slice(0, 8),
+      format(new Date(order.created_at), "yyyy-MM-dd HH:mm"),
+      order.profiles?.full_name || order.customer_name || "Guest",
+      order.profiles?.email || order.customer_email || "-",
+      order.profiles?.phone || order.customer_phone || "-",
+      order.status,
+      order.total,
+      (Array.isArray(order.items) ? order.items : []).map((i: any) => `${i.name} (${i.qty})`).join("; ")
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `orders_${format(new Date(), "yyyy-MM-dd")}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast({ title: "CSV Export Started", description: "Your order list is being downloaded." });
+  };
+
+  const exportToPDF = () => {
+    if (!orders?.length) return;
+
+    const doc = new jsPDF();
+    doc.text("Ank Darppan - Order List", 14, 15);
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${format(new Date(), "dd MMM yyyy, hh:mm a")}`, 14, 22);
+
+    const tableColumn = ["ID", "Customer", "Date", "Status", "Total"];
+    const tableRows = orders.map(order => [
+      order.id.slice(0, 8),
+      order.profiles?.full_name || order.customer_name || "Guest",
+      format(new Date(order.created_at), "dd MMM yy"),
+      order.status.toUpperCase(),
+      `INR ${order.total}`
+    ]);
+
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 30,
+      theme: 'grid',
+      headStyles: { fillColor: [212, 168, 67] }, // primary gold
+      styles: { fontSize: 8 }
+    });
+
+    doc.save(`orders_${format(new Date(), "yyyy-MM-dd")}.pdf`);
+    toast({ title: "PDF Export Started", description: "Your order list is being downloaded." });
+  };
+
   if (error) {
     return (
       <div className="glass-card p-8 text-center border-destructive/20">
@@ -84,6 +155,22 @@ const AdminOrdersTab = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="font-heading font-semibold text-lg text-white">All Orders ({orders?.length || 0})</h2>
+        
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm" className="gap-2 bg-white/5 border-white/10 hover:bg-white/10 transition-all">
+              <Download className="w-4 h-4" /> Export
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="bg-[#0f172a] border-white/10">
+            <DropdownMenuItem onClick={exportToCSV} className="gap-2 cursor-pointer hover:bg-white/5 text-white focus:bg-white/10">
+              <FileSpreadsheet className="w-4 h-4 text-emerald-500" /> Export as CSV
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={exportToPDF} className="gap-2 cursor-pointer hover:bg-white/5 text-white focus:bg-white/10">
+              <FilePdf className="w-4 h-4 text-red-500" /> Export as PDF
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {!orders?.length ? (
