@@ -97,8 +97,22 @@ const AdminOrdersTab = () => {
   const exportToCSV = () => {
     if (!orders?.length) return;
     
-    const headers = ["Order ID", "Date", "Customer Name", "Email", "Phone", "Status", "Total", "Items"];
+    const headers = ["Order ID", "Date", "Customer Name", "Email", "Phone", "Status", "Total", "Items", "DOB", "TOB", "POB", "Address", "Notes"];
     const rows = orders.map(order => [
+      order.id.slice(0, 8),
+      format(new Date(order.created_at), "yyyy-MM-dd HH:mm"),
+      order.profiles?.full_name || order.customer_name || "Guest",
+      order.profiles?.email || order.customer_email || "-",
+      order.profiles?.phone || order.customer_phone || "-",
+      order.status,
+      order.total,
+      (Array.isArray(order.items) ? order.items : []).map((i: any) => `${i.name} (${i.qty})`).join("; "),
+      order.booking_details?.dob || "-",
+      order.booking_details?.tob || "-",
+      order.booking_details?.pob || "-",
+      order.booking_details?.address || "-",
+      order.booking_details?.notes || "-"
+    ]);
       order.id.slice(0, 8),
       format(new Date(order.created_at), "yyyy-MM-dd HH:mm"),
       order.profiles?.full_name || order.customer_name || "Guest",
@@ -134,8 +148,15 @@ const AdminOrdersTab = () => {
     doc.setFontSize(10);
     doc.text(`Generated on: ${format(new Date(), "dd MMM yyyy, hh:mm a")}`, 14, 22);
 
-    const tableColumn = ["ID", "Customer", "Date", "Status", "Total"];
+    const tableColumn = ["ID", "Customer", "Date", "Status", "Items", "Total"];
     const tableRows = orders.map(order => [
+      order.id.slice(0, 8),
+      order.profiles?.full_name || order.customer_name || "Guest",
+      format(new Date(order.created_at), "dd MMM yy"),
+      order.status.toUpperCase(),
+      (Array.isArray(order.items) ? order.items : []).map((i: any) => i.name).join(", "),
+      `INR ${order.total}`
+    ]);
       order.id.slice(0, 8),
       order.profiles?.full_name || order.customer_name || "Guest",
       format(new Date(order.created_at), "dd MMM yy"),
@@ -149,8 +170,20 @@ const AdminOrdersTab = () => {
       startY: 30,
       theme: 'grid',
       headStyles: { fillColor: [212, 168, 67] }, // primary gold
-      styles: { fontSize: 8 }
+      styles: { fontSize: 7, cellPadding: 2 },
+      columnStyles: {
+        0: { cellWidth: 15 },
+        1: { cellWidth: 35 },
+        2: { cellWidth: 20 },
+        3: { cellWidth: 25 },
+        4: { cellWidth: 'auto' },
+        5: { cellWidth: 20 }
+      }
     });
+
+    // Add Consultation Details section for each order if needed, or just a separate page
+    // For now, let's just make the main table more comprehensive.
+    // If the user wants a full report, we could iterate and add sections.
 
     doc.save(`orders_${format(new Date(), "yyyy-MM-dd")}.pdf`);
     toast({ title: "PDF Export Started", description: "Your order list is being downloaded." });
@@ -318,12 +351,29 @@ const AdminOrdersTab = () => {
               {selectedOrder.booking_details && (
                 <div className="space-y-2 p-3 bg-secondary/30 rounded-lg">
                   <h4 className="font-heading text-xs uppercase tracking-wider text-primary">Consultation Details</h4>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    {selectedOrder.booking_details.dob && <div><span className="text-muted-foreground">DOB:</span> {selectedOrder.booking_details.dob}</div>}
-                    {selectedOrder.booking_details.tob && <div><span className="text-muted-foreground">TOB:</span> {selectedOrder.booking_details.tob}</div>}
-                    {selectedOrder.booking_details.pob && <div className="col-span-2"><span className="text-muted-foreground">POB:</span> {selectedOrder.booking_details.pob}</div>}
-                    {selectedOrder.booking_details.address && <div className="col-span-2"><span className="text-muted-foreground">Address:</span> {selectedOrder.booking_details.address}</div>}
-                    {selectedOrder.booking_details.notes && <div className="col-span-2 italic mt-1">"{selectedOrder.booking_details.notes}"</div>}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className="space-y-1 bg-white/5 p-2 rounded">
+                      <p className="text-[10px] text-muted-foreground uppercase font-semibold">Date of Birth</p>
+                      <p className="text-white">{selectedOrder.booking_details.dob || "Not provided"}</p>
+                    </div>
+                    <div className="space-y-1 bg-white/5 p-2 rounded">
+                      <p className="text-[10px] text-muted-foreground uppercase font-semibold">Time of Birth</p>
+                      <p className="text-white">{selectedOrder.booking_details.tob || "Not provided"}</p>
+                    </div>
+                    <div className="space-y-1 bg-white/5 p-2 rounded sm:col-span-2">
+                      <p className="text-[10px] text-muted-foreground uppercase font-semibold">Place of Birth</p>
+                      <p className="text-white">{selectedOrder.booking_details.pob || "Not provided"}</p>
+                    </div>
+                    <div className="space-y-1 bg-white/5 p-2 rounded sm:col-span-2">
+                      <p className="text-[10px] text-muted-foreground uppercase font-semibold">Delivery Address</p>
+                      <p className="text-white whitespace-pre-wrap">{selectedOrder.booking_details.address || "Not provided"}</p>
+                    </div>
+                    {selectedOrder.booking_details.notes && (
+                      <div className="space-y-1 bg-white/5 p-2 rounded sm:col-span-2 border-l-2 border-primary/50">
+                        <p className="text-[10px] text-muted-foreground uppercase font-semibold">Additional Notes</p>
+                        <p className="text-white italic">"{selectedOrder.booking_details.notes}"</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
