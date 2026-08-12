@@ -61,14 +61,72 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
     );
 
-    await supabase
+    const { data: order, error: orderError } = await supabase
       .from("orders")
       .update({
         razorpay_payment_id,
         status: "paid",
         updated_at: new Date().toISOString(),
       })
-      .eq("razorpay_order_id", razorpay_order_id);
+      .eq("razorpay_order_id", razorpay_order_id)
+      .select()
+      .single();
+
+    if (order) {
+      // ✅ Send Confirmation Email
+      const itemsList = order.items.map((i: any) => `${i.name} (x${i.qty})`).join(", ");
+      const booking = order.booking_details || {};
+      
+      const emailHtml = `
+        <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px;">
+          <h2 style="color: #D4A843; text-align: center;">Order Confirmed!</h2>
+          <p>Hi ${order.customer_name},</p>
+          <p>Thank you for choosing Ank Darppan. Your order has been placed successfully.</p>
+          
+          <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0;">Order Summary</h3>
+            <p><strong>Order ID:</strong> #${order.razorpay_order_id.slice(-8)}</p>
+            <p><strong>Items:</strong> ${itemsList}</p>
+            <p><strong>Total Amount:</strong> ₹${order.total}</p>
+          </div>
+
+          <div style="background: #fdf6e7; padding: 15px; border-radius: 8px; border: 1px solid #f3e5c2;">
+            <h3 style="margin-top: 0; color: #856404;">Captured Details</h3>
+            <p><strong>Date of Birth:</strong> ${booking.dob || 'Not provided'}</p>
+            <p><strong>Time of Birth:</strong> ${booking.tob || 'Not provided'}</p>
+            <p><strong>Place of Birth:</strong> ${booking.pob || 'Not provided'}</p>
+            <p><strong>Delivery Address:</strong> ${booking.address || 'Not provided'}</p>
+          </div>
+
+          <p style="margin-top: 20px;">We will process your report shortly. You can track your order status on our website.</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+          <p style="font-size: 12px; color: #999; text-align: center;">&copy; ${new Date().getFullYear()} Ank Darppan. All rights reserved.</p>
+        </div>
+      `;
+
+      // Use internal email tool via Supabase Edge Function environment if available, 
+      // or standard Resend integration if configured. 
+      // For now, we log that we'd send it, as actual SMTP depends on secrets.
+      console.log(`Confirmation email prepared for ${order.customer_email}`);
+      
+      // Attempting to send via a hypothetical email service if RESEND_API_KEY exists
+      const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+      if (RESEND_API_KEY) {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${RESEND_API_KEY}`,
+          },
+          body: JSON.stringify({
+            from: "Ank Darppan <noreply@ankdarppan.com>",
+            to: [order.customer_email],
+            subject: `Order Confirmed - #${order.razorpay_order_id.slice(-8)}`,
+            html: emailHtml,
+          }),
+        });
+      }
+    }
 
     return new Response(
       JSON.stringify({ verified: true }),
