@@ -113,7 +113,7 @@ const AdminOrdersTab = () => {
                     <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
                       <span className="text-primary font-semibold">₹{order.total}</span>
                       <span>•</span>
-                      <span>{format(new Date(order.created_at), "dd MMM, hh:mm a")}</span>
+                      <span title={order.created_at}>{format(new Date(order.created_at), "dd MMM yyyy, hh:mm a")}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
