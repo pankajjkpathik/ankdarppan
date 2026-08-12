@@ -40,6 +40,12 @@ const CartDrawer = () => {
   const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
   const [couponLoading, setCouponLoading] = useState(false);
 
+  // Partner Details for Marriage Compatibility
+  const [partnerName, setPartnerName] = useState("");
+  const [partnerDob, setPartnerDob] = useState("");
+  const [partnerTob, setPartnerTob] = useState("");
+  const [partnerPob, setPartnerPob] = useState("");
+
   const shippingCost = shippingType === "india" ? SHIPPING_INDIA : 0; // foreign = on actual (entered manually or TBD)
 
   const computeDiscount = (coupon: any, subtotal: number) => {
@@ -147,11 +153,21 @@ const CartDrawer = () => {
   };
 
   const handleCheckout = async () => {
+    const isMarriageCompatibility = items.some(i => 
+      i.name.toLowerCase().includes('marriage') || 
+      i.name.toLowerCase().includes('compatibility')
+    );
+
     const errors: string[] = [];
     if (!customerName.trim()) errors.push("Full Name");
     if (!customerPhone.trim()) errors.push("Phone Number");
     if (!dob) errors.push("Date of Birth");
     if (!shippingAddress.trim()) errors.push("Delivery Address");
+
+    if (isMarriageCompatibility) {
+      if (!partnerName.trim()) errors.push("Partner's Name");
+      if (!partnerDob) errors.push("Partner's Date of Birth");
+    }
 
     if (errors.length > 0) {
       toast({ 
@@ -206,6 +222,12 @@ const CartDrawer = () => {
             tob,
             pob,
             address: shippingAddress,
+            partner_details: isMarriageCompatibility ? {
+              name: partnerName,
+              dob: partnerDob,
+              tob: partnerTob,
+              pob: partnerPob,
+            } : null,
           },
         },
       });
@@ -253,6 +275,10 @@ const CartDrawer = () => {
           setDob("");
           setTob("");
           setPob("");
+          setPartnerName("");
+          setPartnerDob("");
+          setPartnerTob("");
+          setPartnerPob("");
           setShippingAddress("");
         },
         prefill: { name: customerName, contact: customerPhone, email: customerEmail },
@@ -370,6 +396,45 @@ const CartDrawer = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Partner Details for Marriage Compatibility */}
+              {items.some(i => i.name.toLowerCase().includes('marriage') || i.name.toLowerCase().includes('compatibility')) && (
+                <div className="space-y-3 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <h4 className="text-sm font-heading font-semibold text-primary">Partner's Details (for Compatibility)</h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    <div className="space-y-1">
+                      <Label className="text-xs">Partner's Full Name *</Label>
+                      <Input 
+                        placeholder="e.g. Jane Doe" 
+                        value={partnerName} 
+                        onChange={(e) => setPartnerName(e.target.value)} 
+                        className={!partnerName && loading ? "border-destructive" : ""}
+                      />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="space-y-1">
+                        <Label className="text-[10px] uppercase text-muted-foreground">Partner's DOB *</Label>
+                        <Input 
+                          type="date" 
+                          value={partnerDob} 
+                          onChange={(e) => setPartnerDob(e.target.value)} 
+                          className={cn("text-xs", !partnerDob && loading ? "border-destructive" : "")} 
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-[10px] uppercase text-muted-foreground">Partner's TOB</Label>
+                        <Input type="time" value={partnerTob} onChange={(e) => setPartnerTob(e.target.value)} className="text-xs" />
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <Label className="text-xs">Partner's Place of Birth</Label>
+                      <Input placeholder="e.g. Mumbai, India" value={partnerPob} onChange={(e) => setPartnerPob(e.target.value)} />
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Shipping */}
               <div className="space-y-3 pt-2">
