@@ -1,33 +1,50 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, Phone, Star, ShieldCheck, Zap, ArrowRight, ShoppingCart, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const MobileCompatibilityReport = () => {
-  const { addItem } = useCart();
+  const { addItem, setIsOpen: openCart } = useCart();
+  const [formData, setFormData] = useState({
+    name: "",
+    mobile: ""
+  });
 
-  const handleBuyNow = () => {
-    // We'll try to find a "Mobile Number Compatibility" service or product
-    // For now, we'll redirect to the consultation booking with a pre-selected option if possible
-    // or just add a generic "Mobile Report" to cart if it exists.
-    // Given the landing page goal, we'll simulate adding it or redirecting to the checkout flow.
-    toast({
-      title: "Redirecting to Secure Checkout",
-      description: "Getting your Mobile Compatibility Report ready...",
-    });
-    // Assuming a service with this name exists or will be added. 
-    // Usually, we'd add it to cart and open the drawer.
+  const handleBuyNow = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    if (!formData.name || !formData.mobile) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide your name and mobile number to generate the report.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     addItem({
       name: "Mobile Number Compatibility Report",
       price: "₹599",
       priceNum: 599,
       img: "/logo.png",
+      // We can pass the captured data via custom properties if needed, 
+      // but for now we'll just add to cart and let checkout handle details
     });
+
+    toast({
+      title: "Added to Cart",
+      description: "Redirecting to secure checkout...",
+    });
+    
+    openCart(true);
   };
 
   const testimonials = [
@@ -71,14 +88,41 @@ const MobileCompatibilityReport = () => {
               <p className="max-w-2xl mx-auto mb-10 text-lg text-muted-foreground leading-relaxed">
                 Unlock the hidden vibration of your mobile number. Discover if your number aligns with your success, health, and prosperity.
               </p>
-              <Button 
-                onClick={handleBuyNow}
-                size="lg" 
-                className="px-8 py-7 text-lg font-bold rounded-full animate-pulse-glow"
-              >
-                GET MY MOBILE COMPATIBILITY REPORT
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-background/50 backdrop-blur-sm p-8 rounded-3xl border border-primary/20 shadow-xl">
+                <div className="space-y-4 mb-6">
+                  <div className="text-left">
+                    <Label htmlFor="hero-name" className="text-sm font-medium ml-1">Full Name</Label>
+                    <Input 
+                      id="hero-name"
+                      placeholder="Enter your name" 
+                      className="bg-background/80"
+                      value={formData.name}
+                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                      required
+                    />
+                  </div>
+                  <div className="text-left">
+                    <Label htmlFor="hero-mobile" className="text-sm font-medium ml-1">Mobile Number to Analyze</Label>
+                    <Input 
+                      id="hero-mobile"
+                      type="tel"
+                      placeholder="Enter mobile number" 
+                      className="bg-background/80"
+                      value={formData.mobile}
+                      onChange={(e) => setFormData(prev => ({ ...prev, mobile: e.target.value }))}
+                      required
+                    />
+                  </div>
+                </div>
+                <Button 
+                  type="submit"
+                  size="lg" 
+                  className="w-full py-7 text-lg font-bold rounded-full animate-pulse-glow"
+                >
+                  GET MY MOBILE COMPATIBILITY REPORT
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </form>
             </motion.div>
           </div>
         </section>
@@ -157,7 +201,14 @@ const MobileCompatibilityReport = () => {
                   <p className="text-xs text-muted-foreground mt-2">*Additional 15% discount applied at checkout with coupon.</p>
                 </div>
 
-                <Button onClick={handleBuyNow} className="w-full md:w-auto px-10 py-6 text-lg font-bold">
+                <Button 
+                  onClick={() => {
+                    const el = document.getElementById("hero-name");
+                    el?.scrollIntoView({ behavior: "smooth" });
+                    el?.focus();
+                  }} 
+                  className="w-full md:w-auto px-10 py-6 text-lg font-bold"
+                >
                   GET MY REPORT NOW
                 </Button>
               </div>
@@ -215,7 +266,11 @@ const MobileCompatibilityReport = () => {
               Join thousands who have optimized their lives through the power of mobile numerology.
             </p>
             <Button 
-              onClick={handleBuyNow}
+              onClick={() => {
+                const el = document.getElementById("hero-name");
+                el?.scrollIntoView({ behavior: "smooth" });
+                el?.focus();
+              }}
               variant="secondary" 
               size="lg" 
               className="px-12 py-8 text-xl font-bold rounded-full hover:scale-105 transition-transform"
