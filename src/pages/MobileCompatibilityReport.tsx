@@ -12,13 +12,13 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const MobileCompatibilityReport = () => {
-  const { addItem, setIsOpen: openCart, clearCart } = useCart();
+  const { addItem, setIsOpen: openCart } = useCart();
   const [formData, setFormData] = useState({
     name: "",
     mobile: ""
   });
 
-  const handleBuyNow = async (e?: React.FormEvent) => {
+  const handleBuyNow = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
 
     if (!formData.name || !formData.mobile) {
@@ -30,24 +30,20 @@ const MobileCompatibilityReport = () => {
       return;
     }
 
-    // Clear cart and add the specific report with the special pricing
-    clearCart();
-    
     addItem({
-      name: `Mobile Compatibility Report (${formData.mobile})`,
+      name: "Mobile Number Compatibility Report",
       price: "₹599",
       priceNum: 599,
       img: "/logo.png",
+      // We can pass the captured data via custom properties if needed, 
+      // but for now we'll just add to cart and let checkout handle details
     });
 
     toast({
       title: "Added to Cart",
-      description: "Applying Sawan Special discount and opening checkout...",
+      description: "Redirecting to secure checkout...",
     });
     
-    // Open the cart drawer where the user will provide birth details and complete payment
-    // We'll also pre-fill the name if possible by storing it in local state or similar
-    // For now, opening the cart is the standard flow.
     openCart(true);
   };
 
