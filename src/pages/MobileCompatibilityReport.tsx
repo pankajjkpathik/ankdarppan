@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CheckCircle2, Phone, Star, ShieldCheck, Zap, ArrowRight, ShoppingCart } from "lucide-react";
+import { CheckCircle2, Phone, Star, ShieldCheck, Zap, ArrowRight, ShoppingCart, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,11 +23,10 @@ const MobileCompatibilityReport = () => {
     // Assuming a service with this name exists or will be added. 
     // Usually, we'd add it to cart and open the drawer.
     addItem({
-      id: "mobile-report-special",
       name: "Mobile Number Compatibility Report",
-      price: 599, // Sawan Special Price example
-      image_url: "/logo.png",
-      type: 'service'
+      price: "₹599",
+      priceNum: 599,
+      img: "/logo.png",
     });
   };
 
