@@ -21,6 +21,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import RefundPolicy from "./pages/RefundPolicy.tsx";
 import TermsAndConditions from "./pages/TermsAndConditions.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import MobileCompatibilityReport from "./pages/MobileCompatibilityReport.tsx";
 
 // Auth Pages
 import Auth from "./pages/Auth.tsx";
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="/mobile-compatibility-report" element={<MobileCompatibilityReport />} />
 
             {/* --- Customer Auth --- */}
             <Route path="/auth" element={<Auth />} />
