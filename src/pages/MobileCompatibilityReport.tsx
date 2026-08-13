@@ -201,7 +201,14 @@ const MobileCompatibilityReport = () => {
                   <p className="text-xs text-muted-foreground mt-2">*Additional 15% discount applied at checkout with coupon.</p>
                 </div>
 
-                <Button onClick={handleBuyNow} className="w-full md:w-auto px-10 py-6 text-lg font-bold">
+                <Button 
+                  onClick={() => {
+                    const el = document.getElementById("hero-name");
+                    el?.scrollIntoView({ behavior: "smooth" });
+                    el?.focus();
+                  }} 
+                  className="w-full md:w-auto px-10 py-6 text-lg font-bold"
+                >
                   GET MY REPORT NOW
                 </Button>
               </div>
@@ -259,7 +266,11 @@ const MobileCompatibilityReport = () => {
               Join thousands who have optimized their lives through the power of mobile numerology.
             </p>
             <Button 
-              onClick={handleBuyNow}
+              onClick={() => {
+                const el = document.getElementById("hero-name");
+                el?.scrollIntoView({ behavior: "smooth" });
+                el?.focus();
+              }}
               variant="secondary" 
               size="lg" 
               className="px-12 py-8 text-xl font-bold rounded-full hover:scale-105 transition-transform"
