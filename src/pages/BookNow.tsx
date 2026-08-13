@@ -139,13 +139,15 @@ const BookNow = () => {
     const isMarriageCompatibility = selected.some(name => 
       name.toLowerCase().includes('marriage') || 
       name.toLowerCase().includes('compatibility')
-    );
+    ) && !selected.some(name => name.toLowerCase().includes('mobile'));
+    
+    const isMobileCompatibility = selected.some(name => name.toLowerCase().includes('mobile'));
     
     const errors: string[] = [];
     if (!form.name.trim()) errors.push("Full Name");
     if (!form.phone.trim()) errors.push("Phone Number");
     if (!form.dob) errors.push("Date of Birth");
-    if (!form.address.trim()) errors.push("Address");
+    if (!form.address.trim() && !isMobileCompatibility) errors.push("Address");
     if (selected.length === 0) errors.push("At least one service");
 
     if (isMarriageCompatibility) {
@@ -300,7 +302,7 @@ const BookNow = () => {
                   <Input name="pob" id="pob" value={form.pob} onChange={handleChange} placeholder="City, State" className="bg-secondary/50 border-border" />
                 </div>
                 <div className="space-y-1.5 sm:col-span-2">
-                  <Label htmlFor="address">Address *</Label>
+                  <Label htmlFor="address">Address {selected.some(name => name.toLowerCase().includes('mobile')) ? "(Optional for Mobile Report)" : "*"}</Label>
                   <Textarea name="address" id="address" required value={form.address} onChange={handleChange} placeholder="Your full address" className={cn("bg-secondary/50 border-border", !form.address && loading ? "border-destructive" : "")} rows={2} />
                 </div>
               </div>
