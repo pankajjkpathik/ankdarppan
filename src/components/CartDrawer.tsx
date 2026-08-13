@@ -156,13 +156,15 @@ const CartDrawer = () => {
     const isMarriageCompatibility = items.some(i => 
       i.name.toLowerCase().includes('marriage') || 
       i.name.toLowerCase().includes('compatibility')
-    );
+    ) && !items.some(i => i.name.toLowerCase().includes('mobile'));
+
+    const isMobileCompatibility = items.some(i => i.name.toLowerCase().includes('mobile'));
 
     const errors: string[] = [];
     if (!customerName.trim()) errors.push("Full Name");
     if (!customerPhone.trim()) errors.push("Phone Number");
     if (!dob) errors.push("Date of Birth");
-    if (!shippingAddress.trim()) errors.push("Delivery Address");
+    if (!shippingAddress.trim() && !isMobileCompatibility) errors.push("Delivery Address");
 
     if (isMarriageCompatibility) {
       if (!partnerName.trim()) errors.push("Partner's Name");
@@ -386,7 +388,7 @@ const CartDrawer = () => {
                   </div>
                   
                   <div className="space-y-1">
-                    <Label className="text-xs">Delivery Address *</Label>
+                    <Label className="text-xs">Delivery Address {items.some(i => i.name.toLowerCase().includes('mobile')) ? "(Optional for Mobile Report)" : "*"}</Label>
                     <Textarea 
                       placeholder="House No, Street, Landmark, City, State, ZIP *" 
                       value={shippingAddress} 

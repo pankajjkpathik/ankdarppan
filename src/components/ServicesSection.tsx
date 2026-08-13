@@ -59,10 +59,12 @@ const ServicesSection = () => {
                       {service.old_price && <span className="text-muted-foreground line-through text-xs">₹{service.old_price.toLocaleString("en-IN")}</span>}
                     </div>
                     <a
-                      href={`/book?service=${encodeURIComponent(service.title)}`}
+                      href={service.title.toLowerCase().includes('mobile compatibility') 
+                        ? "/mobile-compatibility-report" 
+                        : `/book?service=${encodeURIComponent(service.title)}`}
                       className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:brightness-110 transition-all"
                     >
-                      Order Now
+                      {service.title.toLowerCase().includes('mobile compatibility') ? "View Offer" : "Order Now"}
                     </a>
                   </div>
                 </motion.div>
