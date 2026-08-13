@@ -93,7 +93,7 @@ const Navbar = () => {
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/30">
         <div className="container mx-auto flex items-center justify-between py-4 px-4">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Ank Darppan" className="w-10 h-10 rounded-full" />
+            <img src="/logo.png" alt="Ank Darppan" className="w-12 h-12 rounded-full object-cover border border-primary/20" />
             <span className="text-xl font-heading font-semibold gold-text">Ank Darppan</span>
           </Link>
 

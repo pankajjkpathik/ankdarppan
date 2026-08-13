@@ -7,7 +7,7 @@ const Footer = () => (
       <div className="grid md:grid-cols-3 gap-8">
         <div>
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Ank Darppan" className="w-8 h-8 rounded-full" />
+            <img src="/logo.png" alt="Ank Darppan" className="w-10 h-10 rounded-full object-cover border border-primary/20" />
             <span className="text-xl font-heading font-bold gold-text">Ank Darppan</span>
           </Link>
           <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
