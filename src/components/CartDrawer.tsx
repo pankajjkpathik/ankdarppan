@@ -165,7 +165,8 @@ const CartDrawer = () => {
              !name.includes('consultation') && 
              !name.includes('grid') && 
              !name.includes('compatibility') &&
-             !name.includes('question');
+             !name.includes('question') &&
+             !name.includes('numerology');
     });
 
     const errors: string[] = [];
