@@ -545,7 +545,7 @@ const CartDrawer = () => {
               <div className="flex justify-between font-bold text-lg border-t border-stone-200 pt-2 text-[#1e1e24]">
                 <span>Total</span>
                 <span className="text-[#b48a2d]">
-                  {shippingType === "india" ? `₹${grandTotal.toLocaleString("en-IN")}` : `₹${(Math.max(total - discount, 0)).toLocaleString("en-IN")} + Shipping`}
+                  {hasPhysicalProducts && shippingType === "foreign" ? `₹${(Math.max(total - discount, 0)).toLocaleString("en-IN")} + Shipping` : `₹${grandTotal.toLocaleString("en-IN")}`}
                 </span>
               </div>
 
