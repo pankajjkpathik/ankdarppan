@@ -75,18 +75,20 @@ const Navbar = () => {
   return (
     <>
       {/* Top bar */}
-      <div className="bg-secondary/80 backdrop-blur border-b border-border/30 text-xs sm:text-sm hidden md:block">
-        <div className="container mx-auto flex items-center justify-between py-2 px-4">
-          <div className="flex items-center gap-4 lg:gap-6 text-primary font-medium">
-            <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {format(new Date(), "do MMMM, yyyy")}</span>
-            <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5" /> contactus@ankdarppan.com</span>
-            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> 11:30 AM to 8:30 PM</span>
-            <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> +(91) 93173-65025</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <a href="https://www.facebook.com/profile.php?id=61572864015133" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Facebook className="w-4 h-4" /></a>
-            <a href="https://www.instagram.com/ankdarppan/" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Instagram className="w-4 h-4" /></a>
-            <a href="https://www.youtube.com/channel/UC8zAQ2jW03afza46M56UjcA" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Youtube className="w-4 h-4" /></a>
+      <div className="bg-secondary/80 backdrop-blur border-b border-border/30 text-xs sm:text-sm">
+        <div className="container mx-auto py-2 px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 lg:gap-x-6 gap-y-2 text-primary font-medium">
+              <span className="flex items-center gap-1.5 whitespace-nowrap"><Calendar className="w-3.5 h-3.5" /> {format(new Date(), "do MMMM, yyyy")}</span>
+              <span className="flex items-center gap-1.5 whitespace-nowrap"><Mail className="w-3.5 h-3.5" /> contactus@ankdarppan.com</span>
+              <span className="flex items-center gap-1.5 whitespace-nowrap"><Clock className="w-3.5 h-3.5" /> 11:30 AM to 8:30 PM</span>
+              <span className="flex items-center gap-1.5 whitespace-nowrap"><Phone className="w-3.5 h-3.5" /> +(91) 93173-65025</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <a href="https://www.facebook.com/profile.php?id=61572864015133" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Facebook className="w-4 h-4" /></a>
+              <a href="https://www.instagram.com/ankdarppan/" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Instagram className="w-4 h-4" /></a>
+              <a href="https://www.youtube.com/channel/UC8zAQ2jW03afza46M56UjcA" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Youtube className="w-4 h-4" /></a>
+            </div>
           </div>
         </div>
       </div>
