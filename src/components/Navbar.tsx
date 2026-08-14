@@ -75,17 +75,18 @@ const Navbar = () => {
   return (
     <>
       {/* Top bar */}
-      <div className="bg-secondary/80 backdrop-blur border-b border-border/30 text-sm hidden md:block">
+      <div className="bg-secondary/80 backdrop-blur border-b border-border/30 text-xs sm:text-sm hidden md:block">
         <div className="container mx-auto flex items-center justify-between py-2 px-4">
-          <div className="flex items-center gap-6 text-muted-foreground">
-            <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-primary" /> contactus@ankdarppan.com</span>
-            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-primary" /> 11:30 AM to 8:30 PM</span>
-            <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-primary" /> +(91) 93173-65025</span>
+          <div className="flex items-center gap-4 lg:gap-6 text-primary font-medium">
+            <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {format(new Date(), "do MMMM, yyyy")}</span>
+            <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5" /> contactus@ankdarppan.com</span>
+            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> 11:30 AM to 8:30 PM</span>
+            <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> +(91) 93173-65025</span>
           </div>
           <div className="flex items-center gap-3">
-            <a href="https://www.facebook.com/profile.php?id=61572864015133" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors"><Facebook className="w-4 h-4" /></a>
-            <a href="https://www.instagram.com/ankdarppan/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-4 h-4" /></a>
-            <a href="https://www.youtube.com/channel/UC8zAQ2jW03afza46M56UjcA" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors"><Youtube className="w-4 h-4" /></a>
+            <a href="https://www.facebook.com/profile.php?id=61572864015133" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Facebook className="w-4 h-4" /></a>
+            <a href="https://www.instagram.com/ankdarppan/" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="https://www.youtube.com/channel/UC8zAQ2jW03afza46M56UjcA" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Youtube className="w-4 h-4" /></a>
           </div>
         </div>
       </div>
