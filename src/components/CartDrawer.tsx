@@ -159,13 +159,20 @@ const CartDrawer = () => {
       i.name.toLowerCase().includes('compatibility')
     ) && !items.some(i => i.name.toLowerCase().includes('mobile'));
 
-    const isMobileCompatibility = items.some(i => i.name.toLowerCase().includes('mobile'));
+    const hasPhysicalProducts = items.some(i => {
+      const name = i.name.toLowerCase();
+      return !name.includes('report') && 
+             !name.includes('consultation') && 
+             !name.includes('grid') && 
+             !name.includes('compatibility') &&
+             !name.includes('question');
+    });
 
     const errors: string[] = [];
     if (!customerName.trim()) errors.push("Full Name");
     if (!customerPhone.trim()) errors.push("Phone Number");
     if (!dob) errors.push("Date of Birth");
-    if (!shippingAddress.trim() && !isMobileCompatibility) errors.push("Delivery Address");
+    if (hasPhysicalProducts && !shippingAddress.trim()) errors.push("Delivery Address");
 
     if (isMarriageCompatibility) {
       if (!partnerName.trim()) errors.push("Partner's Name");
