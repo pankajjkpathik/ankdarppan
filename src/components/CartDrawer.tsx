@@ -174,7 +174,7 @@ const CartDrawer = () => {
     if (!customerName.trim()) errors.push("Full Name");
     if (!customerPhone.trim()) errors.push("Phone Number");
     if (!dob) errors.push("Date of Birth");
-    if (hasPhysicalProducts && !shippingAddress.trim()) errors.push("Delivery Address");
+    if (hasPhysicalProducts && !shippingAddress.trim()) errors.push("Shipping Address");
 
     if (isMarriageCompatibility) {
       if (!partnerName.trim()) errors.push("Partner's Name");
