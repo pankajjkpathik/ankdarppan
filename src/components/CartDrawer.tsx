@@ -168,15 +168,6 @@ const CartDrawer = () => {
       i.name.toLowerCase().includes('compatibility')
     ) && !items.some(i => i.name.toLowerCase().includes('mobile'));
 
-    const hasPhysicalProducts = items.some(i => {
-      const name = i.name.toLowerCase();
-      return !name.includes('report') && 
-             !name.includes('consultation') && 
-             !name.includes('grid') && 
-             !name.includes('compatibility') &&
-             !name.includes('question') &&
-             !name.includes('numerology');
-    });
 
     const errors: string[] = [];
     if (!customerName.trim()) errors.push("Full Name");
