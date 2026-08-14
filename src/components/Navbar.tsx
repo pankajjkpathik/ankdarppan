@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, Mail, Clock, ShoppingCart, Facebook, Instagram, Youtube, User, LogOut, LogIn } from "lucide-react";
+import { Menu, X, Phone, Mail, Clock, ShoppingCart, Facebook, Instagram, Youtube, User, LogOut, LogIn, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { format } from "date-fns";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 import { supabase } from "@/integrations/supabase/client";
