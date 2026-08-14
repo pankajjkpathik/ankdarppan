@@ -378,14 +378,14 @@ const CartDrawer = () => {
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[10px] uppercase text-muted-foreground">Time of Birth</Label>
-                      <Input type="time" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs" />
+                      <Label className="text-[10px] uppercase text-[#1e1e24]/60">Time of Birth</Label>
+                      <Input type="time" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24]" />
                     </div>
                   </div>
                   
                   <div className="space-y-1">
                     <Label className="text-xs">Place of Birth</Label>
-                    <Input placeholder="e.g. New Delhi, India" value={pob} onChange={(e) => setPob(e.target.value)} />
+                    <Input placeholder="e.g. New Delhi, India" value={pob} onChange={(e) => setPob(e.target.value)} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                   </div>
                   
                   <div className="space-y-1">
@@ -394,7 +394,7 @@ const CartDrawer = () => {
                       placeholder="House No, Street, Landmark, City, State, ZIP *" 
                       value={shippingAddress} 
                       onChange={(e) => setShippingAddress(e.target.value)} 
-                      className={cn("min-h-[80px] text-xs bg-secondary/20 border-white/10", !shippingAddress && loading ? "border-destructive" : "")}
+                      className={cn("min-h-[80px] text-xs bg-stone-50 border-stone-200 text-[#1e1e24]", !shippingAddress && loading ? "border-destructive" : "")}
                     />
                   </div>
                 </div>
