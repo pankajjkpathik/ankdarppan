@@ -85,7 +85,7 @@ const MobileCompatibilityReport = () => {
                 Mobile Number Consultation <br />
                 <span className="text-primary">Luck or Obstacles?</span>
               </h1>
-              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-600 leading-relaxed">
+              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed">
                 Unlock the hidden vibration of your mobile number. Discover if your number aligns with your success, health, and prosperity.
               </p>
               <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-primary/20 shadow-xl">
@@ -170,7 +170,7 @@ const MobileCompatibilityReport = () => {
                       {item.icon}
                     </div>
                     <h3 className="text-xl font-heading mb-3">{item.title}</h3>
-                    <p className="text-stone-600">{item.desc}</p>
+                    <p className="text-stone-900 font-medium">{item.desc}</p>
                   </CardContent>
                 </Card>
               ))}

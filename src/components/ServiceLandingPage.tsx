@@ -84,7 +84,7 @@ const ServiceLandingPage = ({
                 {serviceTitle} <br />
                 <span className="text-primary">Unlock Your Potential</span>
               </h1>
-              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-600 leading-relaxed">
+              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed">
                 {description}
               </p>
               
@@ -158,7 +158,7 @@ const ServiceLandingPage = ({
                       {item.icon}
                     </div>
                     <h3 className="text-xl font-heading mb-3">{item.title}</h3>
-                    <p className="text-stone-600">{item.desc}</p>
+                    <p className="text-stone-900 font-medium">{item.desc}</p>
                   </CardContent>
                 </Card>
               ))}
