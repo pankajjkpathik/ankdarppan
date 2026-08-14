@@ -166,9 +166,9 @@ const CartDrawer = () => {
 
   const handleCheckout = async () => {
     const isMarriageCompatibility = items.some(i => 
-      i.name.toLowerCase().includes('marriage') || 
-      i.name.toLowerCase().includes('compatibility')
-    ) && !items.some(i => i.name.toLowerCase().includes('mobile'));
+      (i.name.toLowerCase().includes('marriage') || i.name.toLowerCase().includes('compatibility')) && 
+      !i.name.toLowerCase().includes('mobile')
+    );
 
 
     const errors: string[] = [];
