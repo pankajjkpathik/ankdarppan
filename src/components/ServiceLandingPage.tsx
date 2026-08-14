@@ -63,12 +63,12 @@ const ServiceLandingPage = ({
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 font-body text-stone-900">
+    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900">
       <Navbar />
       
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden bg-stone-100">
+        <section className="relative py-20 overflow-hidden bg-[#f9f6f0]">
           <div className="container px-4 mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -86,25 +86,25 @@ const ServiceLandingPage = ({
                 {description}
               </p>
               
-              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-stone-200 shadow-xl">
+              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-primary/20 shadow-xl">
                 <div className="space-y-4 mb-6">
                   <div className="text-left">
-                    <Label htmlFor="hero-name" className="text-sm font-medium ml-1 text-stone-700">Full Name</Label>
+                    <Label htmlFor="hero-name" className="text-sm font-semibold ml-1 text-stone-900">Full Name</Label>
                     <Input 
                       id="hero-name"
                       placeholder="Enter your name" 
-                      className="bg-stone-50 border-stone-200"
+                      className="bg-[#fdfbf7] border-stone-300 text-stone-900 placeholder:text-stone-400 focus:border-primary"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                       required
                     />
                   </div>
                   <div className="text-left">
-                    <Label htmlFor="hero-dob" className="text-sm font-medium ml-1 text-stone-700">Date of Birth</Label>
+                    <Label htmlFor="hero-dob" className="text-sm font-semibold ml-1 text-stone-900">Date of Birth</Label>
                     <Input 
                       id="hero-dob"
                       type="date"
-                      className="bg-stone-50 border-stone-200"
+                      className="bg-[#fdfbf7] border-stone-300 text-stone-900 focus:border-primary"
                       value={formData.dob}
                       onChange={(e) => setFormData(prev => ({ ...prev, dob: e.target.value }))}
                       required
@@ -165,7 +165,7 @@ const ServiceLandingPage = ({
         </section>
 
         {/* What's Included */}
-        <section className="py-20 bg-stone-100">
+        <section className="py-20 bg-[#f9f6f0]">
           <div className="container px-4 mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="flex-1">

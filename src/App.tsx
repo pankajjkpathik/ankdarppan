@@ -72,7 +72,7 @@ const App = () => (
             <Route path="/mobile-compatibility-report" element={<MobileCompatibilityReport />} />
             <Route path="/loshu-grid-report" element={<LoshuGridReport />} />
             <Route path="/marriage-compatibility" element={<MarriageCompatibility />} />
-            <Route path="/name-compatibility" element={<NameCompatibilityReport />} />
+            <Route path="/name-compatibility-report" element={<NameCompatibilityReport />} />
 
             {/* --- Customer Auth --- */}
             <Route path="/auth" element={<Auth />} />
