@@ -365,22 +365,22 @@ const BookNow = () => {
               )}
             </div>
 
-            <div className="glass-card p-6 space-y-4">
-              <h2 className="font-heading font-semibold text-lg text-foreground flex items-center gap-2">
-                <Ticket className="w-4 h-4 text-primary" /> Coupon Code
+            <div className="bg-white border border-[#b48a2d]/20 rounded-2xl shadow-sm p-6 space-y-4">
+              <h2 className="font-heading font-semibold text-lg text-[#1e1e24] flex items-center gap-2">
+                <Ticket className="w-4 h-4 text-[#b48a2d]" /> Coupon Code
               </h2>
               <div className="flex gap-2">
                 <Input
                   placeholder="Enter code"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                  className="uppercase bg-secondary/50 border-border"
+                  className="uppercase bg-stone-50 border-stone-200 text-[#1e1e24]"
                   disabled={!!appliedCoupon}
                 />
                 {appliedCoupon ? (
                   <Button type="button" variant="ghost" onClick={() => { setAppliedCoupon(null); setCouponCode(""); }}>Remove</Button>
                 ) : (
-                  <Button type="button" variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()}>
+                  <Button type="button" variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()} className="border-[#b48a2d] text-[#b48a2d] hover:bg-[#b48a2d]/10">
                     {couponLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
                   </Button>
                 )}
@@ -390,9 +390,9 @@ const BookNow = () => {
               )}
             </div>
 
-            <div className="glass-card p-6 space-y-4">
-              <h2 className="font-heading font-semibold text-lg text-foreground">Additional Notes</h2>
-              <Textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Any specific questions..." className="bg-secondary/50 border-border" rows={3} />
+            <div className="bg-white border border-[#b48a2d]/20 rounded-2xl shadow-sm p-6 space-y-4">
+              <h2 className="font-heading font-semibold text-lg text-[#1e1e24]">Additional Notes</h2>
+              <Textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Any specific questions..." className="bg-stone-50 border-stone-200 text-[#1e1e24]" rows={3} />
             </div>
 
             {selected.length > 0 && (

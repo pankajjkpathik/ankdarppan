@@ -299,32 +299,32 @@ const CartDrawer = () => {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent className="bg-card border-border w-full sm:max-w-md flex flex-col">
+      <SheetContent className="bg-[#fdfbf7] text-[#1e1e24] border-stone-200 w-full sm:max-w-md flex flex-col">
         <SheetHeader>
-          <SheetTitle className="font-heading gold-text text-xl flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5 text-primary" /> Your Cart
+          <SheetTitle className="font-heading text-[#b48a2d] text-xl flex items-center gap-2">
+            <ShoppingCart className="w-5 h-5 text-[#b48a2d]" /> Your Cart
           </SheetTitle>
         </SheetHeader>
 
         {items.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground">
+          <div className="flex-1 flex items-center justify-center text-[#1e1e24]/60">
             Your cart is empty
           </div>
         ) : (
           <>
             <div className="flex-1 overflow-y-auto space-y-4 mt-4 pr-1">
               {items.map((item) => (
-                <div key={item.name} className="flex gap-3 glass-card p-3">
+                <div key={item.name} className="flex gap-3 bg-white border border-[#b48a2d]/20 rounded-2xl p-3 shadow-sm">
                   <img src={item.img} alt={item.name} className="w-16 h-16 rounded-lg object-cover" />
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-semibold text-foreground truncate">{item.name}</h4>
-                    <p className="text-primary font-bold text-sm">{item.price}</p>
+                    <h4 className="text-sm font-semibold text-[#1e1e24] truncate">{item.name}</h4>
+                    <p className="text-[#b48a2d] font-bold text-sm">{item.price}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <button onClick={() => updateQty(item.name, item.qty - 1)} className="w-6 h-6 rounded bg-secondary flex items-center justify-center">
+                      <button onClick={() => updateQty(item.name, item.qty - 1)} className="w-6 h-6 rounded bg-stone-100 flex items-center justify-center text-[#1e1e24]">
                         <Minus className="w-3 h-3" />
                       </button>
                       <span className="text-sm w-5 text-center">{item.qty}</span>
-                      <button onClick={() => updateQty(item.name, item.qty + 1)} className="w-6 h-6 rounded bg-secondary flex items-center justify-center">
+                      <button onClick={() => updateQty(item.name, item.qty + 1)} className="w-6 h-6 rounded bg-stone-100 flex items-center justify-center text-[#1e1e24]">
                         <Plus className="w-3 h-3" />
                       </button>
                       <button onClick={() => removeItem(item.name)} className="ml-auto text-destructive">
@@ -345,7 +345,7 @@ const CartDrawer = () => {
                       placeholder="e.g. John Doe" 
                       value={customerName} 
                       onChange={(e) => setCustomerName(e.target.value)} 
-                      className={!customerName && loading ? "border-destructive" : ""}
+                      className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !customerName && loading ? "border-destructive" : "")}
                     />
                   </div>
                   <div className="space-y-1">
@@ -354,7 +354,7 @@ const CartDrawer = () => {
                       placeholder="e.g. +91 98765 43210" 
                       value={customerPhone} 
                       onChange={(e) => setCustomerPhone(e.target.value)}
-                      className={!customerPhone && loading ? "border-destructive" : ""}
+                      className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !customerPhone && loading ? "border-destructive" : "")}
                     />
                   </div>
                   <div className="space-y-1">
@@ -363,17 +363,18 @@ const CartDrawer = () => {
                       placeholder="e.g. john@example.com" 
                       value={customerEmail} 
                       onChange={(e) => setCustomerEmail(e.target.value)} 
+                      className="bg-stone-50 border-stone-200 text-[#1e1e24]"
                     />
                   </div>
                   
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
-                      <Label className="text-[10px] uppercase text-muted-foreground">Date of Birth *</Label>
+                      <Label className="text-[10px] uppercase text-[#1e1e24]/60">Date of Birth *</Label>
                       <Input 
                         type="date" 
                         value={dob} 
                         onChange={(e) => setDob(e.target.value)} 
-                        className={cn("text-xs", !dob && loading ? "border-destructive" : "")} 
+                        className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24]", !dob && loading ? "border-destructive" : "")} 
                       />
                     </div>
                     <div className="space-y-1">
