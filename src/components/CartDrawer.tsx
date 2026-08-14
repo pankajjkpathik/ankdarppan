@@ -347,7 +347,9 @@ const CartDrawer = () => {
 
               {/* Customer & Birth Details */}
               <div className="space-y-3 pt-2">
-                <h4 className="text-sm font-heading font-semibold text-stone-950">Numerology Report Details</h4>
+                <h4 className="text-sm font-heading font-semibold text-stone-950">
+                  {hasPhysicalProducts ? "Order Details" : "Numerology Report Details"}
+                </h4>
                 <div className="grid grid-cols-1 gap-3">
                   <div className="space-y-1">
                     <Label className="text-xs text-stone-900 font-semibold">Full Name *</Label>
