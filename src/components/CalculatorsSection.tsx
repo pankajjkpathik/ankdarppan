@@ -19,8 +19,8 @@ const BirthDestinyCalc = () => {
   const [result, setResult] = useState<{ birth: number; destiny: number } | null>(null);
 
   const calculate = () => {
-    if (!dob) return;
-    const [y, m, d] = dob.split("-").map(Number);
+    if (!dob || dob.length < 10) return;
+    const [d, m, y] = dob.split("/").map(Number);
     const birth = reduceToSingle(d);
     const destiny = reduceToSingle(d + m + y);
     setResult({ birth, destiny });
@@ -35,9 +35,16 @@ const BirthDestinyCalc = () => {
       <div className="mb-4">
         <label className="text-xs text-muted-foreground ml-1 mb-1 block">Date of Birth (DD/MM/YYYY)</label>
         <input
-          type="date"
+          type="text"
+          placeholder="DD/MM/YYYY"
           value={dob}
-          onChange={(e) => setDob(e.target.value)}
+          onChange={(e) => {
+            let value = e.target.value.replace(/\D/g, "");
+            if (value.length > 8) value = value.slice(0, 8);
+            if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+            else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+            setDob(value);
+          }}
           className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground"
         />
       </div>
@@ -159,8 +166,8 @@ const PersonalYearCalc = () => {
   const [result, setResult] = useState<{ year: number; month: number } | null>(null);
 
   const calculate = () => {
-    if (!dob) return;
-    const [, m, d] = dob.split("-").map(Number);
+    if (!dob || dob.length < 10) return;
+    const [d, m, y] = dob.split("/").map(Number);
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
     const personalYear = reduceToSingle(d + m + currentYear);
@@ -177,9 +184,16 @@ const PersonalYearCalc = () => {
       <div className="mb-4">
         <label className="text-xs text-muted-foreground ml-1 mb-1 block">Date of Birth (DD/MM/YYYY)</label>
         <input
-          type="date"
+          type="text"
+          placeholder="DD/MM/YYYY"
           value={dob}
-          onChange={(e) => setDob(e.target.value)}
+          onChange={(e) => {
+            let value = e.target.value.replace(/\D/g, "");
+            if (value.length > 8) value = value.slice(0, 8);
+            if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+            else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+            setDob(value);
+          }}
           className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground"
         />
       </div>
