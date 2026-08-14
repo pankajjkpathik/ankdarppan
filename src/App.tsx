@@ -23,6 +23,9 @@ import RefundPolicy from "./pages/RefundPolicy.tsx";
 import TermsAndConditions from "./pages/TermsAndConditions.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import MobileCompatibilityReport from "./pages/MobileCompatibilityReport.tsx";
+import LoshuGridReport from "./pages/LoshuGridReport.tsx";
+import MarriageCompatibility from "./pages/MarriageCompatibility.tsx";
+import NameCompatibilityReport from "./pages/NameCompatibilityReport.tsx";
 
 // Auth Pages
 import Auth from "./pages/Auth.tsx";
@@ -67,6 +70,9 @@ const App = () => (
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/mobile-compatibility-report" element={<MobileCompatibilityReport />} />
+            <Route path="/loshu-grid-report" element={<LoshuGridReport />} />
+            <Route path="/marriage-compatibility" element={<MarriageCompatibility />} />
+            <Route path="/name-compatibility" element={<NameCompatibilityReport />} />
 
             {/* --- Customer Auth --- */}
             <Route path="/auth" element={<Auth />} />

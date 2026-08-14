@@ -59,12 +59,23 @@ const ServicesSection = () => {
                       {service.old_price && <span className="text-muted-foreground line-through text-xs">₹{service.old_price.toLocaleString("en-IN")}</span>}
                     </div>
                     <a
-                      href={service.title.toLowerCase().includes('mobile compatibility') 
+                      href={service.title.toLowerCase().includes('mobile number consultation') || service.title.toLowerCase().includes('mobile compatibility')
                         ? "/mobile-compatibility-report" 
+                        : service.title.toLowerCase().includes('loshu grid')
+                        ? "/loshu-grid-report"
+                        : service.title.toLowerCase().includes('marriage compatibility')
+                        ? "/marriage-compatibility"
+                        : service.title.toLowerCase().includes('name compatibility')
+                        ? "/name-compatibility-report"
                         : `/book?service=${encodeURIComponent(service.title)}`}
                       className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:brightness-110 transition-all"
                     >
-                      {service.title.toLowerCase().includes('mobile compatibility') ? "View Offer" : "Order Now"}
+                      {service.title.toLowerCase().includes('mobile number consultation') || 
+                       service.title.toLowerCase().includes('mobile compatibility') ||
+                       service.title.toLowerCase().includes('loshu grid') ||
+                       service.title.toLowerCase().includes('marriage compatibility') ||
+                       service.title.toLowerCase().includes('name compatibility') 
+                       ? "View Offer" : "Order Now"}
                     </a>
                   </div>
                 </motion.div>
