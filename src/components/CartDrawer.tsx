@@ -107,7 +107,6 @@ const CartDrawer = () => {
 
   const hasPhysicalProducts = items.length > 0 && items.some(i => {
     const name = i.name.toLowerCase();
-    // A digital service contains these keywords
     const isDigital = name.includes('report') || 
                       name.includes('consultation') || 
                       name.includes('grid') || 
