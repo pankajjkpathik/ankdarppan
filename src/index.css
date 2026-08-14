@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap');
+/* Google Fonts loaded in index.html for better performance */
 
 @tailwind base;
 @tailwind components;
@@ -63,6 +63,7 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    line-height: 1.7;
   }
 
   h1, h2, h3, h4, h5, h6 {
