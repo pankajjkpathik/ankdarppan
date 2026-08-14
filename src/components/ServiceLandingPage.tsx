@@ -203,18 +203,18 @@ const ServiceLandingPage = ({
               </div>
               
               <div className="flex-1 relative">
-                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white aspect-[3/4] flex flex-col relative group cursor-pointer" onClick={() => window.open(sampleReportImage, '_blank')}>
+                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white aspect-[3/4] flex flex-col relative group">
                   {sampleReportImage ? (
                     <div className="relative w-full h-full overflow-hidden">
                       <img 
                         src={sampleReportImage} 
-                        alt="Sample Report" 
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        alt="Sample Report Excerpt" 
+                        className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="bg-white/95 px-6 py-3 rounded-full text-sm font-bold text-stone-950 shadow-xl border border-primary/20">
-                          VIEW SAMPLE REPORT
-                        </div>
+                      <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
+                      <div className="absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl border border-primary/20 shadow-lg">
+                        <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">Preview Excerpt</p>
+                        <p className="text-xs text-stone-900 font-medium">Visualization of typical report section</p>
                       </div>
                     </div>
                   ) : (
