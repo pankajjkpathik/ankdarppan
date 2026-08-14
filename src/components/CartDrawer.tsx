@@ -426,14 +426,14 @@ const CartDrawer = () => {
                         />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[10px] uppercase text-muted-foreground">Partner's TOB</Label>
-                        <Input type="time" value={partnerTob} onChange={(e) => setPartnerTob(e.target.value)} className="text-xs" />
+                        <Label className="text-[10px] uppercase text-[#1e1e24]/60">Partner's TOB</Label>
+                        <Input type="time" value={partnerTob} onChange={(e) => setPartnerTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24]" />
                       </div>
                     </div>
                     
                     <div className="space-y-1">
                       <Label className="text-xs">Partner's Place of Birth</Label>
-                      <Input placeholder="e.g. Mumbai, India" value={partnerPob} onChange={(e) => setPartnerPob(e.target.value)} />
+                      <Input placeholder="e.g. Mumbai, India" value={partnerPob} onChange={(e) => setPartnerPob(e.target.value)} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                     </div>
                   </div>
                 </div>
