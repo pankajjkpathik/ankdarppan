@@ -9,6 +9,7 @@ import { ArrowLeft, Loader2, CreditCard, Ticket } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { fbTrack } from "@/lib/fbpixel";
+import { Helmet } from "react-helmet-async";
 
 import { cn } from "@/lib/utils";
 
@@ -261,7 +262,11 @@ const BookNow = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#fdfbf7] text-[#1e1e24]">
+      <Helmet>
+        <title>Book Consultation | Ank Darppan</title>
+        <meta name="description" content="Book your personal numerology consultation with Ank Darppan. Secure payments and detailed reports." />
+      </Helmet>
       <div className="container mx-auto px-4 py-8 max-w-2xl">
         <button onClick={() => navigate("/")} className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -269,17 +274,17 @@ const BookNow = () => {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2">
-            Book Your <span className="gold-text">Consultation</span>
+            Book Your <span className="text-[#b48a2d]">Consultation</span>
           </h1>
-          <p className="text-muted-foreground mb-8">Fill in your details, select services, and pay securely via Razorpay.</p>
+          <p className="opacity-70 mb-8">Fill in your details, select services, and pay securely via Razorpay.</p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="glass-card p-6 space-y-4">
-              <h2 className="font-heading font-semibold text-lg text-foreground">Personal Details</h2>
+            <div className="bg-white border border-[#b48a2d]/20 rounded-2xl shadow-sm p-6 space-y-4">
+              <h2 className="font-heading font-semibold text-lg text-[#1e1e24]">Personal Details</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="name">Full Name *</Label>
-                  <Input name="name" id="name" required value={form.name} onChange={handleChange} placeholder="Your full name" className={cn("bg-secondary/50 border-border", !form.name && loading ? "border-destructive" : "")} />
+                  <Input name="name" id="name" required value={form.name} onChange={handleChange} placeholder="Your full name" className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.name && loading ? "border-destructive" : "")} />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="phone">Phone Number *</Label>
