@@ -5,7 +5,7 @@ import heroBg from "@/assets/hero-bg.jpg";
 const stats = [
   { value: "5+", label: "Years Experience" },
   { value: "1000+", label: "Reports Delivered" },
-  { value: "98%", label: "Accuracy Rate" },
+  { value: "100%", label: "Accuracy Rate" },
 ];
 
 const HeroSection = () => (
