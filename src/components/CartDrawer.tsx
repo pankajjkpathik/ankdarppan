@@ -105,6 +105,15 @@ const CartDrawer = () => {
     setCouponCode("");
   };
 
+  const hasPhysicalProducts = items.some(i => {
+    const name = i.name.toLowerCase();
+    return !name.includes('report') && 
+           !name.includes('consultation') && 
+           !name.includes('grid') && 
+           !name.includes('compatibility') &&
+           !name.includes('question') &&
+           !name.includes('numerology');
+  });
 
   // Auto-fill user details when cart opens
   useEffect(() => {
