@@ -410,13 +410,15 @@ const CartDrawer = () => {
                   {hasPhysicalProducts && (
                     <div className="space-y-3 animate-in fade-in slide-in-from-top-1 duration-200">
                       <h4 className="text-sm font-heading font-semibold text-stone-950 pt-2 border-t border-stone-100">Shipping Details</h4>
-                      <Label className="text-xs text-stone-900 font-semibold">Shipping Address (for Products) *</Label>
-                      <Textarea 
-                        placeholder="House No, Street, Landmark, City, State, ZIP *" 
-                        value={shippingAddress} 
-                        onChange={(e) => setShippingAddress(e.target.value)} 
-                        className={cn("min-h-[80px] text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !shippingAddress && loading ? "border-destructive" : "")}
-                      />
+                      <div className="space-y-1">
+                        <Label className="text-xs text-stone-900 font-semibold">Shipping Address *</Label>
+                        <Textarea 
+                          placeholder="House No, Street, Landmark, City, State, ZIP *" 
+                          value={shippingAddress} 
+                          onChange={(e) => setShippingAddress(e.target.value)} 
+                          className={cn("min-h-[80px] text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !shippingAddress && loading ? "border-destructive" : "")}
+                        />
+                      </div>
                     </div>
                   )}
                 </div>
