@@ -30,7 +30,7 @@ const HeroSection = () => (
         className="max-w-3xl"
       >
         <p className="text-primary font-display text-xl md:text-2xl italic mb-4">India's Trusted Numerology Consultant</p>
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight mb-6">
           Take Control of Your <span className="gold-text animate-shimmer">Destiny</span>
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 font-light leading-relaxed" style={{ lineHeight: 1.7 }}>
@@ -59,7 +59,7 @@ const HeroSection = () => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="grid grid-cols-3 gap-4 mt-8 w-full"
+        className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 w-full"
       >
         {stats.map((stat) => (
           <div key={stat.label} className="glass-card p-4 text-center">
