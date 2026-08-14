@@ -32,12 +32,15 @@ const BirthDestinyCalc = () => {
         <Calculator className="w-8 h-8 text-primary" />
         <h3 className="text-lg font-heading font-semibold">Birth & Destiny Calculator</h3>
       </div>
-      <input
-        type="date"
-        value={dob}
-        onChange={(e) => setDob(e.target.value)}
-        className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground mb-4"
-      />
+      <div className="mb-4">
+        <label className="text-xs text-muted-foreground ml-1 mb-1 block">Date of Birth (DD/MM/YYYY)</label>
+        <input
+          type="date"
+          value={dob}
+          onChange={(e) => setDob(e.target.value)}
+          className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground"
+        />
+      </div>
       <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all">
         Calculate
       </button>
@@ -171,12 +174,15 @@ const PersonalYearCalc = () => {
         <Calendar className="w-8 h-8 text-primary" />
         <h3 className="text-lg font-heading font-semibold">Personal Year & Month</h3>
       </div>
-      <input
-        type="date"
-        value={dob}
-        onChange={(e) => setDob(e.target.value)}
-        className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground mb-4"
-      />
+      <div className="mb-4">
+        <label className="text-xs text-muted-foreground ml-1 mb-1 block">Date of Birth (DD/MM/YYYY)</label>
+        <input
+          type="date"
+          value={dob}
+          onChange={(e) => setDob(e.target.value)}
+          className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground"
+        />
+      </div>
       <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all">
         Calculate
       </button>

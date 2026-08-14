@@ -10,6 +10,7 @@ import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import sampleReport from "@/assets/mobile_compatibility_report_sample.png.asset.json";
 
 const MobileCompatibilityReport = () => {
   const { addItem, setIsOpen: openCart } = useCart();
@@ -101,7 +102,7 @@ const MobileCompatibilityReport = () => {
                     />
                   </div>
                   <div className="text-left">
-                    <Label htmlFor="hero-dob" className="text-sm font-semibold ml-1 text-stone-900">Date of Birth</Label>
+                    <Label htmlFor="hero-dob" className="text-sm font-semibold ml-1 text-stone-900">Date of Birth (DD/MM/YYYY)</Label>
                     <Input 
                       id="hero-dob"
                       type="date"
@@ -224,46 +225,17 @@ const MobileCompatibilityReport = () => {
               </div>
               
               <div className="flex-1 relative">
-                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                  <div className="bg-white aspect-[3/4] flex flex-col p-8 border border-stone-100">
-                    <div className="flex justify-between items-start mb-8 border-b pb-4">
-                      <img src="/logo.png" alt="Ank Darppan" className="w-16 h-16 grayscale opacity-80" />
-                      <div className="text-right">
-                        <p className="text-[10px] text-stone-400 uppercase tracking-widest">Numerology Analysis</p>
-                        <p className="font-heading text-stone-800">Mobile Compatibility</p>
+                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white group relative">
+                  <div className="bg-white aspect-[3/4] flex flex-col relative overflow-hidden">
+                    <img 
+                      src={sampleReport.url} 
+                      alt="Sample Mobile Compatibility Report" 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="bg-white/90 px-4 py-2 rounded-full text-xs font-bold text-stone-900 shadow-lg">
+                        Sample Preview
                       </div>
-                    </div>
-                    
-                    <div className="space-y-6">
-                      <div className="space-y-2">
-                        <div className="h-3 w-1/2 bg-stone-100 rounded"></div>
-                        <div className="h-3 w-full bg-stone-50 rounded"></div>
-                        <div className="h-3 w-full bg-stone-50 rounded"></div>
-                      </div>
-                      
-                      <div className="p-4 bg-stone-50 rounded-xl border border-stone-100">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">85%</div>
-                          <div className="h-2 flex-1 bg-stone-200 rounded-full overflow-hidden">
-                            <div className="h-full w-[85%] bg-primary"></div>
-                          </div>
-                        </div>
-                        <div className="h-2 w-2/3 bg-stone-100 rounded"></div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="h-20 bg-stone-50 rounded-lg border border-stone-100"></div>
-                        <div className="h-20 bg-stone-50 rounded-lg border border-stone-100"></div>
-                      </div>
-                      
-                      <div className="pt-4 border-t border-stone-100">
-                        <div className="h-2 w-1/2 bg-stone-100 rounded mb-2"></div>
-                        <div className="h-2 w-full bg-stone-50 rounded"></div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-auto text-center pt-8 opacity-20">
-                      <p className="text-[10px]">ANK DARPPAN • CONFIDENTIAL REPORT</p>
                     </div>
                   </div>
                 </div>

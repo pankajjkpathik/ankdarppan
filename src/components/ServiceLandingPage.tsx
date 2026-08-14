@@ -18,6 +18,7 @@ interface LandingPageProps {
   description: string;
   benefits: string[];
   heroImage?: string;
+  sampleReportImage?: string;
 }
 
 const ServiceLandingPage = ({ 
@@ -26,7 +27,8 @@ const ServiceLandingPage = ({
   oldPrice, 
   description, 
   benefits,
-  heroImage = "/logo.png"
+  heroImage = "/logo.png",
+  sampleReportImage
 }: LandingPageProps) => {
   const { addItem, setIsOpen: openCart } = useCart();
   const [formData, setFormData] = useState({
@@ -100,7 +102,7 @@ const ServiceLandingPage = ({
                     />
                   </div>
                   <div className="text-left">
-                    <Label htmlFor="hero-dob" className="text-sm font-semibold ml-1 text-stone-900">Date of Birth</Label>
+                    <Label htmlFor="hero-dob" className="text-sm font-semibold ml-1 text-stone-900">Date of Birth (DD/MM/YYYY)</Label>
                     <Input 
                       id="hero-dob"
                       type="date"
@@ -200,27 +202,44 @@ const ServiceLandingPage = ({
               </div>
               
               <div className="flex-1 relative">
-                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white p-8 aspect-[3/4] flex flex-col">
-                  <div className="flex justify-between items-start mb-8 border-b pb-4">
-                    <img src="/logo.png" alt="Ank Darppan" className="w-16 h-16 grayscale opacity-80" />
-                    <div className="text-right">
-                      <p className="text-[10px] text-stone-400 uppercase tracking-widest">Premium Service</p>
-                      <p className="font-heading text-stone-800">{serviceTitle}</p>
-                    </div>
-                  </div>
-                  <div className="space-y-6 flex-1">
-                    <div className="h-4 bg-stone-100 rounded w-3/4"></div>
-                    <div className="h-4 bg-stone-50 rounded w-full"></div>
-                    <div className="h-4 bg-stone-50 rounded w-full"></div>
-                    <div className="mt-8 space-y-4">
-                      {[1, 2, 3].map(i => (
-                        <div key={i} className="flex items-center gap-3">
-                          <div className="w-4 h-4 rounded-full bg-primary/20"></div>
-                          <div className="h-3 bg-stone-50 rounded flex-1"></div>
+                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white aspect-[3/4] flex flex-col relative group">
+                  {sampleReportImage ? (
+                    <div className="relative w-full h-full overflow-hidden">
+                      <img 
+                        src={sampleReportImage} 
+                        alt="Sample Report" 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="bg-white/90 px-4 py-2 rounded-full text-xs font-bold text-stone-900 shadow-lg">
+                          Sample Preview
                         </div>
-                      ))}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <>
+                      <div className="flex justify-between items-start p-8 mb-8 border-b pb-4">
+                        <img src="/logo.png" alt="Ank Darppan" className="w-16 h-16 grayscale opacity-80" />
+                        <div className="text-right">
+                          <p className="text-[10px] text-stone-400 uppercase tracking-widest">Premium Service</p>
+                          <p className="font-heading text-stone-800">{serviceTitle}</p>
+                        </div>
+                      </div>
+                      <div className="space-y-6 flex-1 px-8">
+                        <div className="h-4 bg-stone-100 rounded w-3/4"></div>
+                        <div className="h-4 bg-stone-50 rounded w-full"></div>
+                        <div className="h-4 bg-stone-50 rounded w-full"></div>
+                        <div className="mt-8 space-y-4">
+                          {[1, 2, 3].map(i => (
+                            <div key={i} className="flex items-center gap-3">
+                              <div className="w-4 h-4 rounded-full bg-primary/20"></div>
+                              <div className="h-3 bg-stone-50 rounded flex-1"></div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
