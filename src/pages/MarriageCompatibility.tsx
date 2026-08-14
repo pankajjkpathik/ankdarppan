@@ -6,8 +6,8 @@ const MarriageCompatibility = () => {
   return (
     <ServiceLandingPage
       serviceTitle="Marriage Compatibility"
-      price={2100}
-      oldPrice={4200}
+      price={941}
+      oldPrice={2100}
       description="Ensure a harmonious lifetime partnership. Our compatibility report analyzes the numerological alignment between two individuals for a successful marriage."
       sampleReportImage={sampleReport.url}
       benefits={[

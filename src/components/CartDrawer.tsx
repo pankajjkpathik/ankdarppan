@@ -386,7 +386,7 @@ const CartDrawer = () => {
                   </div>
                     <div className="space-y-1">
                       <Label className="text-[10px] uppercase text-stone-900 font-bold">Time of Birth</Label>
-                      <Input type="time" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium" />
+                      <Input placeholder="HH:MM AM/PM" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium" />
                     </div>
                   </div>
                   
@@ -443,7 +443,7 @@ const CartDrawer = () => {
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[10px] uppercase text-[#1e1e24]/60">Partner's TOB</Label>
-                        <Input type="time" value={partnerTob} onChange={(e) => setPartnerTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24]" />
+                        <Input placeholder="HH:MM AM/PM" value={partnerTob} onChange={(e) => setPartnerTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24]" />
                       </div>
                     </div>
                     

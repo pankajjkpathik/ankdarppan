@@ -6,8 +6,8 @@ const LoshuGridReport = () => {
   return (
     <ServiceLandingPage
       serviceTitle="Loshu Grid Report"
-      price={2100}
-      oldPrice={4500}
+      price={941}
+      oldPrice={2100}
       description="Unlock the ancient secrets of the Loshu Grid. This report provides a complete analysis of your birth chart using Chinese numerology principles."
       sampleReportImage={sampleReport.url}
       benefits={[
