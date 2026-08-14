@@ -348,7 +348,7 @@ const CartDrawer = () => {
               {/* Customer & Birth Details */}
               <div className="space-y-3 pt-2">
                 <h4 className="text-sm font-heading font-semibold text-stone-950">
-                  {hasPhysicalProducts ? "Order Details" : "Numerology Report Details"}
+                  {hasPhysicalProducts ? "Customer Details" : "Numerology Report Details"}
                 </h4>
                 <div className="grid grid-cols-1 gap-3">
                   <div className="space-y-1">
@@ -379,37 +379,40 @@ const CartDrawer = () => {
                     />
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="space-y-1">
-                    <Label className="text-[10px] uppercase text-stone-900 font-bold">DOB (DD/MM/YYYY) {hasPhysicalProducts ? "" : "*"}</Label>
-                    <Input 
-                      placeholder="DD/MM/YYYY"
-                      value={dob} 
-                      onChange={(e) => {
-                        let value = e.target.value.replace(/\D/g, "");
-                        if (value.length > 8) value = value.slice(0, 8);
-                        if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
-                        else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
-                        setDob(value);
-                      }} 
-                      className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !dob && loading && !hasPhysicalProducts ? "border-destructive" : "")} 
-                    />
-                  </div>
-                    <div className="space-y-1">
-                      <Label className="text-[10px] uppercase text-stone-900 font-bold">Time of Birth</Label>
-                      <Input placeholder="HH:MM AM/PM" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium" />
-                    </div>
-                  </div>
+                  {!hasPhysicalProducts && (
+                    <>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="space-y-1">
+                          <Label className="text-[10px] uppercase text-stone-900 font-bold">DOB (DD/MM/YYYY) *</Label>
+                          <Input 
+                            placeholder="DD/MM/YYYY"
+                            value={dob} 
+                            onChange={(e) => {
+                              let value = e.target.value.replace(/\D/g, "");
+                              if (value.length > 8) value = value.slice(0, 8);
+                              if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+                              else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+                              setDob(value);
+                            }} 
+                            className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !dob && loading ? "border-destructive" : "")} 
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-[10px] uppercase text-stone-900 font-bold">Time of Birth</Label>
+                          <Input placeholder="HH:MM AM/PM" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium" />
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <Label className="text-xs text-stone-900 font-semibold">Place of Birth</Label>
+                        <Input placeholder="e.g. New Delhi, India" value={pob} onChange={(e) => setPob(e.target.value)} className="bg-stone-50 border-stone-200 text-[#1e1e24] font-medium" />
+                      </div>
+                    </>
+                  )}
                   
-                  <div className="space-y-1">
-                    <Label className="text-xs text-stone-900 font-semibold">Place of Birth</Label>
-                    <Input placeholder="e.g. New Delhi, India" value={pob} onChange={(e) => setPob(e.target.value)} className="bg-stone-50 border-stone-200 text-[#1e1e24] font-medium" />
-                  </div>
-                  
-                  {/* Address & Shipping only for products */}
                   {hasPhysicalProducts && (
-                    <div className="space-y-3 animate-in fade-in slide-in-from-top-1 duration-200">
-                      <h4 className="text-sm font-heading font-semibold text-stone-950 pt-2 border-t border-stone-100">Shipping Details</h4>
+                    <div className="space-y-3 animate-in fade-in slide-in-from-top-1 duration-200 pt-2 border-t border-stone-100">
+                      <h4 className="text-sm font-heading font-semibold text-stone-950">Shipping Details</h4>
                       <div className="space-y-1">
                         <Label className="text-xs text-stone-900 font-semibold">Shipping Address *</Label>
                         <Textarea 
