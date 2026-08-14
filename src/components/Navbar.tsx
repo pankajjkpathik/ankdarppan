@@ -82,7 +82,9 @@ const Navbar = () => {
               <span className="flex items-center gap-1.5 whitespace-nowrap"><Calendar className="w-3.5 h-3.5" /> {format(new Date(), "do MMMM, yyyy")}</span>
               <span className="flex items-center gap-1.5 whitespace-nowrap"><Mail className="w-3.5 h-3.5" /> contactus@ankdarppan.com</span>
               <span className="flex items-center gap-1.5 whitespace-nowrap"><Clock className="w-3.5 h-3.5" /> 11:30 AM to 8:30 PM</span>
-              <span className="flex items-center gap-1.5 whitespace-nowrap"><Phone className="w-3.5 h-3.5" /> +(91) 93173-65025</span>
+              <a href="https://wa.me/919317365025" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 whitespace-nowrap hover:brightness-110 transition-all">
+                <Phone className="w-3.5 h-3.5" /> +(91) 93173-65025
+              </a>
             </div>
             <div className="flex items-center gap-4">
               <a href="https://www.facebook.com/profile.php?id=61572864015133" target="_blank" rel="noopener noreferrer" className="text-primary hover:brightness-110 transition-colors"><Facebook className="w-4 h-4" /></a>
