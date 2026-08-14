@@ -205,7 +205,7 @@ const MobileCompatibilityReport = () => {
                   </div>
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹581</span>
-                    <span className="text-lg text-stone-400 line-through">₹1,199</span>
+                    <span className="text-lg text-stone-400 line-through">₹1,500</span>
                     <span className="text-primary font-semibold">Limited Time Offer</span>
                   </div>
                   <p className="text-xs text-stone-500 mt-2">*Apply coupon FOLLOWER at checkout for extra 15% discount.</p>
