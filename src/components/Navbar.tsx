@@ -159,9 +159,7 @@ const Navbar = () => {
               </Link>
             )}
 
-            <Link to="/book" className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all animate-pulse-glow">
-              Book Now
-            </Link>
+            {/* Book Now removed as per user request */}
           </div>
 
           <div className="flex items-center gap-2 lg:hidden">
@@ -218,9 +216,7 @@ const Navbar = () => {
                   </Link>
                 )}
 
-                <Link to="/book" onClick={() => setOpen(false)} className="mt-2 text-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">
-                  Book Now
-                </Link>
+                {/* Book Now removed */}
               </div>
             </motion.div>
           )}
