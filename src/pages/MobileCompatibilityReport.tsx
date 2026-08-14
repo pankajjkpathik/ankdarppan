@@ -66,7 +66,7 @@ const MobileCompatibilityReport = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900">
+    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900 selection:bg-primary/20">
       <Navbar />
       
       <main>
@@ -130,7 +130,7 @@ const MobileCompatibilityReport = () => {
                   size="lg" 
                   className="w-full py-7 text-lg font-bold rounded-full shadow-lg shadow-primary/20"
                 >
-                  GET MY MOBILE COMPATIBILITY REPORT
+                  GET MY REPORT
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </form>
@@ -207,7 +207,7 @@ const MobileCompatibilityReport = () => {
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹581</span>
                     <span className="text-lg text-stone-400 line-through">₹1,500</span>
-                    <span className="text-primary font-semibold">Limited Time Offer</span>
+                    <span className="text-primary font-bold">Limited Time Offer</span>
                   </div>
                   <p className="text-xs text-stone-500 mt-2">*Apply coupon FOLLOWER at checkout for extra 15% discount.</p>
                 </div>
@@ -220,7 +220,7 @@ const MobileCompatibilityReport = () => {
                   }} 
                   className="w-full md:w-auto px-10 py-6 text-lg font-bold"
                 >
-                  GET MY REPORT NOW
+                  GET MY REPORT
                 </Button>
               </div>
               

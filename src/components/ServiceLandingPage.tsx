@@ -65,7 +65,7 @@ const ServiceLandingPage = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900">
+    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900 selection:bg-primary/20">
       <Navbar />
       
       <main>
@@ -118,7 +118,7 @@ const ServiceLandingPage = ({
                   size="lg" 
                   className="w-full py-7 text-lg font-bold rounded-full shadow-lg shadow-primary/20"
                 >
-                  GET MY {serviceTitle.toUpperCase()}
+                  GET MY REPORT
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </form>
@@ -185,7 +185,7 @@ const ServiceLandingPage = ({
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
                     {oldPrice && <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span>}
-                    <span className="text-primary font-semibold">Limited Time Offer</span>
+                    <span className="text-primary font-bold">Limited Time Offer</span>
                   </div>
                 </div>
 
@@ -263,7 +263,7 @@ const ServiceLandingPage = ({
               size="lg" 
               className="px-12 py-8 text-xl font-bold rounded-full"
             >
-              GET STARTED
+              GET MY REPORT
             </Button>
             <div className="mt-8 flex items-center justify-center gap-6 opacity-80">
               <span className="flex items-center gap-1 text-sm"><ShieldCheck className="w-4 h-4" /> Secure Payment</span>
