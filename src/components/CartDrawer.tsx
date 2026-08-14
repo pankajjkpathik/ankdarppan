@@ -159,13 +159,20 @@ const CartDrawer = () => {
       i.name.toLowerCase().includes('compatibility')
     ) && !items.some(i => i.name.toLowerCase().includes('mobile'));
 
-    const isMobileCompatibility = items.some(i => i.name.toLowerCase().includes('mobile'));
+    const hasPhysicalProducts = items.some(i => {
+      const name = i.name.toLowerCase();
+      return !name.includes('report') && 
+             !name.includes('consultation') && 
+             !name.includes('grid') && 
+             !name.includes('compatibility') &&
+             !name.includes('question');
+    });
 
     const errors: string[] = [];
     if (!customerName.trim()) errors.push("Full Name");
     if (!customerPhone.trim()) errors.push("Phone Number");
     if (!dob) errors.push("Date of Birth");
-    if (!shippingAddress.trim() && !isMobileCompatibility) errors.push("Delivery Address");
+    if (hasPhysicalProducts && !shippingAddress.trim()) errors.push("Delivery Address");
 
     if (isMarriageCompatibility) {
       if (!partnerName.trim()) errors.push("Partner's Name");
@@ -396,7 +403,15 @@ const CartDrawer = () => {
                   </div>
                   
                   {/* Address & Shipping only for products */}
-                  {items.some(i => i.priceNum > 500 && !i.name.toLowerCase().includes('report') && !i.name.toLowerCase().includes('consultation')) && (
+                  {items.some(i => {
+                    const name = i.name.toLowerCase();
+                    // Products are items that are NOT reports, consultations, Grid, or Compatibility
+                    return !name.includes('report') && 
+                           !name.includes('consultation') && 
+                           !name.includes('grid') && 
+                           !name.includes('compatibility') &&
+                           !name.includes('question'); // Ask One Question
+                  }) && (
                     <div className="space-y-1 animate-in fade-in slide-in-from-top-1 duration-200">
                       <Label className="text-xs text-stone-900 font-semibold">Shipping Address (for Products) *</Label>
                       <Textarea 
