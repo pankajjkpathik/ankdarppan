@@ -41,8 +41,8 @@ const BirthDestinyCalc = () => {
           className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground"
         />
       </div>
-      <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all">
-        Calculate
+      <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-bold hover:brightness-110 transition-all">
+        CALCULATE
       </button>
       {result && (
         <div className="mt-4 grid grid-cols-2 gap-4">
@@ -83,8 +83,8 @@ const NameNumberCalc = () => {
         placeholder="Enter your full name"
         className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground mb-4"
       />
-      <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all">
-        Calculate
+      <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-bold hover:brightness-110 transition-all">
+        CALCULATE
       </button>
       {result !== null && (
         <div className="mt-4 text-center p-3 rounded-lg bg-secondary">
@@ -141,8 +141,8 @@ const KuaNumberCalc = () => {
           </button>
         ))}
       </div>
-      <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all">
-        Calculate
+      <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-bold hover:brightness-110 transition-all">
+        CALCULATE
       </button>
       {result !== null && (
         <div className="mt-4 text-center p-3 rounded-lg bg-secondary">
@@ -183,8 +183,8 @@ const PersonalYearCalc = () => {
           className="w-full p-3 rounded-lg bg-secondary border border-border text-foreground"
         />
       </div>
-      <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all">
-        Calculate
+      <button onClick={calculate} className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-bold hover:brightness-110 transition-all">
+        CALCULATE
       </button>
       {result && (
         <div className="mt-4 grid grid-cols-2 gap-4">

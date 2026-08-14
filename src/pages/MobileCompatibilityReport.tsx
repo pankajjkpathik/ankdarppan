@@ -194,7 +194,7 @@ const MobileCompatibilityReport = () => {
                   ].map((text, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-stone-700">{text}</span>
+                      <span className="text-stone-900 font-medium">{text}</span>
                     </li>
                   ))}
                 </ul>
