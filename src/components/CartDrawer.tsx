@@ -464,33 +464,35 @@ const CartDrawer = () => {
               )}
 
               {/* Shipping */}
-              <div className="space-y-3 pt-2">
-                <h4 className="text-sm font-heading font-semibold flex items-center gap-2">
-                  <Truck className="w-4 h-4 text-[#b48a2d]" /> Shipping
-                </h4>
-                <RadioGroup
-                  value={shippingType}
-                  onValueChange={(v) => setShippingType(v as "india" | "foreign")}
-                  className="space-y-2"
-                >
-                  <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
-                    <RadioGroupItem value="india" id="ship-india" />
-                    <Label htmlFor="ship-india" className="flex-1 cursor-pointer">
-                      <span className="text-sm font-medium text-[#1e1e24]">India</span>
-                      <span className="text-xs text-[#1e1e24]/60 block">Free Shipping</span>
-                    </Label>
-                    <span className="text-green-600 font-bold text-sm">FREE</span>
-                  </div>
-                  <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
-                    <RadioGroupItem value="foreign" id="ship-foreign" />
-                    <Label htmlFor="ship-foreign" className="flex-1 cursor-pointer">
-                      <span className="text-sm font-medium text-[#1e1e24]">International</span>
-                      <span className="text-xs text-[#1e1e24]/60 block">Shipping on actuals — we'll contact you</span>
-                    </Label>
-                    <span className="text-[#1e1e24]/60 text-xs font-medium">On Actual</span>
-                  </div>
-                </RadioGroup>
-              </div>
+              {hasPhysicalProducts && (
+                <div className="space-y-3 pt-2">
+                  <h4 className="text-sm font-heading font-semibold flex items-center gap-2">
+                    <Truck className="w-4 h-4 text-[#b48a2d]" /> Shipping
+                  </h4>
+                  <RadioGroup
+                    value={shippingType}
+                    onValueChange={(v) => setShippingType(v as "india" | "foreign")}
+                    className="space-y-2"
+                  >
+                    <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
+                      <RadioGroupItem value="india" id="ship-india" />
+                      <Label htmlFor="ship-india" className="flex-1 cursor-pointer">
+                        <span className="text-sm font-medium text-[#1e1e24]">India</span>
+                        <span className="text-xs text-[#1e1e24]/60 block">Free Shipping</span>
+                      </Label>
+                      <span className="text-green-600 font-bold text-sm">FREE</span>
+                    </div>
+                    <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
+                      <RadioGroupItem value="foreign" id="ship-foreign" />
+                      <Label htmlFor="ship-foreign" className="flex-1 cursor-pointer">
+                        <span className="text-sm font-medium text-[#1e1e24]">International</span>
+                        <span className="text-xs text-[#1e1e24]/60 block">Shipping on actuals — we'll contact you</span>
+                      </Label>
+                      <span className="text-[#1e1e24]/60 text-xs font-medium">On Actual</span>
+                    </div>
+                  </RadioGroup>
+                </div>
+              )}
             </div>
 
             <div className="border-t border-stone-200 pt-4 mt-4 space-y-3">
