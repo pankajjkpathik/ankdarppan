@@ -260,8 +260,8 @@ const MobileCompatibilityReport = () => {
                         <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                       ))}
                     </div>
-                    <p className="italic mb-6 text-stone-600">"{t.text}"</p>
-                    <p className="font-bold text-sm text-stone-800">— {t.name}</p>
+                    <p className="italic mb-6 text-stone-900 font-medium">"{t.text}"</p>
+                    <p className="font-bold text-sm text-stone-950">— {t.name}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -273,7 +273,7 @@ const MobileCompatibilityReport = () => {
         <section className="py-20 bg-primary text-primary-foreground">
           <div className="container px-4 mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-heading mb-6">Ready to Align Your Mobile Vibration?</h2>
-            <p className="max-w-xl mx-auto mb-10 opacity-90">
+            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium">
               Join thousands who have optimized their lives through the power of mobile numerology.
             </p>
             <Button 

@@ -250,7 +250,7 @@ const ServiceLandingPage = ({
         <section className="py-20 bg-primary text-primary-foreground">
           <div className="container px-4 mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-heading mb-6">Ready to Transform Your Life?</h2>
-            <p className="max-w-xl mx-auto mb-10 opacity-90">
+            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium">
               Get your personalized {serviceTitle} today and step into your destiny.
             </p>
             <Button 
