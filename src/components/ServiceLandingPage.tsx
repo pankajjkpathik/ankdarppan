@@ -65,7 +65,7 @@ const ServiceLandingPage = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900">
+    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900 selection:bg-primary/20">
       <Navbar />
       
       <main>
@@ -84,7 +84,7 @@ const ServiceLandingPage = ({
                 {serviceTitle} <br />
                 <span className="text-primary">Unlock Your Potential</span>
               </h1>
-              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-600 leading-relaxed">
+              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed">
                 {description}
               </p>
               
@@ -118,7 +118,7 @@ const ServiceLandingPage = ({
                   size="lg" 
                   className="w-full py-7 text-lg font-bold rounded-full shadow-lg shadow-primary/20"
                 >
-                  GET MY {serviceTitle.toUpperCase()}
+                  GET MY REPORT
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </form>
@@ -158,7 +158,7 @@ const ServiceLandingPage = ({
                       {item.icon}
                     </div>
                     <h3 className="text-xl font-heading mb-3">{item.title}</h3>
-                    <p className="text-stone-600">{item.desc}</p>
+                    <p className="text-stone-900 font-medium">{item.desc}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -176,7 +176,7 @@ const ServiceLandingPage = ({
                   {benefits.map((text, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-stone-700">{text}</span>
+                      <span className="text-stone-900 font-medium">{text}</span>
                     </li>
                   ))}
                 </ul>
@@ -185,7 +185,7 @@ const ServiceLandingPage = ({
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
                     {oldPrice && <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span>}
-                    <span className="text-primary font-semibold">Limited Time Offer</span>
+                    <span className="text-primary font-bold">Limited Time Offer</span>
                   </div>
                 </div>
 
@@ -197,7 +197,7 @@ const ServiceLandingPage = ({
                   }} 
                   className="w-full md:w-auto px-10 py-6 text-lg font-bold"
                 >
-                  ORDER NOW
+                  GET MY REPORT
                 </Button>
               </div>
               
@@ -250,7 +250,7 @@ const ServiceLandingPage = ({
         <section className="py-20 bg-primary text-primary-foreground">
           <div className="container px-4 mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-heading mb-6">Ready to Transform Your Life?</h2>
-            <p className="max-w-xl mx-auto mb-10 opacity-90">
+            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium">
               Get your personalized {serviceTitle} today and step into your destiny.
             </p>
             <Button 
@@ -263,7 +263,7 @@ const ServiceLandingPage = ({
               size="lg" 
               className="px-12 py-8 text-xl font-bold rounded-full"
             >
-              GET STARTED
+              GET MY REPORT
             </Button>
             <div className="mt-8 flex items-center justify-center gap-6 opacity-80">
               <span className="flex items-center gap-1 text-sm"><ShieldCheck className="w-4 h-4" /> Secure Payment</span>

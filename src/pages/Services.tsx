@@ -66,7 +66,7 @@ const Services = () => {
             href={link}
             className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:brightness-110 transition-all"
           >
-            {isSpecial ? "View Offer" : "Order Now"}
+            GET MY REPORT
           </a>
         </div>
       </motion.div>

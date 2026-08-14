@@ -66,7 +66,7 @@ const MobileCompatibilityReport = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900">
+    <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900 selection:bg-primary/20">
       <Navbar />
       
       <main>
@@ -85,7 +85,7 @@ const MobileCompatibilityReport = () => {
                 Mobile Number Consultation <br />
                 <span className="text-primary">Luck or Obstacles?</span>
               </h1>
-              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-600 leading-relaxed">
+              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed">
                 Unlock the hidden vibration of your mobile number. Discover if your number aligns with your success, health, and prosperity.
               </p>
               <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-primary/20 shadow-xl">
@@ -130,7 +130,7 @@ const MobileCompatibilityReport = () => {
                   size="lg" 
                   className="w-full py-7 text-lg font-bold rounded-full shadow-lg shadow-primary/20"
                 >
-                  GET MY MOBILE COMPATIBILITY REPORT
+                  GET MY REPORT
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </form>
@@ -170,7 +170,7 @@ const MobileCompatibilityReport = () => {
                       {item.icon}
                     </div>
                     <h3 className="text-xl font-heading mb-3">{item.title}</h3>
-                    <p className="text-stone-600">{item.desc}</p>
+                    <p className="text-stone-900 font-medium">{item.desc}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -194,7 +194,7 @@ const MobileCompatibilityReport = () => {
                   ].map((text, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-stone-700">{text}</span>
+                      <span className="text-stone-900 font-medium">{text}</span>
                     </li>
                   ))}
                 </ul>
@@ -207,7 +207,7 @@ const MobileCompatibilityReport = () => {
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹581</span>
                     <span className="text-lg text-stone-400 line-through">₹1,500</span>
-                    <span className="text-primary font-semibold">Limited Time Offer</span>
+                    <span className="text-primary font-bold">Limited Time Offer</span>
                   </div>
                   <p className="text-xs text-stone-500 mt-2">*Apply coupon FOLLOWER at checkout for extra 15% discount.</p>
                 </div>
@@ -220,7 +220,7 @@ const MobileCompatibilityReport = () => {
                   }} 
                   className="w-full md:w-auto px-10 py-6 text-lg font-bold"
                 >
-                  GET MY REPORT NOW
+                  GET MY REPORT
                 </Button>
               </div>
               
@@ -260,8 +260,8 @@ const MobileCompatibilityReport = () => {
                         <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                       ))}
                     </div>
-                    <p className="italic mb-6 text-stone-600">"{t.text}"</p>
-                    <p className="font-bold text-sm text-stone-800">— {t.name}</p>
+                    <p className="italic mb-6 text-stone-900 font-medium">"{t.text}"</p>
+                    <p className="font-bold text-sm text-stone-950">— {t.name}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -273,7 +273,7 @@ const MobileCompatibilityReport = () => {
         <section className="py-20 bg-primary text-primary-foreground">
           <div className="container px-4 mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-heading mb-6">Ready to Align Your Mobile Vibration?</h2>
-            <p className="max-w-xl mx-auto mb-10 opacity-90">
+            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium">
               Join thousands who have optimized their lives through the power of mobile numerology.
             </p>
             <Button 

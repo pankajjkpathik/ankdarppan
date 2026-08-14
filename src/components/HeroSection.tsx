@@ -41,9 +41,9 @@ const HeroSection = () => (
         <div className="flex flex-col gap-4 mb-12">
           <Link
             to="/book"
-            className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-base hover:brightness-110 transition-all shadow-[0_4px_20px_-5px_hsl(var(--primary)/0.4)] w-fit"
+            className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-base hover:brightness-110 transition-all shadow-[0_4px_20px_-5px_hsl(var(--primary)/0.4)] w-fit"
           >
-            Book Consultation
+            GET MY REPORT
           </Link>
           <div className="flex items-center gap-2 text-xs text-muted-foreground opacity-80">
             <span>🔒 Secure Razorpay Payments</span>
