@@ -105,14 +105,16 @@ const CartDrawer = () => {
     setCouponCode("");
   };
 
-  const hasPhysicalProducts = items.some(i => {
+  const hasPhysicalProducts = items.length > 0 && items.some(i => {
     const name = i.name.toLowerCase();
-    return !name.includes('report') && 
-           !name.includes('consultation') && 
-           !name.includes('grid') && 
-           !name.includes('compatibility') &&
-           !name.includes('question') &&
-           !name.includes('numerology');
+    // A digital service contains these keywords
+    const isDigital = name.includes('report') || 
+                      name.includes('consultation') || 
+                      name.includes('grid') || 
+                      name.includes('compatibility') ||
+                      name.includes('question') ||
+                      name.includes('numerology');
+    return !isDigital;
   });
 
   // Auto-fill user details when cart opens
