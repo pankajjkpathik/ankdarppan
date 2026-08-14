@@ -369,14 +369,14 @@ const CartDrawer = () => {
                   
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
-                      <Label className="text-[10px] uppercase text-[#1e1e24]/60">Date of Birth *</Label>
-                      <Input 
-                        type="date" 
-                        value={dob} 
-                        onChange={(e) => setDob(e.target.value)} 
-                        className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24]", !dob && loading ? "border-destructive" : "")} 
-                      />
-                    </div>
+                    <Label className="text-[10px] uppercase text-[#1e1e24]/60">Date of Birth (DD/MM/YYYY) *</Label>
+                    <Input 
+                      type="date" 
+                      value={dob} 
+                      onChange={(e) => setDob(e.target.value)} 
+                      className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24]", !dob && loading ? "border-destructive" : "")} 
+                    />
+                  </div>
                     <div className="space-y-1">
                       <Label className="text-[10px] uppercase text-[#1e1e24]/60">Time of Birth</Label>
                       <Input type="time" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24]" />

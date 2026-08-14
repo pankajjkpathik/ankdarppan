@@ -295,7 +295,7 @@ const BookNow = () => {
                   <Input name="email" id="email" type="email" value={form.email} onChange={handleChange} placeholder="your@email.com" className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor="dob">Date of Birth *</Label>
+                  <Label htmlFor="dob">Date of Birth (DD/MM/YYYY) *</Label>
                   <Input name="dob" id="dob" type="date" required value={form.dob} onChange={handleChange} className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.dob && loading ? "border-destructive" : "")} />
                 </div>
                 <div className="space-y-1.5">
@@ -322,7 +322,7 @@ const BookNow = () => {
                     <Input name="partnerName" id="partnerName" value={form.partnerName} onChange={handleChange} placeholder="Partner's name" className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.partnerName && loading ? "border-destructive" : "")} />
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="partnerDob">Partner's Date of Birth *</Label>
+                    <Label htmlFor="partnerDob">Partner's Date of Birth (DD/MM/YYYY) *</Label>
                     <Input name="partnerDob" id="partnerDob" type="date" value={form.partnerDob} onChange={handleChange} className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.partnerDob && loading ? "border-destructive" : "")} />
                   </div>
                   <div className="space-y-1.5">
