@@ -225,7 +225,7 @@ const MobileCompatibilityReport = () => {
               </div>
               
               <div className="flex-1 relative">
-                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white group relative">
+                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white group relative cursor-pointer" onClick={() => window.open(sampleReport.url, '_blank')}>
                   <div className="bg-white aspect-[3/4] flex flex-col relative overflow-hidden">
                     <img 
                       src={sampleReport.url} 
@@ -233,8 +233,8 @@ const MobileCompatibilityReport = () => {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-black/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="bg-white/90 px-4 py-2 rounded-full text-xs font-bold text-stone-900 shadow-lg">
-                        Sample Preview
+                      <div className="bg-white/95 px-6 py-3 rounded-full text-sm font-bold text-stone-950 shadow-xl border border-primary/20">
+                        VIEW SAMPLE REPORT
                       </div>
                     </div>
                   </div>
