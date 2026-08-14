@@ -1,3 +1,4 @@
+/* Standardized Date Formats & Visual Visibility Edits applied */
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, Phone, Star, ShieldCheck, Zap, ArrowRight, ShoppingCart, Clock } from "lucide-react";
