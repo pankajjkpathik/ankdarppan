@@ -32,7 +32,7 @@ const MobileCompatibilityReport = () => {
     }
 
     addItem({
-      name: "Mobile Number Compatibility Report",
+      name: "Mobile Number Consultation",
       price: "₹581",
       priceNum: 581,
       img: "/logo.png",
@@ -81,7 +81,7 @@ const MobileCompatibilityReport = () => {
                 Sawan Special Offer
               </span>
               <h1 className="mb-6 text-4xl font-heading md:text-6xl text-stone-900">
-                Is Your Mobile Number Bringing You <br />
+                Mobile Number Consultation <br />
                 <span className="text-primary">Luck or Obstacles?</span>
               </h1>
               <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-600 leading-relaxed">
