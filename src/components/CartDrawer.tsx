@@ -403,7 +403,7 @@ const CartDrawer = () => {
               {/* Partner Details for Marriage Compatibility */}
               {items.some(i => i.name.toLowerCase().includes('marriage') || i.name.toLowerCase().includes('compatibility')) && (
                 <div className="space-y-3 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                  <h4 className="text-sm font-heading font-semibold text-primary">Partner's Details (for Compatibility)</h4>
+                  <h4 className="text-sm font-heading font-semibold text-[#b48a2d]">Partner's Details (for Compatibility)</h4>
                   <div className="grid grid-cols-1 gap-3">
                     <div className="space-y-1">
                       <Label className="text-xs">Partner's Full Name *</Label>
@@ -411,18 +411,18 @@ const CartDrawer = () => {
                         placeholder="e.g. Jane Doe" 
                         value={partnerName} 
                         onChange={(e) => setPartnerName(e.target.value)} 
-                        className={!partnerName && loading ? "border-destructive" : ""}
+                        className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !partnerName && loading ? "border-destructive" : "")}
                       />
                     </div>
                     
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <Label className="text-[10px] uppercase text-muted-foreground">Partner's DOB *</Label>
+                        <Label className="text-[10px] uppercase text-[#1e1e24]/60">Partner's DOB *</Label>
                         <Input 
                           type="date" 
                           value={partnerDob} 
                           onChange={(e) => setPartnerDob(e.target.value)} 
-                          className={cn("text-xs", !partnerDob && loading ? "border-destructive" : "")} 
+                          className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24]", !partnerDob && loading ? "border-destructive" : "")} 
                         />
                       </div>
                       <div className="space-y-1">

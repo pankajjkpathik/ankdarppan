@@ -58,7 +58,7 @@ const BlogSection = () => {
             >
               {blog.image_url && (
                 <Link to={`/blog/${blog.slug}`}>
-                  <img src={blog.image_url} alt={blog.title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <img src={blog.image_url} alt={blog.title || "Numerology blog post"} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 </Link>
               )}
               <div className="p-5">

@@ -13,7 +13,7 @@ const HeroSection = () => (
     <div className="absolute inset-0">
       <img
         src={heroBg}
-        alt="Mystical numerology background"
+        alt="Mystical numerology golden background"
         className="w-full h-full object-cover"
         width={1920}
         height={1080}

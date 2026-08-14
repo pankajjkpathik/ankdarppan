@@ -50,7 +50,7 @@ const ServicesSection = () => {
                   transition={{ delay: i * 0.1 }}
                   className="glass-card p-6 group hover:border-primary/40 transition-all duration-300"
                 >
-                  <Icon className="w-10 h-10 text-primary mb-4 group-hover:scale-110 transition-transform" />
+                  <Icon className="w-10 h-10 text-primary mb-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
                   <h3 className="text-lg font-heading font-semibold mb-2 text-foreground">{service.title}</h3>
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{service.description}</p>
                   <div className="flex items-center justify-between mt-auto">
