@@ -11,7 +11,7 @@ import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import sampleReport from "@/assets/mobile_compatibility_report_sample.png.asset.json";
+import sampleReport from "@/assets/mobile-sample.jpg.asset.json";
 
 const MobileCompatibilityReport = () => {
   const { addItem, setIsOpen: openCart } = useCart();
