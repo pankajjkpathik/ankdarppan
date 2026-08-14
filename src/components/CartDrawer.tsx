@@ -392,7 +392,7 @@ const CartDrawer = () => {
                         else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
                         setDob(value);
                       }} 
-                      className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !dob && loading ? "border-destructive" : "")} 
+                      className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !dob && loading && !hasPhysicalProducts ? "border-destructive" : "")} 
                     />
                   </div>
                     <div className="space-y-1">
