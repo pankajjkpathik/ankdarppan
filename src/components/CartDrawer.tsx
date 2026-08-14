@@ -417,7 +417,7 @@ const CartDrawer = () => {
                     
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <Label className="text-[10px] uppercase text-[#1e1e24]/60">Partner's DOB *</Label>
+                        <Label className="text-[10px] uppercase text-[#1e1e24]/60">Partner's DOB (DD/MM/YYYY) *</Label>
                         <Input 
                           type="date" 
                           value={partnerDob} 
