@@ -314,7 +314,7 @@ const BookNow = () => {
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="tob">Time of Birth</Label>
-                  <Input name="tob" id="tob" type="time" value={form.tob} onChange={handleChange} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
+                  <Input name="tob" id="tob" type="text" placeholder="HH:MM AM/PM" value={form.tob} onChange={handleChange} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="pob">Place of Birth</Label>
@@ -354,7 +354,7 @@ const BookNow = () => {
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="partnerTob">Partner's Time of Birth</Label>
-                    <Input name="partnerTob" id="partnerTob" type="time" value={form.partnerTob} onChange={handleChange} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
+                    <Input name="partnerTob" id="partnerTob" type="text" placeholder="HH:MM AM/PM" value={form.partnerTob} onChange={handleChange} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="partnerPob">Partner's Place of Birth</Label>
