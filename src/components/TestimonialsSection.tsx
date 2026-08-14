@@ -69,8 +69,7 @@ const TestimonialsSection = () => (
               ))}
             </div>
             <div>
-              <p className="font-heading font-semibold text-foreground">{t.name}</p>
-              <p className="text-xs text-muted-foreground">{t.location}</p>
+              <p className="font-heading font-semibold text-foreground">{t.name}, {t.location}</p>
             </div>
           </motion.div>
         ))}

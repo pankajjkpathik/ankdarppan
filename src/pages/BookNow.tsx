@@ -9,6 +9,7 @@ import { ArrowLeft, Loader2, CreditCard, Ticket } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { fbTrack } from "@/lib/fbpixel";
+import { Helmet } from "react-helmet-async";
 
 import { cn } from "@/lib/utils";
 
@@ -261,7 +262,11 @@ const BookNow = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#fdfbf7] text-[#1e1e24]">
+      <Helmet>
+        <title>Book Consultation | Ank Darppan</title>
+        <meta name="description" content="Book your personal numerology consultation with Ank Darppan. Secure payments and detailed reports." />
+      </Helmet>
       <div className="container mx-auto px-4 py-8 max-w-2xl">
         <button onClick={() => navigate("/")} className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -269,71 +274,71 @@ const BookNow = () => {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2">
-            Book Your <span className="gold-text">Consultation</span>
+            Book Your <span className="text-[#b48a2d]">Consultation</span>
           </h1>
-          <p className="text-muted-foreground mb-8">Fill in your details, select services, and pay securely via Razorpay.</p>
+          <p className="opacity-70 mb-8">Fill in your details, select services, and pay securely via Razorpay.</p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="glass-card p-6 space-y-4">
-              <h2 className="font-heading font-semibold text-lg text-foreground">Personal Details</h2>
+            <div className="bg-white border border-[#b48a2d]/20 rounded-2xl shadow-sm p-6 space-y-4">
+              <h2 className="font-heading font-semibold text-lg text-[#1e1e24]">Personal Details</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="name">Full Name *</Label>
-                  <Input name="name" id="name" required value={form.name} onChange={handleChange} placeholder="Your full name" className={cn("bg-secondary/50 border-border", !form.name && loading ? "border-destructive" : "")} />
+                  <Input name="name" id="name" required value={form.name} onChange={handleChange} placeholder="Your full name" className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.name && loading ? "border-destructive" : "")} />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="phone">Phone Number *</Label>
-                  <Input name="phone" id="phone" type="tel" required value={form.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" className={cn("bg-secondary/50 border-border", !form.phone && loading ? "border-destructive" : "")} />
+                  <Input name="phone" id="phone" type="tel" required value={form.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.phone && loading ? "border-destructive" : "")} />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="email">Email</Label>
-                  <Input name="email" id="email" type="email" value={form.email} onChange={handleChange} placeholder="your@email.com" className="bg-secondary/50 border-border" />
+                  <Input name="email" id="email" type="email" value={form.email} onChange={handleChange} placeholder="your@email.com" className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="dob">Date of Birth *</Label>
-                  <Input name="dob" id="dob" type="date" required value={form.dob} onChange={handleChange} className={cn("bg-secondary/50 border-border", !form.dob && loading ? "border-destructive" : "")} />
+                  <Input name="dob" id="dob" type="date" required value={form.dob} onChange={handleChange} className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.dob && loading ? "border-destructive" : "")} />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="tob">Time of Birth</Label>
-                  <Input name="tob" id="tob" type="time" value={form.tob} onChange={handleChange} className="bg-secondary/50 border-border" />
+                  <Input name="tob" id="tob" type="time" value={form.tob} onChange={handleChange} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="pob">Place of Birth</Label>
-                  <Input name="pob" id="pob" value={form.pob} onChange={handleChange} placeholder="City, State" className="bg-secondary/50 border-border" />
+                  <Input name="pob" id="pob" value={form.pob} onChange={handleChange} placeholder="City, State" className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                 </div>
                 <div className="space-y-1.5 sm:col-span-2">
                   <Label htmlFor="address">Address {selected.some(name => name.toLowerCase().includes('mobile')) ? "(Optional for Mobile Report)" : "*"}</Label>
-                  <Textarea name="address" id="address" required value={form.address} onChange={handleChange} placeholder="Your full address" className={cn("bg-secondary/50 border-border", !form.address && loading ? "border-destructive" : "")} rows={2} />
+                  <Textarea name="address" id="address" required value={form.address} onChange={handleChange} placeholder="Your full address" className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.address && loading ? "border-destructive" : "")} rows={2} />
                 </div>
               </div>
             </div>
 
             {selected.some(name => name.toLowerCase().includes('marriage') || name.toLowerCase().includes('compatibility')) && (
-              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="glass-card p-6 space-y-4 border-primary/30">
-                <h2 className="font-heading font-semibold text-lg text-primary">Partner's Details</h2>
+              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="bg-white border border-[#b48a2d]/20 rounded-2xl shadow-sm p-6 space-y-4">
+                <h2 className="font-heading font-semibold text-lg text-[#b48a2d]">Partner's Details</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label htmlFor="partnerName">Partner's Full Name *</Label>
-                    <Input name="partnerName" id="partnerName" value={form.partnerName} onChange={handleChange} placeholder="Partner's name" className={cn("bg-secondary/50 border-border", !form.partnerName && loading ? "border-destructive" : "")} />
+                    <Input name="partnerName" id="partnerName" value={form.partnerName} onChange={handleChange} placeholder="Partner's name" className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.partnerName && loading ? "border-destructive" : "")} />
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="partnerDob">Partner's Date of Birth *</Label>
-                    <Input name="partnerDob" id="partnerDob" type="date" value={form.partnerDob} onChange={handleChange} className={cn("bg-secondary/50 border-border", !form.partnerDob && loading ? "border-destructive" : "")} />
+                    <Input name="partnerDob" id="partnerDob" type="date" value={form.partnerDob} onChange={handleChange} className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.partnerDob && loading ? "border-destructive" : "")} />
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="partnerTob">Partner's Time of Birth</Label>
-                    <Input name="partnerTob" id="partnerTob" type="time" value={form.partnerTob} onChange={handleChange} className="bg-secondary/50 border-border" />
+                    <Input name="partnerTob" id="partnerTob" type="time" value={form.partnerTob} onChange={handleChange} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="partnerPob">Partner's Place of Birth</Label>
-                    <Input name="partnerPob" id="partnerPob" value={form.partnerPob} onChange={handleChange} placeholder="City, State" className="bg-secondary/50 border-border" />
+                    <Input name="partnerPob" id="partnerPob" value={form.partnerPob} onChange={handleChange} placeholder="City, State" className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
                   </div>
                 </div>
               </motion.div>
             )}
 
-            <div className="glass-card p-6 space-y-4">
-              <h2 className="font-heading font-semibold text-lg text-foreground">Select Services *</h2>
+            <div className="bg-white border border-[#b48a2d]/20 rounded-2xl shadow-sm p-6 space-y-4">
+              <h2 className="font-heading font-semibold text-lg text-[#1e1e24]">Select Services *</h2>
               {dbLoading ? (
                 <div className="flex justify-center py-4"><Loader2 className="animate-spin text-primary" /></div>
               ) : (
@@ -345,13 +350,13 @@ const BookNow = () => {
                       onClick={() => toggleService(s.title)}
                       className={`text-left p-4 rounded-xl border transition-all ${
                         selected.includes(s.title)
-                          ? "border-primary bg-primary/10 shadow-[0_0_15px_-3px_hsl(var(--primary)/0.3)]"
-                          : "border-border bg-secondary/30 hover:border-primary/40"
+                          ? "border-[#b48a2d] bg-[#b48a2d]/10 shadow-[0_4px_12px_rgba(180,138,45,0.15)]"
+                          : "border-stone-200 bg-stone-50 hover:border-[#b48a2d]/40"
                       }`}
                     >
-                      <span className="text-sm font-semibold text-foreground">{s.title}</span>
+                      <span className={`text-sm font-semibold transition-colors ${selected.includes(s.title) ? "text-[#b48a2d]" : "text-[#1e1e24]"}`}>{s.title}</span>
                       <div className="mt-1 flex items-center gap-2">
-                        <span className="text-primary font-bold">₹{s.price}</span>
+                        <span className={`font-bold ${selected.includes(s.title) ? "text-[#b48a2d]" : "text-[#b48a2d]/80"}`}>₹{s.price}</span>
                         {s.old_price && <span className="text-muted-foreground line-through text-xs">₹{s.old_price}</span>}
                       </div>
                     </button>
@@ -360,22 +365,22 @@ const BookNow = () => {
               )}
             </div>
 
-            <div className="glass-card p-6 space-y-4">
-              <h2 className="font-heading font-semibold text-lg text-foreground flex items-center gap-2">
-                <Ticket className="w-4 h-4 text-primary" /> Coupon Code
+            <div className="bg-white border border-[#b48a2d]/20 rounded-2xl shadow-sm p-6 space-y-4">
+              <h2 className="font-heading font-semibold text-lg text-[#1e1e24] flex items-center gap-2">
+                <Ticket className="w-4 h-4 text-[#b48a2d]" /> Coupon Code
               </h2>
               <div className="flex gap-2">
                 <Input
                   placeholder="Enter code"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                  className="uppercase bg-secondary/50 border-border"
+                  className="uppercase bg-stone-50 border-stone-200 text-[#1e1e24]"
                   disabled={!!appliedCoupon}
                 />
                 {appliedCoupon ? (
                   <Button type="button" variant="ghost" onClick={() => { setAppliedCoupon(null); setCouponCode(""); }}>Remove</Button>
                 ) : (
-                  <Button type="button" variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()}>
+                  <Button type="button" variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()} className="border-[#b48a2d] text-[#b48a2d] hover:bg-[#b48a2d]/10">
                     {couponLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
                   </Button>
                 )}
@@ -385,9 +390,9 @@ const BookNow = () => {
               )}
             </div>
 
-            <div className="glass-card p-6 space-y-4">
-              <h2 className="font-heading font-semibold text-lg text-foreground">Additional Notes</h2>
-              <Textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Any specific questions..." className="bg-secondary/50 border-border" rows={3} />
+            <div className="bg-white border border-[#b48a2d]/20 rounded-2xl shadow-sm p-6 space-y-4">
+              <h2 className="font-heading font-semibold text-lg text-[#1e1e24]">Additional Notes</h2>
+              <Textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Any specific questions..." className="bg-stone-50 border-stone-200 text-[#1e1e24]" rows={3} />
             </div>
 
             {selected.length > 0 && (
