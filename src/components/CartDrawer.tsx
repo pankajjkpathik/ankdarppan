@@ -337,66 +337,69 @@ const CartDrawer = () => {
 
               {/* Customer & Birth Details */}
               <div className="space-y-3 pt-2">
-                <h4 className="text-sm font-heading font-semibold">Numerology Report Details</h4>
+                <h4 className="text-sm font-heading font-semibold text-stone-950">Numerology Report Details</h4>
                 <div className="grid grid-cols-1 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs">Full Name *</Label>
+                    <Label className="text-xs text-stone-900 font-semibold">Full Name *</Label>
                     <Input 
                       placeholder="e.g. John Doe" 
                       value={customerName} 
                       onChange={(e) => setCustomerName(e.target.value)} 
-                      className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !customerName && loading ? "border-destructive" : "")}
+                      className={cn("bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !customerName && loading ? "border-destructive" : "")}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label className="text-xs">Phone Number *</Label>
+                    <Label className="text-xs text-stone-900 font-semibold">Phone Number *</Label>
                     <Input 
                       placeholder="e.g. +91 98765 43210" 
                       value={customerPhone} 
                       onChange={(e) => setCustomerPhone(e.target.value)}
-                      className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !customerPhone && loading ? "border-destructive" : "")}
+                      className={cn("bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !customerPhone && loading ? "border-destructive" : "")}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label className="text-xs">Email Address</Label>
+                    <Label className="text-xs text-stone-900 font-semibold">Email Address</Label>
                     <Input 
                       placeholder="e.g. john@example.com" 
                       value={customerEmail} 
                       onChange={(e) => setCustomerEmail(e.target.value)} 
-                      className="bg-stone-50 border-stone-200 text-[#1e1e24]"
+                      className="bg-stone-50 border-stone-200 text-[#1e1e24] font-medium"
                     />
                   </div>
                   
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
-                    <Label className="text-[10px] uppercase text-[#1e1e24]/60">Date of Birth (DD/MM/YYYY) *</Label>
+                    <Label className="text-[10px] uppercase text-stone-900 font-bold">DOB (DD/MM/YYYY) *</Label>
                     <Input 
                       type="date" 
                       value={dob} 
                       onChange={(e) => setDob(e.target.value)} 
-                      className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24]", !dob && loading ? "border-destructive" : "")} 
+                      className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !dob && loading ? "border-destructive" : "")} 
                     />
                   </div>
                     <div className="space-y-1">
-                      <Label className="text-[10px] uppercase text-[#1e1e24]/60">Time of Birth</Label>
-                      <Input type="time" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24]" />
+                      <Label className="text-[10px] uppercase text-stone-900 font-bold">Time of Birth</Label>
+                      <Input type="time" value={tob} onChange={(e) => setTob(e.target.value)} className="text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium" />
                     </div>
                   </div>
                   
                   <div className="space-y-1">
-                    <Label className="text-xs">Place of Birth</Label>
-                    <Input placeholder="e.g. New Delhi, India" value={pob} onChange={(e) => setPob(e.target.value)} className="bg-stone-50 border-stone-200 text-[#1e1e24]" />
+                    <Label className="text-xs text-stone-900 font-semibold">Place of Birth</Label>
+                    <Input placeholder="e.g. New Delhi, India" value={pob} onChange={(e) => setPob(e.target.value)} className="bg-stone-50 border-stone-200 text-[#1e1e24] font-medium" />
                   </div>
                   
-                  <div className="space-y-1">
-                    <Label className="text-xs">Delivery Address {items.some(i => i.name.toLowerCase().includes('mobile')) ? "(Optional for Mobile Report)" : "*"}</Label>
-                    <Textarea 
-                      placeholder="House No, Street, Landmark, City, State, ZIP *" 
-                      value={shippingAddress} 
-                      onChange={(e) => setShippingAddress(e.target.value)} 
-                      className={cn("min-h-[80px] text-xs bg-stone-50 border-stone-200 text-[#1e1e24]", !shippingAddress && loading ? "border-destructive" : "")}
-                    />
-                  </div>
+                  {/* Address & Shipping only for products */}
+                  {items.some(i => i.priceNum > 500 && !i.name.toLowerCase().includes('report') && !i.name.toLowerCase().includes('consultation')) && (
+                    <div className="space-y-1 animate-in fade-in slide-in-from-top-1 duration-200">
+                      <Label className="text-xs text-stone-900 font-semibold">Shipping Address (for Products) *</Label>
+                      <Textarea 
+                        placeholder="House No, Street, Landmark, City, State, ZIP *" 
+                        value={shippingAddress} 
+                        onChange={(e) => setShippingAddress(e.target.value)} 
+                        className={cn("min-h-[80px] text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !shippingAddress && loading ? "border-destructive" : "")}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -510,10 +513,12 @@ const CartDrawer = () => {
                   <span className="text-green-600 font-semibold">-₹{discount.toLocaleString("en-IN")}</span>
                 </div>
               )}
-              <div className="flex justify-between text-sm text-[#1e1e24]/60">
-                <span>Shipping</span>
-                <span className={shippingType === "india" ? "text-green-600 font-semibold" : ""}>{shippingType === "india" ? "FREE" : "On Actual"}</span>
-              </div>
+              {items.some(i => !i.name.toLowerCase().includes('report') && !i.name.toLowerCase().includes('consultation')) && (
+                <div className="flex justify-between text-sm text-[#1e1e24]/60">
+                  <span>Shipping</span>
+                  <span className={shippingType === "india" ? "text-green-600 font-semibold" : ""}>{shippingType === "india" ? "FREE" : "On Actual"}</span>
+                </div>
+              )}
               <div className="flex justify-between font-bold text-lg border-t border-stone-200 pt-2 text-[#1e1e24]">
                 <span>Total</span>
                 <span className="text-[#b48a2d]">

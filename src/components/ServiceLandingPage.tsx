@@ -157,8 +157,8 @@ const ServiceLandingPage = ({
                     <div className="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-primary/10">
                       {item.icon}
                     </div>
-                    <h3 className="text-xl font-heading mb-3">{item.title}</h3>
-                    <p className="text-stone-900 font-medium">{item.desc}</p>
+                    <h3 className="text-xl font-heading mb-3 text-stone-900 font-bold">{item.title}</h3>
+                    <p className="text-stone-950 font-semibold">{item.desc}</p>
                   </CardContent>
                 </Card>
               ))}
