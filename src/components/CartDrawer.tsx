@@ -372,9 +372,15 @@ const CartDrawer = () => {
                     <div className="space-y-1">
                     <Label className="text-[10px] uppercase text-stone-900 font-bold">DOB (DD/MM/YYYY) *</Label>
                     <Input 
-                      type="date" 
+                      placeholder="DD/MM/YYYY"
                       value={dob} 
-                      onChange={(e) => setDob(e.target.value)} 
+                      onChange={(e) => {
+                        let value = e.target.value.replace(/\D/g, "");
+                        if (value.length > 8) value = value.slice(0, 8);
+                        if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+                        else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+                        setDob(value);
+                      }} 
                       className={cn("text-xs bg-stone-50 border-stone-200 text-[#1e1e24] font-medium", !dob && loading ? "border-destructive" : "")} 
                     />
                   </div>

@@ -296,7 +296,21 @@ const BookNow = () => {
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="dob">Date of Birth (DD/MM/YYYY) *</Label>
-                  <Input name="dob" id="dob" type="date" required value={form.dob} onChange={handleChange} className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.dob && loading ? "border-destructive" : "")} />
+                  <Input 
+                    name="dob" 
+                    id="dob" 
+                    placeholder="DD/MM/YYYY"
+                    required 
+                    value={form.dob} 
+                    onChange={(e) => {
+                      let value = e.target.value.replace(/\D/g, "");
+                      if (value.length > 8) value = value.slice(0, 8);
+                      if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+                      else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+                      setForm(p => ({ ...p, dob: value }));
+                    }} 
+                    className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.dob && loading ? "border-destructive" : "")} 
+                  />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="tob">Time of Birth</Label>
@@ -323,7 +337,20 @@ const BookNow = () => {
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="partnerDob">Partner's Date of Birth (DD/MM/YYYY) *</Label>
-                    <Input name="partnerDob" id="partnerDob" type="date" value={form.partnerDob} onChange={handleChange} className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.partnerDob && loading ? "border-destructive" : "")} />
+                    <Input 
+                      name="partnerDob" 
+                      id="partnerDob" 
+                      placeholder="DD/MM/YYYY"
+                      value={form.partnerDob} 
+                      onChange={(e) => {
+                        let value = e.target.value.replace(/\D/g, "");
+                        if (value.length > 8) value = value.slice(0, 8);
+                        if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+                        else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+                        setForm(p => ({ ...p, partnerDob: value }));
+                      }} 
+                      className={cn("bg-stone-50 border-stone-200 text-[#1e1e24]", !form.partnerDob && loading ? "border-destructive" : "")} 
+                    />
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="partnerTob">Partner's Time of Birth</Label>

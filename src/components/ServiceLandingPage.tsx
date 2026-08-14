@@ -106,10 +106,16 @@ const ServiceLandingPage = ({
                     <Label htmlFor="hero-dob" className="text-sm font-semibold ml-1 text-stone-900">Date of Birth (DD/MM/YYYY)</Label>
                     <Input 
                       id="hero-dob"
-                      type="date"
+                      placeholder="DD/MM/YYYY"
                       className="bg-[#fdfbf7] border-stone-300 text-stone-900 focus:border-primary"
                       value={formData.dob}
-                      onChange={(e) => setFormData(prev => ({ ...prev, dob: e.target.value }))}
+                      onChange={(e) => {
+                        let value = e.target.value.replace(/\D/g, "");
+                        if (value.length > 8) value = value.slice(0, 8);
+                        if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+                        else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+                        setFormData(prev => ({ ...prev, dob: value }));
+                      }}
                       required
                     />
                   </div>
