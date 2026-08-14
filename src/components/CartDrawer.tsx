@@ -404,15 +404,7 @@ const CartDrawer = () => {
                   </div>
                   
                   {/* Address & Shipping only for products */}
-                  {items.some(i => {
-                    const name = i.name.toLowerCase();
-                    // Products are items that are NOT reports, consultations, Grid, or Compatibility
-                    return !name.includes('report') && 
-                           !name.includes('consultation') && 
-                           !name.includes('grid') && 
-                           !name.includes('compatibility') &&
-                           !name.includes('question'); // Ask One Question
-                  }) && (
+                  {hasPhysicalProducts && (
                     <div className="space-y-1 animate-in fade-in slide-in-from-top-1 duration-200">
                       <Label className="text-xs text-stone-900 font-semibold">Shipping Address (for Products) *</Label>
                       <Textarea 
