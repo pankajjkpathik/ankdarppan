@@ -381,7 +381,7 @@ const CartDrawer = () => {
                   
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
-                    <Label className="text-[10px] uppercase text-stone-900 font-bold">DOB (DD/MM/YYYY) *</Label>
+                    <Label className="text-[10px] uppercase text-stone-900 font-bold">DOB (DD/MM/YYYY) {hasPhysicalProducts ? "" : "*"}</Label>
                     <Input 
                       placeholder="DD/MM/YYYY"
                       value={dob} 
