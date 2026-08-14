@@ -442,48 +442,48 @@ const CartDrawer = () => {
               {/* Shipping */}
               <div className="space-y-3 pt-2">
                 <h4 className="text-sm font-heading font-semibold flex items-center gap-2">
-                  <Truck className="w-4 h-4 text-primary" /> Shipping
+                  <Truck className="w-4 h-4 text-[#b48a2d]" /> Shipping
                 </h4>
                 <RadioGroup
                   value={shippingType}
                   onValueChange={(v) => setShippingType(v as "india" | "foreign")}
                   className="space-y-2"
                 >
-                  <div className="flex items-center space-x-2 glass-card p-3 rounded-lg">
+                  <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
                     <RadioGroupItem value="india" id="ship-india" />
                     <Label htmlFor="ship-india" className="flex-1 cursor-pointer">
-                      <span className="text-sm font-medium">India</span>
-                      <span className="text-xs text-muted-foreground block">Free Shipping</span>
+                      <span className="text-sm font-medium text-[#1e1e24]">India</span>
+                      <span className="text-xs text-[#1e1e24]/60 block">Free Shipping</span>
                     </Label>
                     <span className="text-green-600 font-bold text-sm">FREE</span>
                   </div>
-                  <div className="flex items-center space-x-2 glass-card p-3 rounded-lg">
+                  <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
                     <RadioGroupItem value="foreign" id="ship-foreign" />
                     <Label htmlFor="ship-foreign" className="flex-1 cursor-pointer">
-                      <span className="text-sm font-medium">International</span>
-                      <span className="text-xs text-muted-foreground block">Shipping on actuals — we'll contact you</span>
+                      <span className="text-sm font-medium text-[#1e1e24]">International</span>
+                      <span className="text-xs text-[#1e1e24]/60 block">Shipping on actuals — we'll contact you</span>
                     </Label>
-                    <span className="text-muted-foreground text-xs font-medium">On Actual</span>
+                    <span className="text-[#1e1e24]/60 text-xs font-medium">On Actual</span>
                   </div>
                 </RadioGroup>
               </div>
             </div>
 
-            <div className="border-t pt-4 mt-4 space-y-3">
+            <div className="border-t border-stone-200 pt-4 mt-4 space-y-3">
               {/* Coupon */}
               <div className="space-y-2">
                 <h4 className="text-sm font-heading font-semibold flex items-center gap-2">
-                  <Ticket className="w-4 h-4 text-primary" /> Coupon Code
+                  <Ticket className="w-4 h-4 text-[#b48a2d]" /> Coupon Code
                 </h4>
                 {appliedCoupon ? (
-                  <div className="flex items-center justify-between glass-card p-3 rounded-lg">
+                  <div className="flex items-center justify-between bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
                     <div>
-                      <p className="text-sm font-semibold text-primary tracking-wide">{appliedCoupon.code}</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-sm font-semibold text-[#b48a2d] tracking-wide">{appliedCoupon.code}</p>
+                      <p className="text-xs text-[#1e1e24]/60">
                         {appliedCoupon.discount_type === "percent" ? `${appliedCoupon.discount_value}% off` : `₹${appliedCoupon.discount_value} off`}
                       </p>
                     </div>
-                    <Button variant="ghost" size="sm" onClick={removeCoupon}>Remove</Button>
+                    <Button variant="ghost" size="sm" onClick={removeCoupon} className="text-[#1e1e24]/60 hover:text-destructive">Remove</Button>
                   </div>
                 ) : (
                   <div className="flex gap-2">
@@ -491,43 +491,43 @@ const CartDrawer = () => {
                       placeholder="Enter coupon code"
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                      className="uppercase"
+                      className="uppercase bg-stone-50 border-stone-200 text-[#1e1e24]"
                     />
-                    <Button variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()}>
+                    <Button variant="outline" onClick={applyCoupon} disabled={couponLoading || !couponCode.trim()} className="border-[#b48a2d] text-[#b48a2d] hover:bg-[#b48a2d]/10">
                       {couponLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
                     </Button>
                   </div>
                 )}
               </div>
 
-              <div className="flex justify-between text-sm text-muted-foreground">
+              <div className="flex justify-between text-sm text-[#1e1e24]/60">
                 <span>Subtotal</span>
-                <span>₹{total}</span>
+                <span>₹{total.toLocaleString("en-IN")}</span>
               </div>
               {discount > 0 && (
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Discount</span>
-                  <span className="text-green-600 font-semibold">-₹{discount}</span>
+                  <span className="text-[#1e1e24]/60">Discount</span>
+                  <span className="text-green-600 font-semibold">-₹{discount.toLocaleString("en-IN")}</span>
                 </div>
               )}
-              <div className="flex justify-between text-sm text-muted-foreground">
+              <div className="flex justify-between text-sm text-[#1e1e24]/60">
                 <span>Shipping</span>
                 <span className={shippingType === "india" ? "text-green-600 font-semibold" : ""}>{shippingType === "india" ? "FREE" : "On Actual"}</span>
               </div>
-              <div className="flex justify-between font-bold text-lg border-t pt-2">
+              <div className="flex justify-between font-bold text-lg border-t border-stone-200 pt-2 text-[#1e1e24]">
                 <span>Total</span>
-                <span className="text-primary">
-                  {shippingType === "india" ? `₹${grandTotal}` : `₹${Math.max(total - discount, 0)} + Shipping`}
+                <span className="text-[#b48a2d]">
+                  {shippingType === "india" ? `₹${grandTotal.toLocaleString("en-IN")}` : `₹${(Math.max(total - discount, 0)).toLocaleString("en-IN")} + Shipping`}
                 </span>
               </div>
 
 
-              <Button onClick={handleCheckout} disabled={loading} className="w-full">
+              <Button onClick={handleCheckout} disabled={loading} className="w-full bg-[#b48a2d] text-white hover:bg-[#b48a2d]/90 py-6 rounded-xl font-heading text-lg shadow-[0_4px_12px_rgba(180,138,45,0.25)]">
                 {loading ? <Loader2 className="animate-spin mr-2" /> : <CreditCard className="mr-2" />}
                 {loading ? "Processing..." : "Pay with Razorpay"}
               </Button>
 
-              <Button variant="outline" onClick={clearCart}>
+              <Button variant="ghost" onClick={clearCart} className="w-full text-[#1e1e24]/40 hover:text-destructive">
                 Clear Cart
               </Button>
             </div>

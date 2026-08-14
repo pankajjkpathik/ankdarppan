@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "@/contexts/CartContext";
+import { Helmet } from "react-helmet-async";
 import CartDrawer from "@/components/CartDrawer";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
@@ -36,6 +37,13 @@ import AdminLayout from "./pages/AdminDashboard.tsx";
 
 const queryClient = new QueryClient();
 
+const PageSEO = ({ title, description }: { title: string; description: string }) => (
+  <Helmet>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </Helmet>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <CartProvider>
@@ -46,11 +54,11 @@ const App = () => (
           <CartDrawer />
           <Routes>
             {/* --- Public Routes --- */}
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<><PageSEO title="Ank Darppan - Expert Numerology Consultant | Unlock Your Destiny" description="India's trusted numerology consultant. Loshu Grid reports, Vedic numerology, marriage compatibility, mobile number consultations & more." /><Index /></>} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/services" element={<Services />} />
             <Route path="/book" element={<BookNow />} />
-            <Route path="/shop" element={<Shop />} />
+            <Route path="/shop" element={<><PageSEO title="Shop Spiritual Products | Ank Darppan" description="Explore our handpicked collection of spiritual products, crystals, and numerology reports." /><Shop /></>} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/product/:id" element={<ProductDetail />} />
