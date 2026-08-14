@@ -1,6 +1,6 @@
 /* Standardized Date Formats & Visual Visibility Edits applied */
 import ServiceLandingPage from "@/components/ServiceLandingPage";
-import sampleReport from "@/assets/marriage_compatibility_report_sample.png.asset.json";
+import sampleReport from "@/assets/marriage-sample.jpg.asset.json";
 
 const MarriageCompatibility = () => {
   return (
