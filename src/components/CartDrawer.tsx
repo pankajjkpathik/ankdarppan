@@ -536,7 +536,7 @@ const CartDrawer = () => {
                   <span className="text-green-600 font-semibold">-₹{discount.toLocaleString("en-IN")}</span>
                 </div>
               )}
-              {items.some(i => !i.name.toLowerCase().includes('report') && !i.name.toLowerCase().includes('consultation')) && (
+              {hasPhysicalProducts && (
                 <div className="flex justify-between text-sm text-[#1e1e24]/60">
                   <span>Shipping</span>
                   <span className={shippingType === "india" ? "text-green-600 font-semibold" : ""}>{shippingType === "india" ? "FREE" : "On Actual"}</span>
