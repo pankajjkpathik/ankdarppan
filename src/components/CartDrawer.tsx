@@ -105,6 +105,15 @@ const CartDrawer = () => {
     setCouponCode("");
   };
 
+  const hasPhysicalProducts = items.some(i => {
+    const name = i.name.toLowerCase();
+    return !name.includes('report') && 
+           !name.includes('consultation') && 
+           !name.includes('grid') && 
+           !name.includes('compatibility') &&
+           !name.includes('question') &&
+           !name.includes('numerology');
+  });
 
   // Auto-fill user details when cart opens
   useEffect(() => {
@@ -159,14 +168,6 @@ const CartDrawer = () => {
       i.name.toLowerCase().includes('compatibility')
     ) && !items.some(i => i.name.toLowerCase().includes('mobile'));
 
-    const hasPhysicalProducts = items.some(i => {
-      const name = i.name.toLowerCase();
-      return !name.includes('report') && 
-             !name.includes('consultation') && 
-             !name.includes('grid') && 
-             !name.includes('compatibility') &&
-             !name.includes('question');
-    });
 
     const errors: string[] = [];
     if (!customerName.trim()) errors.push("Full Name");
@@ -403,15 +404,7 @@ const CartDrawer = () => {
                   </div>
                   
                   {/* Address & Shipping only for products */}
-                  {items.some(i => {
-                    const name = i.name.toLowerCase();
-                    // Products are items that are NOT reports, consultations, Grid, or Compatibility
-                    return !name.includes('report') && 
-                           !name.includes('consultation') && 
-                           !name.includes('grid') && 
-                           !name.includes('compatibility') &&
-                           !name.includes('question'); // Ask One Question
-                  }) && (
+                  {hasPhysicalProducts && (
                     <div className="space-y-1 animate-in fade-in slide-in-from-top-1 duration-200">
                       <Label className="text-xs text-stone-900 font-semibold">Shipping Address (for Products) *</Label>
                       <Textarea 
@@ -471,33 +464,35 @@ const CartDrawer = () => {
               )}
 
               {/* Shipping */}
-              <div className="space-y-3 pt-2">
-                <h4 className="text-sm font-heading font-semibold flex items-center gap-2">
-                  <Truck className="w-4 h-4 text-[#b48a2d]" /> Shipping
-                </h4>
-                <RadioGroup
-                  value={shippingType}
-                  onValueChange={(v) => setShippingType(v as "india" | "foreign")}
-                  className="space-y-2"
-                >
-                  <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
-                    <RadioGroupItem value="india" id="ship-india" />
-                    <Label htmlFor="ship-india" className="flex-1 cursor-pointer">
-                      <span className="text-sm font-medium text-[#1e1e24]">India</span>
-                      <span className="text-xs text-[#1e1e24]/60 block">Free Shipping</span>
-                    </Label>
-                    <span className="text-green-600 font-bold text-sm">FREE</span>
-                  </div>
-                  <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
-                    <RadioGroupItem value="foreign" id="ship-foreign" />
-                    <Label htmlFor="ship-foreign" className="flex-1 cursor-pointer">
-                      <span className="text-sm font-medium text-[#1e1e24]">International</span>
-                      <span className="text-xs text-[#1e1e24]/60 block">Shipping on actuals — we'll contact you</span>
-                    </Label>
-                    <span className="text-[#1e1e24]/60 text-xs font-medium">On Actual</span>
-                  </div>
-                </RadioGroup>
-              </div>
+              {hasPhysicalProducts && (
+                <div className="space-y-3 pt-2">
+                  <h4 className="text-sm font-heading font-semibold flex items-center gap-2">
+                    <Truck className="w-4 h-4 text-[#b48a2d]" /> Shipping
+                  </h4>
+                  <RadioGroup
+                    value={shippingType}
+                    onValueChange={(v) => setShippingType(v as "india" | "foreign")}
+                    className="space-y-2"
+                  >
+                    <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
+                      <RadioGroupItem value="india" id="ship-india" />
+                      <Label htmlFor="ship-india" className="flex-1 cursor-pointer">
+                        <span className="text-sm font-medium text-[#1e1e24]">India</span>
+                        <span className="text-xs text-[#1e1e24]/60 block">Free Shipping</span>
+                      </Label>
+                      <span className="text-green-600 font-bold text-sm">FREE</span>
+                    </div>
+                    <div className="flex items-center space-x-2 bg-white border border-[#b48a2d]/20 p-3 rounded-lg shadow-sm">
+                      <RadioGroupItem value="foreign" id="ship-foreign" />
+                      <Label htmlFor="ship-foreign" className="flex-1 cursor-pointer">
+                        <span className="text-sm font-medium text-[#1e1e24]">International</span>
+                        <span className="text-xs text-[#1e1e24]/60 block">Shipping on actuals — we'll contact you</span>
+                      </Label>
+                      <span className="text-[#1e1e24]/60 text-xs font-medium">On Actual</span>
+                    </div>
+                  </RadioGroup>
+                </div>
+              )}
             </div>
 
             <div className="border-t border-stone-200 pt-4 mt-4 space-y-3">
@@ -541,7 +536,7 @@ const CartDrawer = () => {
                   <span className="text-green-600 font-semibold">-₹{discount.toLocaleString("en-IN")}</span>
                 </div>
               )}
-              {items.some(i => !i.name.toLowerCase().includes('report') && !i.name.toLowerCase().includes('consultation')) && (
+              {hasPhysicalProducts && (
                 <div className="flex justify-between text-sm text-[#1e1e24]/60">
                   <span>Shipping</span>
                   <span className={shippingType === "india" ? "text-green-600 font-semibold" : ""}>{shippingType === "india" ? "FREE" : "On Actual"}</span>
@@ -550,7 +545,7 @@ const CartDrawer = () => {
               <div className="flex justify-between font-bold text-lg border-t border-stone-200 pt-2 text-[#1e1e24]">
                 <span>Total</span>
                 <span className="text-[#b48a2d]">
-                  {shippingType === "india" ? `₹${grandTotal.toLocaleString("en-IN")}` : `₹${(Math.max(total - discount, 0)).toLocaleString("en-IN")} + Shipping`}
+                  {hasPhysicalProducts && shippingType === "foreign" ? `₹${(Math.max(total - discount, 0)).toLocaleString("en-IN")} + Shipping` : `₹${grandTotal.toLocaleString("en-IN")}`}
                 </span>
               </div>
 
