@@ -17,9 +17,10 @@ interface ServiceForm {
   link: string;
   sort_order: string;
   is_active: boolean;
+  coupon_codes: string;
 }
 
-const emptyForm: ServiceForm = { title: "", description: "", price: "", old_price: "", icon: "FileText", link: "", sort_order: "0", is_active: true };
+const emptyForm: ServiceForm = { title: "", description: "", price: "", old_price: "", icon: "FileText", link: "", sort_order: "0", is_active: true, coupon_codes: "" };
 
 const iconOptions = ["Grid3X3", "BookOpen", "Heart", "Smartphone", "Gem", "FileText", "Star", "Sparkles", "Eye", "Moon"];
 
@@ -58,6 +59,7 @@ const AdminServicesTab = () => {
         link: form.link || null,
         sort_order: parseInt(form.sort_order) || 0,
         is_active: form.is_active,
+        coupon_codes: form.coupon_codes ? form.coupon_codes.split(",").map(c => c.trim().toUpperCase()).filter(Boolean) : [],
       };
 
       if (editingId) {
@@ -92,6 +94,7 @@ const AdminServicesTab = () => {
       link: s.link || "",
       sort_order: String(s.sort_order),
       is_active: s.is_active,
+      coupon_codes: Array.isArray(s.coupon_codes) ? s.coupon_codes.join(", ") : "",
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -147,6 +150,11 @@ const AdminServicesTab = () => {
         <div className="space-y-1.5">
           <Label>Description</Label>
           <Textarea name="description" value={form.description} onChange={handleChange} placeholder="Service description" className="bg-secondary/50 border-border" rows={2} />
+        </div>
+        <div className="space-y-1.5">
+          <Label>Discount Coupon Codes (Comma separated)</Label>
+          <Input name="coupon_codes" value={form.coupon_codes} onChange={handleChange} placeholder="FOLLOWER, SAWAN2026, WELCOME10" className="bg-secondary/50 border-border" />
+          <p className="text-[10px] text-muted-foreground ml-1 italic">Enter codes exactly as defined in the Coupons tab.</p>
         </div>
         <div className="flex items-center gap-2">
           <input type="checkbox" id="svc_active" checked={form.is_active} onChange={(e) => setForm((p) => ({ ...p, is_active: e.target.checked }))} className="rounded border-border" />
