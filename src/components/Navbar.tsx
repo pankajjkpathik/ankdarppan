@@ -105,18 +105,20 @@ const Navbar = () => {
             <span className="text-xl font-heading font-semibold gold-text">Ank Darppan</span>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={() => handleNavClick(link)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          {!isLandingPage && (
+            <div className="hidden lg:flex items-center gap-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => handleNavClick(link)}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          )}
 
           <div className="hidden lg:flex items-center gap-3">
             {/* Cart */}
