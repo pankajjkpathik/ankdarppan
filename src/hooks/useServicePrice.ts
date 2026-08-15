@@ -16,15 +16,29 @@ export const useServicePrice = (
     queryFn: async () => {
       const { data, error } = await supabase
         .from("services")
-        .select("id, title, price, old_price")
+        .select("id, title, price, old_price, coupon_codes")
         .eq("is_active", true);
       if (error) throw error;
+      
       const needles = matchTitles.map((t) => t.toLowerCase());
-      return (
-        data?.find((s) =>
-          needles.some((n) => s.title.toLowerCase().includes(n))
-        ) || null
+      const service = data?.find((s) =>
+        needles.some((n) => s.title.toLowerCase().includes(n))
       );
+
+      if (!service) return null;
+
+      // Fetch coupons if there are coupon codes associated
+      let coupons = [];
+      if (service.coupon_codes && service.coupon_codes.length > 0) {
+        const { data: couponData } = await supabase
+          .from("coupons")
+          .select("*")
+          .in("code", service.coupon_codes)
+          .eq("is_active", true);
+        coupons = couponData || [];
+      }
+
+      return { ...service, coupons };
     },
     staleTime: 60_000,
   });
@@ -32,6 +46,7 @@ export const useServicePrice = (
   return {
     price: data?.price ?? fallbackPrice,
     oldPrice: data?.old_price ? Number(data.old_price) : fallbackOldPrice,
+    coupons: data?.coupons || [],
     isLoading,
   };
 };

@@ -37,7 +37,7 @@ const ServiceLandingPage = ({
   heroImage = "/logo.png",
   sampleReportImage
 }: LandingPageProps) => {
-  const { price, oldPrice } = useServicePrice(
+  const { price, oldPrice, coupons } = useServicePrice(
     matchTitles && matchTitles.length ? matchTitles : [serviceTitle],
     fallbackPrice,
     fallbackOldPrice
@@ -201,6 +201,20 @@ const ServiceLandingPage = ({
                 </ul>
                 
                 <div className="p-6 border border-primary/30 rounded-2xl bg-white mb-8 shadow-md">
+                  {coupons && coupons.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {coupons.map((c: any) => (
+                        <div key={c.id} className="flex items-center gap-2">
+                          <div className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-bold rounded uppercase tracking-wider">
+                            COUPON: {c.code}
+                          </div>
+                          <span className="text-xs font-semibold text-stone-800">
+                            {c.discount_type === 'percent' ? `${c.discount_value}%` : `₹${c.discount_value}`} OFF
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
                     {oldPrice && <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span>}
