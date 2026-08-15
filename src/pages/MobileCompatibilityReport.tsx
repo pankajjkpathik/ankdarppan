@@ -42,8 +42,8 @@ const MobileCompatibilityReport = () => {
 
     addItem({
       name: "Mobile Number Consultation",
-      price: "₹581",
-      priceNum: 581,
+      price: `₹${price}`,
+      priceNum: price,
       img: "/logo.png",
     });
 
@@ -219,8 +219,8 @@ const MobileCompatibilityReport = () => {
                     <span className="text-sm font-semibold text-stone-800">15% Follower Discount</span>
                   </div>
                   <div className="flex items-baseline gap-3">
-                    <span className="text-3xl font-bold text-stone-900">₹581</span>
-                    <span className="text-lg text-stone-400 line-through">₹1,500</span>
+                    <span className="text-3xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
+                    {oldPrice ? <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span> : null}
                     <span className="text-primary font-bold">Limited Time Offer</span>
                   </div>
                   <p className="text-xs text-stone-500 mt-2">*Apply coupon FOLLOWER at checkout for extra 15% discount.</p>
