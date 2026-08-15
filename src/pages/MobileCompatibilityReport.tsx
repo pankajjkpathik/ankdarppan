@@ -213,11 +213,11 @@ const MobileCompatibilityReport = () => {
         </section>
 
         {/* What's Included & Sample */}
-        <section className="py-20 bg-[#f9f6f0]">
+        <section className="py-12 md:py-20 bg-[#f9f6f0]">
           <div className="container px-4 mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="flex-1">
-                <h2 className="text-3xl font-heading text-stone-900 mb-6">What's Included in Your Report</h2>
+                <h2 className="text-3xl font-heading text-stone-900 mb-6 text-center md:text-left">What's Included</h2>
                 <ul className="space-y-4 mb-8">
                   {[
                     "Detailed numerological breakdown of your current number",
@@ -228,7 +228,7 @@ const MobileCompatibilityReport = () => {
                   ].map((text, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-stone-900 font-medium">{text}</span>
+                      <span className="text-stone-900 font-medium text-left">{text}</span>
                     </li>
                   ))}
                 </ul>
@@ -256,7 +256,7 @@ const MobileCompatibilityReport = () => {
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
                     {oldPrice ? <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span> : null}
-                    <span className="text-primary font-bold">Limited Time Offer</span>
+                    <span className="text-primary font-bold">Sawan Offer</span>
                   </div>
                   <p className="text-xs text-stone-500 mt-2">
                     {coupons && coupons.length > 0 
@@ -275,16 +275,28 @@ const MobileCompatibilityReport = () => {
                 >
                   GET MY REPORT
                 </Button>
+                <p className="mt-3 text-[10px] md:text-xs text-stone-500 text-center md:text-left font-medium">
+                  PDF report delivered on WhatsApp within 24 hours.
+                </p>
               </div>
               
-              <div className="flex-1 relative">
+              <div className="flex-1 relative order-first md:order-last mb-12 md:mb-0">
                 <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white group relative">
                   <div className="bg-white aspect-[3/4] flex flex-col relative overflow-hidden">
                     <img 
                       src={sampleReport.url} 
                       alt="Sample Mobile Report Excerpt" 
+                      width="400"
+                      height="533"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                      }}
                       className="w-full h-full object-cover"
                     />
+                    <div className="hidden absolute inset-0 flex items-center justify-center bg-stone-100 p-8 text-center text-stone-500 font-medium">
+                      Sample report preview — coming soon
+                    </div>
                     <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
                     <div className="absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl border border-primary/20 shadow-lg">
                       <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">Preview Excerpt</p>
