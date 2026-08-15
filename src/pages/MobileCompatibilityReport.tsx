@@ -85,24 +85,24 @@ const MobileCompatibilityReport = () => {
       
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden bg-[#f9f6f0]">
-          <div className="container px-4 mx-auto text-center">
+        <section id="hero-section" className="relative py-12 md:py-20 overflow-hidden bg-[#f9f6f0]">
+          <div className="container px-4 mx-auto text-center md:text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider text-primary uppercase bg-primary/10 rounded-full">
-                Sawan Special Offer
+                Sawan Offer
               </span>
-              <h1 className="mb-6 text-4xl font-heading md:text-6xl text-stone-900">
+              <h1 className="mb-6 text-4xl font-heading md:text-6xl text-stone-900 leading-tight">
                 Mobile Number Consultation <br />
                 <span className="text-primary">Luck or Obstacles?</span>
               </h1>
-              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed">
+              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed text-left md:text-center">
                 Unlock the hidden vibration of your mobile number. Discover if your number aligns with your success, health, and prosperity.
               </p>
-              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-primary/20 shadow-xl">
+              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-6 md:p-8 rounded-3xl border border-primary/20 shadow-xl">
                 <div className="space-y-4 mb-6">
                   <div className="text-left">
                     <Label htmlFor="hero-name" className="text-sm font-semibold ml-1 text-stone-900">Full Name</Label>
@@ -120,6 +120,7 @@ const MobileCompatibilityReport = () => {
                     <Input 
                       id="hero-dob"
                       placeholder="DD/MM/YYYY"
+                      inputMode="numeric"
                       className="bg-[#fdfbf7] border-stone-300 text-stone-900 focus:border-primary"
                       value={formData.dob}
                       onChange={(e) => {
@@ -145,6 +146,14 @@ const MobileCompatibilityReport = () => {
                     />
                   </div>
                 </div>
+
+                <div className="mb-4 text-center">
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <span className="text-2xl font-bold text-stone-900">₹{price}</span>
+                    {oldPrice && <span className="text-lg text-stone-400 line-through">₹{oldPrice}</span>}
+                  </div>
+                </div>
+
                 <Button 
                   type="submit"
                   size="lg" 
@@ -153,6 +162,9 @@ const MobileCompatibilityReport = () => {
                   GET MY REPORT
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
+                <p className="mt-3 text-[10px] md:text-xs text-stone-500 text-center font-medium">
+                  PDF report delivered on WhatsApp within 24 hours.
+                </p>
               </form>
             </motion.div>
           </div>
