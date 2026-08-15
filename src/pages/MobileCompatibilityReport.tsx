@@ -1,8 +1,7 @@
 /* Standardized Date Formats & Visual Visibility Edits applied */
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Phone, Star, ShieldCheck, Zap, ArrowRight, ShoppingCart, Clock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { CheckCircle2, Star, ShieldCheck, Zap, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,6 +10,7 @@ import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import sampleReport from "@/assets/mobile-sample.jpg.asset.json";
 import { useServicePrice } from "@/hooks/useServicePrice";
 
@@ -75,7 +75,13 @@ const MobileCompatibilityReport = () => {
 
   return (
     <div className="min-h-screen bg-[#fdfbf7] font-body text-stone-900 selection:bg-primary/20">
+      <SEO 
+        title="Mobile Number Numerology Report ₹581 | Ank Darppan"
+        description="आपका Mobile Number आपके लिए lucky है या नहीं? पूरी report + voice note, 24 घंटे में। Sawan offer ₹581."
+        canonical="https://www.ankdarppan.com/mobile-compatibility-report"
+      />
       <Navbar />
+...
       
       <main>
         {/* Hero Section */}
