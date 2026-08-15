@@ -1,7 +1,16 @@
 import { Phone, Mail, Facebook, Instagram, Youtube } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const Footer = () => (
+const Footer = () => {
+  const location = useLocation();
+  const isLandingPage = [
+    '/loshu-grid-report',
+    '/mobile-compatibility-report',
+    '/marriage-compatibility',
+    '/name-compatibility-report'
+  ].includes(location.pathname);
+
+  return (
   <footer className="border-t border-border/10 bg-[#060608]">
     <div className="container mx-auto px-4 py-12">
       <div className="grid md:grid-cols-3 gap-8">
@@ -50,10 +59,16 @@ const Footer = () => (
         </div>
       </div>
       <div className="border-t border-border/30 mt-8 pt-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Ank Darppan. All Rights Reserved.
+        <p className="mb-4">© {new Date().getFullYear()} Ank Darppan. All Rights Reserved.</p>
+        {isLandingPage && (
+          <p className="italic opacity-70">
+            Numerology reports are provided for guidance and self-reflection purposes and are not a substitute for professional medical, legal or financial advice.
+          </p>
+        )}
       </div>
     </div>
   </footer>
 );
+}
 
 export default Footer;
