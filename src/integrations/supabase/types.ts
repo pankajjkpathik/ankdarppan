@@ -276,6 +276,7 @@ export type Database = {
       }
       services: {
         Row: {
+          coupon_codes: string[] | null
           created_at: string
           description: string | null
           icon: string | null
@@ -289,6 +290,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          coupon_codes?: string[] | null
           created_at?: string
           description?: string | null
           icon?: string | null
@@ -302,6 +304,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          coupon_codes?: string[] | null
           created_at?: string
           description?: string | null
           icon?: string | null
