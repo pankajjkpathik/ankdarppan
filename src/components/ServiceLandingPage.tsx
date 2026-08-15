@@ -317,8 +317,12 @@ const ServiceLandingPage = ({
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center h-full text-stone-400 font-medium border-2 border-dashed border-stone-200">
-                      Sample report preview — coming soon
+                    <div className="relative w-full h-full overflow-hidden">
+                      <img 
+                        src={samplePlaceholder.url}
+                        alt="Sample report preview — coming soon"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   )}
                 </div>
