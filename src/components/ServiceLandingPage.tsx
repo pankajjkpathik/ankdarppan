@@ -1,7 +1,7 @@
 /* Standardized Date Formats & Visual Visibility Edits applied */
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Star, ShieldCheck, Zap, ArrowRight, Clock } from "lucide-react";
+import { CheckCircle2, Star, ShieldCheck, Zap, ArrowRight, Clock, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +14,8 @@ import { StickyPriceBar } from "./StickyPriceBar";
 import { BenefitCard } from "./BenefitCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useServicePrice } from "@/hooks/useServicePrice";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { testimonials } from "@/data/testimonials";
 
 
 interface LandingPageProps {
