@@ -1,6 +1,6 @@
 /* Standardized Date Formats & Visual Visibility Edits applied */
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Star, ShieldCheck, Zap, ArrowRight, Clock, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
