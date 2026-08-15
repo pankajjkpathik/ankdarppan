@@ -17,6 +17,7 @@ import { useServicePrice } from "@/hooks/useServicePrice";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { testimonials } from "@/data/testimonials";
 import { fbTrack } from "@/lib/fbpixel";
+import samplePlaceholder from "@/assets/sample-coming-soon.jpg.asset.json";
 
 
 interface LandingPageProps {
