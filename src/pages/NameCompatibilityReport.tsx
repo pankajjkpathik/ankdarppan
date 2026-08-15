@@ -1,6 +1,7 @@
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
-import sampleReport from "@/assets/name-report-v2.jpg.asset.json";
+
+const sampleReport = { url: "/name-report-v2.png" };
 
 const NameCompatibilityReport = () => {
   return (

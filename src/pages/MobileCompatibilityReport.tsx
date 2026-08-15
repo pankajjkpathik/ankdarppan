@@ -1,6 +1,7 @@
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
-import sampleReport from "@/assets/mobile-report-v2.jpg.asset.json";
+
+const sampleReport = { url: "/mobile-report-v2.png" };
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
