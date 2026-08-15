@@ -1,6 +1,6 @@
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
-import sampleReport from "@/assets/name-sample.jpg.asset.json";
+import sampleReport from "@/assets/name-report-preview.jpg.asset.json";
 
 const NameCompatibilityReport = () => {
   return (
