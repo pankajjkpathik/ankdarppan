@@ -1,15 +1,17 @@
 /* Standardized Date Formats & Visual Visibility Edits applied */
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, Star, ShieldCheck, Zap, ArrowRight, Clock, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { CheckCircle2, Star, ShieldCheck, Zap, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { DobInput } from "./DobInput";
+import { StickyPriceBar } from "./StickyPriceBar";
+import { BenefitCard } from "./BenefitCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useServicePrice } from "@/hooks/useServicePrice";
 
@@ -80,6 +82,12 @@ const ServiceLandingPage = ({
     } else {
       setDobError("");
     }
+  };
+
+  const scrollToHero = () => {
+    const el = document.getElementById("hero-name");
+    el?.scrollIntoView({ behavior: "smooth" });
+    el?.focus();
   };
 
   const handleBuyNow = (e?: React.FormEvent) => {
@@ -155,26 +163,12 @@ const ServiceLandingPage = ({
                       required
                     />
                   </div>
-                  <div className="text-left">
-                    <Label htmlFor="hero-dob" className="text-sm font-semibold ml-1 text-stone-900">Date of Birth (DD/MM/YYYY)</Label>
-                    <Input 
-                      id="hero-dob"
-                      placeholder="DD/MM/YYYY"
-                      inputMode="numeric"
-                      className={`bg-[#fdfbf7] border-stone-300 text-stone-900 focus:border-primary ${dobError ? 'border-destructive' : ''}`}
-                      value={formData.dob}
-                      onBlur={validateDob}
-                      onChange={(e) => {
-                        let value = e.target.value.replace(/\D/g, "");
-                        if (value.length > 8) value = value.slice(0, 8);
-                        if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
-                        else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
-                        setFormData(prev => ({ ...prev, dob: value }));
-                      }}
-                      required
-                    />
-                    {dobError && <p className="mt-1 text-xs text-destructive ml-1">{dobError}</p>}
-                  </div>
+                  <DobInput 
+                    value={formData.dob}
+                    onChange={(val) => setFormData(prev => ({ ...prev, dob: val }))}
+                    onBlur={validateDob}
+                    error={dobError}
+                  />
                 </div>
 
                 <div className="mb-4 text-center">
@@ -226,17 +220,7 @@ const ServiceLandingPage = ({
                   icon: <Star className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
               ].map((item, i) => (
-                <Card key={i} className="border-stone-200 bg-white hover:border-primary/50 transition-colors shadow-sm overflow-hidden">
-                  <CardContent className="p-5 md:pt-8 md:text-center flex md:flex-col items-center md:items-center gap-4 md:gap-0">
-                    <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 md:mb-6 rounded-xl md:rounded-2xl bg-primary/10 shrink-0">
-                      {item.icon}
-                    </div>
-                    <div className="text-left md:text-center">
-                      <h3 className="text-lg md:text-xl font-heading mb-1 md:mb-3 text-stone-900 font-bold leading-tight">{item.title}</h3>
-                      <p className="text-stone-950 font-semibold text-sm md:text-base leading-snug">{item.desc}</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <BenefitCard key={i} title={item.title} desc={item.desc} icon={item.icon} />
               ))}
             </div>
           </div>
@@ -280,11 +264,7 @@ const ServiceLandingPage = ({
                 </div>
 
                 <Button 
-                  onClick={() => {
-                    const el = document.getElementById("hero-name");
-                    el?.scrollIntoView({ behavior: "smooth" });
-                    el?.focus();
-                  }} 
+                  onClick={scrollToHero} 
                   className="w-full md:w-auto px-10 py-6 text-lg font-bold"
                 >
                   GET MY REPORT
@@ -337,11 +317,7 @@ const ServiceLandingPage = ({
               Get your personalized {serviceTitle} today and step into your destiny.
             </p>
             <Button 
-              onClick={() => {
-                const el = document.getElementById("hero-name");
-                el?.scrollIntoView({ behavior: "smooth" });
-                el?.focus();
-              }}
+              onClick={scrollToHero}
               variant="secondary" 
               size="lg" 
               className="px-12 py-8 text-xl font-bold rounded-full w-full md:w-auto"
@@ -359,38 +335,12 @@ const ServiceLandingPage = ({
         </section>
       </main>
 
-      {/* Sticky Bottom Bar Mobile Only */}
-      <AnimatePresence>
-        {showSticky && (
-          <motion.div
-            initial={{ y: 100 }}
-            animate={{ y: 0 }}
-            exit={{ y: 100 }}
-            className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] md:hidden safe-area-bottom"
-          >
-            <div className="flex items-center justify-between p-4 gap-4">
-              <div className="flex flex-col">
-                <span className="text-xs text-stone-500 font-bold uppercase tracking-wider">Sawan Offer</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-xl font-bold text-stone-900">₹{price}</span>
-                  {oldPrice && <span className="text-sm text-stone-400 line-through">₹{oldPrice}</span>}
-                </div>
-              </div>
-              <Button 
-                onClick={() => {
-                  const el = document.getElementById("hero-name");
-                  el?.scrollIntoView({ behavior: "smooth" });
-                  el?.focus();
-                }}
-                className="flex-1 py-6 rounded-full font-bold shadow-lg shadow-primary/20"
-              >
-                GET MY REPORT
-              </Button>
-            </div>
-            <div className="h-[env(safe-area-inset-bottom)] w-full"></div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <StickyPriceBar 
+        show={showSticky} 
+        price={price} 
+        oldPrice={oldPrice} 
+        onScrollTo={scrollToHero} 
+      />
 
       <Footer />
     </div>
