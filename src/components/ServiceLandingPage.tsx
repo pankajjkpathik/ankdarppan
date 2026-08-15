@@ -27,14 +27,21 @@ interface LandingPageProps {
 
 const ServiceLandingPage = ({ 
   serviceTitle, 
-  price, 
-  oldPrice, 
+  price: fallbackPrice, 
+  oldPrice: fallbackOldPrice, 
+  matchTitles,
   description, 
   benefits,
   heroImage = "/logo.png",
   sampleReportImage
 }: LandingPageProps) => {
+  const { price, oldPrice } = useServicePrice(
+    matchTitles && matchTitles.length ? matchTitles : [serviceTitle],
+    fallbackPrice,
+    fallbackOldPrice
+  );
   const { addItem, setIsOpen: openCart } = useCart();
+
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
