@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { ArrowLeft, Search, Loader2, Package, CheckCircle, Clock, XCircle, User, Calendar, MapPin } from "lucide-react";
+import { fbTrack } from "@/lib/fbpixel";
 
 const statusConfig: Record<string, { icon: React.ElementType; color: string; label: string }> = {
   paid: { icon: CheckCircle, color: "text-green-500", label: "Payment Successful" },
