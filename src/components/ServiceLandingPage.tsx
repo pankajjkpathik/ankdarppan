@@ -17,6 +17,7 @@ import { useServicePrice } from "@/hooks/useServicePrice";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { testimonials } from "@/data/testimonials";
 import { fbTrack } from "@/lib/fbpixel";
+import samplePlaceholder from "@/assets/sample-coming-soon.jpg.asset.json";
 
 
 interface LandingPageProps {
@@ -304,9 +305,11 @@ const ServiceLandingPage = ({
                         }}
                         className="w-full h-full object-cover"
                       />
-                      <div className="hidden absolute inset-0 flex items-center justify-center bg-stone-100 p-8 text-center text-stone-500 font-medium">
-                        Sample report preview — coming soon
-                      </div>
+                      <img 
+                        src={samplePlaceholder.url}
+                        alt="Sample report preview — coming soon"
+                        className="hidden w-full h-full object-cover"
+                      />
                       <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
                       <div className="absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl border border-primary/20 shadow-lg">
                         <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">Sample Report Preview</p>
@@ -314,8 +317,12 @@ const ServiceLandingPage = ({
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center h-full text-stone-400 font-medium border-2 border-dashed border-stone-200">
-                      Sample report preview — coming soon
+                    <div className="relative w-full h-full overflow-hidden">
+                      <img 
+                        src={samplePlaceholder.url}
+                        alt="Sample report preview — coming soon"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   )}
                 </div>
