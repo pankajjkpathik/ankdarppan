@@ -309,8 +309,8 @@ const ServiceLandingPage = ({
                       </div>
                       <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
                       <div className="absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl border border-primary/20 shadow-lg">
-                        <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">Preview Excerpt</p>
-                        <p className="text-xs text-stone-900 font-medium">Visualization of typical report section</p>
+                        <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">Sample Report Preview</p>
+                        <p className="text-xs text-stone-900 font-medium">Personalized Numerology Analysis</p>
                       </div>
                     </div>
                   ) : (
