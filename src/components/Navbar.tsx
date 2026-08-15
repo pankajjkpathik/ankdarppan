@@ -29,6 +29,8 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isLandingPage = ["/loshu-grid-report", "/mobile-compatibility-report", "/marriage-compatibility", "/name-compatibility-report"].includes(location.pathname);
+
   const [user, setUser] = useState<{ email?: string; name?: string } | null>(null);
 
   useEffect(() => {
