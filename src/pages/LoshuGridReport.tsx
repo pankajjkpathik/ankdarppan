@@ -1,6 +1,7 @@
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
-import sampleReport from "@/assets/loshu-report-v2.jpg.asset.json";
+
+const sampleReport = { url: "/loshu-report-v2.png" };
 
 const LoshuGridReport = () => {
   return (
