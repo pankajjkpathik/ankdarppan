@@ -335,10 +335,10 @@ const MobileCompatibilityReport = () => {
         </section>
 
         {/* Final CTA */}
-        <section className="py-20 bg-primary text-primary-foreground">
+        <section className="py-12 md:py-20 bg-primary text-primary-foreground">
           <div className="container px-4 mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-heading mb-6">Ready to Align Your Mobile Vibration?</h2>
-            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium">
+            <h2 className="text-3xl md:text-4xl font-heading mb-6 leading-tight">Ready to Align Your Mobile Vibration?</h2>
+            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium text-left md:text-center px-4">
               Join thousands who have optimized their lives through the power of mobile numerology.
             </p>
             <Button 
@@ -349,11 +349,14 @@ const MobileCompatibilityReport = () => {
               }}
               variant="secondary" 
               size="lg" 
-              className="px-12 py-8 text-xl font-bold rounded-full hover:scale-105 transition-transform"
+              className="px-12 py-8 text-xl font-bold rounded-full w-full md:w-auto"
             >
               GET MY REPORT
             </Button>
-            <div className="mt-8 flex items-center justify-center gap-6 opacity-80">
+            <p className="mt-4 text-xs text-primary-foreground/80 font-medium">
+              PDF report delivered on WhatsApp within 24 hours.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 opacity-80">
               <span className="flex items-center gap-1 text-sm"><ShieldCheck className="w-4 h-4" /> Secure Payment</span>
               <span className="flex items-center gap-1 text-sm"><Clock className="w-4 h-4" /> 24-48h Delivery</span>
             </div>
