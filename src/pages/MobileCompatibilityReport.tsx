@@ -85,24 +85,24 @@ const MobileCompatibilityReport = () => {
       
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden bg-[#f9f6f0]">
-          <div className="container px-4 mx-auto text-center">
+        <section id="hero-section" className="relative py-12 md:py-20 overflow-hidden bg-[#f9f6f0]">
+          <div className="container px-4 mx-auto text-center md:text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider text-primary uppercase bg-primary/10 rounded-full">
-                Sawan Special Offer
+                Sawan Offer
               </span>
-              <h1 className="mb-6 text-4xl font-heading md:text-6xl text-stone-900">
+              <h1 className="mb-6 text-4xl font-heading md:text-6xl text-stone-900 leading-tight">
                 Mobile Number Consultation <br />
                 <span className="text-primary">Luck or Obstacles?</span>
               </h1>
-              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed">
+              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed text-left md:text-center">
                 Unlock the hidden vibration of your mobile number. Discover if your number aligns with your success, health, and prosperity.
               </p>
-              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-primary/20 shadow-xl">
+              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-6 md:p-8 rounded-3xl border border-primary/20 shadow-xl">
                 <div className="space-y-4 mb-6">
                   <div className="text-left">
                     <Label htmlFor="hero-name" className="text-sm font-semibold ml-1 text-stone-900">Full Name</Label>
@@ -120,6 +120,7 @@ const MobileCompatibilityReport = () => {
                     <Input 
                       id="hero-dob"
                       placeholder="DD/MM/YYYY"
+                      inputMode="numeric"
                       className="bg-[#fdfbf7] border-stone-300 text-stone-900 focus:border-primary"
                       value={formData.dob}
                       onChange={(e) => {
@@ -145,6 +146,14 @@ const MobileCompatibilityReport = () => {
                     />
                   </div>
                 </div>
+
+                <div className="mb-4 text-center">
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <span className="text-2xl font-bold text-stone-900">₹{price}</span>
+                    {oldPrice && <span className="text-lg text-stone-400 line-through">₹{oldPrice}</span>}
+                  </div>
+                </div>
+
                 <Button 
                   type="submit"
                   size="lg" 
@@ -153,6 +162,9 @@ const MobileCompatibilityReport = () => {
                   GET MY REPORT
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
+                <p className="mt-3 text-[10px] md:text-xs text-stone-500 text-center font-medium">
+                  PDF report delivered on WhatsApp within 24 hours.
+                </p>
               </form>
             </motion.div>
           </div>
@@ -166,31 +178,33 @@ const MobileCompatibilityReport = () => {
               <div className="w-20 h-1 bg-primary mx-auto opacity-50"></div>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               {[
                 {
                   title: "Vibrational Analysis",
-                  desc: "Understand the core energy and frequency your number emits to the universe.",
-                  icon: <Zap className="w-8 h-8 text-primary" />,
+                  desc: "Understand the core energy and frequency your number emits.",
+                  icon: <Zap className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
                 {
                   title: "Success Index",
-                  desc: "Learn how well your number supports your career growth and financial stability.",
-                  icon: <ShieldCheck className="w-8 h-8 text-primary" />,
+                  desc: "Learn how well your number supports your career growth.",
+                  icon: <ShieldCheck className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
                 {
                   title: "Relationship Harmony",
-                  desc: "Discover if your number attracts positive connections or causes misunderstandings.",
-                  icon: <Star className="w-8 h-8 text-primary" />,
+                  desc: "Discover if your number attracts positive connections.",
+                  icon: <Star className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
               ].map((item, i) => (
-                <Card key={i} className="border-stone-200 bg-white hover:border-primary/50 transition-colors shadow-sm">
-                  <CardContent className="pt-8 text-center">
-                    <div className="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-primary/10">
+                <Card key={i} className="border-stone-200 bg-white hover:border-primary/50 transition-colors shadow-sm overflow-hidden">
+                  <CardContent className="p-5 md:pt-8 md:text-center flex md:flex-col items-center md:items-center gap-4 md:gap-0">
+                    <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 md:mb-6 rounded-xl md:rounded-2xl bg-primary/10 shrink-0">
                       {item.icon}
                     </div>
-                    <h3 className="text-xl font-heading mb-3 text-stone-900 font-bold">{item.title}</h3>
-                    <p className="text-stone-950 font-semibold">{item.desc}</p>
+                    <div className="text-left md:text-center">
+                      <h3 className="text-lg md:text-xl font-heading mb-1 md:mb-3 text-stone-900 font-bold leading-tight">{item.title}</h3>
+                      <p className="text-stone-950 font-semibold text-sm md:text-base leading-snug">{item.desc}</p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -199,11 +213,11 @@ const MobileCompatibilityReport = () => {
         </section>
 
         {/* What's Included & Sample */}
-        <section className="py-20 bg-[#f9f6f0]">
+        <section className="py-12 md:py-20 bg-[#f9f6f0]">
           <div className="container px-4 mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="flex-1">
-                <h2 className="text-3xl font-heading text-stone-900 mb-6">What's Included in Your Report</h2>
+                <h2 className="text-3xl font-heading text-stone-900 mb-6 text-center md:text-left">What's Included</h2>
                 <ul className="space-y-4 mb-8">
                   {[
                     "Detailed numerological breakdown of your current number",
@@ -214,7 +228,7 @@ const MobileCompatibilityReport = () => {
                   ].map((text, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-stone-900 font-medium">{text}</span>
+                      <span className="text-stone-900 font-medium text-left">{text}</span>
                     </li>
                   ))}
                 </ul>
@@ -242,7 +256,7 @@ const MobileCompatibilityReport = () => {
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
                     {oldPrice ? <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span> : null}
-                    <span className="text-primary font-bold">Limited Time Offer</span>
+                    <span className="text-primary font-bold">Sawan Offer</span>
                   </div>
                   <p className="text-xs text-stone-500 mt-2">
                     {coupons && coupons.length > 0 
@@ -261,16 +275,28 @@ const MobileCompatibilityReport = () => {
                 >
                   GET MY REPORT
                 </Button>
+                <p className="mt-3 text-[10px] md:text-xs text-stone-500 text-center md:text-left font-medium">
+                  PDF report delivered on WhatsApp within 24 hours.
+                </p>
               </div>
               
-              <div className="flex-1 relative">
+              <div className="flex-1 relative order-first md:order-last mb-12 md:mb-0">
                 <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white group relative">
                   <div className="bg-white aspect-[3/4] flex flex-col relative overflow-hidden">
                     <img 
                       src={sampleReport.url} 
                       alt="Sample Mobile Report Excerpt" 
+                      width="400"
+                      height="533"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                      }}
                       className="w-full h-full object-cover"
                     />
+                    <div className="hidden absolute inset-0 flex items-center justify-center bg-stone-100 p-8 text-center text-stone-500 font-medium">
+                      Sample report preview — coming soon
+                    </div>
                     <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
                     <div className="absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl border border-primary/20 shadow-lg">
                       <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">Preview Excerpt</p>
@@ -309,10 +335,10 @@ const MobileCompatibilityReport = () => {
         </section>
 
         {/* Final CTA */}
-        <section className="py-20 bg-primary text-primary-foreground">
+        <section className="py-12 md:py-20 bg-primary text-primary-foreground">
           <div className="container px-4 mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-heading mb-6">Ready to Align Your Mobile Vibration?</h2>
-            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium">
+            <h2 className="text-3xl md:text-4xl font-heading mb-6 leading-tight">Ready to Align Your Mobile Vibration?</h2>
+            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium text-left md:text-center px-4">
               Join thousands who have optimized their lives through the power of mobile numerology.
             </p>
             <Button 
@@ -323,11 +349,14 @@ const MobileCompatibilityReport = () => {
               }}
               variant="secondary" 
               size="lg" 
-              className="px-12 py-8 text-xl font-bold rounded-full hover:scale-105 transition-transform"
+              className="px-12 py-8 text-xl font-bold rounded-full w-full md:w-auto"
             >
               GET MY REPORT
             </Button>
-            <div className="mt-8 flex items-center justify-center gap-6 opacity-80">
+            <p className="mt-4 text-xs text-primary-foreground/80 font-medium">
+              PDF report delivered on WhatsApp within 24 hours.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 opacity-80">
               <span className="flex items-center gap-1 text-sm"><ShieldCheck className="w-4 h-4" /> Secure Payment</span>
               <span className="flex items-center gap-1 text-sm"><Clock className="w-4 h-4" /> 24-48h Delivery</span>
             </div>

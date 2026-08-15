@@ -29,6 +29,8 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isLandingPage = ["/loshu-grid-report", "/mobile-compatibility-report", "/marriage-compatibility", "/name-compatibility-report"].includes(location.pathname);
+
   const [user, setUser] = useState<{ email?: string; name?: string } | null>(null);
 
   useEffect(() => {
@@ -79,9 +81,9 @@ const Navbar = () => {
         <div className="container mx-auto py-2 px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 lg:gap-x-6 gap-y-2 text-primary font-medium">
-              <span className="flex items-center gap-1.5 whitespace-nowrap"><Calendar className="w-3.5 h-3.5" /> {format(new Date(), "do MMMM, yyyy")}</span>
+              <span className="hidden md:flex items-center gap-1.5 whitespace-nowrap"><Calendar className="w-3.5 h-3.5" /> {format(new Date(), "do MMMM, yyyy")}</span>
               <span className="flex items-center gap-1.5 whitespace-nowrap"><Mail className="w-3.5 h-3.5" /> contactus@ankdarppan.com</span>
-              <span className="flex items-center gap-1.5 whitespace-nowrap"><Clock className="w-3.5 h-3.5" /> 11:30 AM to 8:30 PM</span>
+              <span className="hidden md:flex items-center gap-1.5 whitespace-nowrap"><Clock className="w-3.5 h-3.5" /> 11:30 AM to 8:30 PM</span>
               <a href="https://wa.me/919317365025" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 whitespace-nowrap hover:brightness-110 transition-all">
                 <Phone className="w-3.5 h-3.5" /> +(91) 93173-65025
               </a>
@@ -103,25 +105,29 @@ const Navbar = () => {
             <span className="text-xl font-heading font-semibold gold-text">Ank Darppan</span>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={() => handleNavClick(link)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          {!isLandingPage && (
+            <div className="hidden lg:flex items-center gap-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => handleNavClick(link)}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors tracking-wide uppercase"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          )}
 
           <div className="hidden lg:flex items-center gap-3">
             {/* Cart */}
-            <button onClick={() => openCart(true)} className="relative p-2 text-foreground hover:text-primary transition-colors">
-              <ShoppingCart className="w-5 h-5" />
-              {count > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{count}</span>}
-            </button>
+            {!isLandingPage && (
+              <button onClick={() => openCart(true)} className="relative p-2 text-foreground hover:text-primary transition-colors">
+                <ShoppingCart className="w-5 h-5" />
+                {count > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{count}</span>}
+              </button>
+            )}
 
             {/* User menu */}
             {user ? (
@@ -167,13 +173,17 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <button onClick={() => openCart(true)} className="relative p-2 text-foreground hover:text-primary transition-colors">
-              <ShoppingCart className="w-5 h-5" />
-              {count > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{count}</span>}
-            </button>
-            <button onClick={() => setOpen(!open)} className="text-foreground">
-              {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            {!isLandingPage && (
+              <>
+                <button onClick={() => openCart(true)} className="relative p-2 text-foreground hover:text-primary transition-colors">
+                  <ShoppingCart className="w-5 h-5" />
+                  {count > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{count}</span>}
+                </button>
+                <button onClick={() => setOpen(!open)} className="text-foreground">
+                  {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </button>
+              </>
+            )}
           </div>
         </div>
 
