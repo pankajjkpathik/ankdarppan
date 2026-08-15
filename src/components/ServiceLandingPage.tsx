@@ -124,25 +124,25 @@ const ServiceLandingPage = ({
       
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden bg-[#f9f6f0]">
-          <div className="container px-4 mx-auto text-center">
+        <section id="hero-section" className="relative py-12 md:py-20 overflow-hidden bg-[#f9f6f0]">
+          <div className="container px-4 mx-auto text-center md:text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider text-primary uppercase bg-primary/10 rounded-full">
-                Premium Numerology Service
+                Sawan Offer
               </span>
-              <h1 className="mb-6 text-4xl font-heading md:text-6xl text-stone-900">
+              <h1 className="mb-6 text-4xl font-heading md:text-6xl text-stone-900 leading-tight">
                 {serviceTitle} <br />
                 <span className="text-primary">Unlock Your Potential</span>
               </h1>
-              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed">
+              <p className="max-w-2xl mx-auto mb-10 text-lg text-stone-700 font-medium leading-relaxed text-left md:text-center">
                 {description}
               </p>
               
-              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-primary/20 shadow-xl">
+              <form onSubmit={handleBuyNow} className="max-w-md mx-auto bg-white p-6 md:p-8 rounded-3xl border border-primary/20 shadow-xl">
                 <div className="space-y-4 mb-6">
                   <div className="text-left">
                     <Label htmlFor="hero-name" className="text-sm font-semibold ml-1 text-stone-900">Full Name</Label>
@@ -160,8 +160,10 @@ const ServiceLandingPage = ({
                     <Input 
                       id="hero-dob"
                       placeholder="DD/MM/YYYY"
-                      className="bg-[#fdfbf7] border-stone-300 text-stone-900 focus:border-primary"
+                      inputMode="numeric"
+                      className={`bg-[#fdfbf7] border-stone-300 text-stone-900 focus:border-primary ${dobError ? 'border-destructive' : ''}`}
                       value={formData.dob}
+                      onBlur={validateDob}
                       onChange={(e) => {
                         let value = e.target.value.replace(/\D/g, "");
                         if (value.length > 8) value = value.slice(0, 8);
@@ -171,8 +173,17 @@ const ServiceLandingPage = ({
                       }}
                       required
                     />
+                    {dobError && <p className="mt-1 text-xs text-destructive ml-1">{dobError}</p>}
                   </div>
                 </div>
+
+                <div className="mb-4 text-center">
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <span className="text-2xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
+                    {oldPrice && <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span>}
+                  </div>
+                </div>
+
                 <Button 
                   type="submit"
                   size="lg" 
@@ -181,6 +192,9 @@ const ServiceLandingPage = ({
                   GET MY REPORT
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
+                <p className="mt-3 text-[10px] md:text-xs text-stone-500 text-center font-medium">
+                  PDF report delivered on WhatsApp within 24 hours.
+                </p>
               </form>
             </motion.div>
           </div>
