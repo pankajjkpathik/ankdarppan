@@ -16,6 +16,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useServicePrice } from "@/hooks/useServicePrice";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { testimonials } from "@/data/testimonials";
+import { fbTrack } from "@/lib/fbpixel";
 
 
 interface LandingPageProps {
