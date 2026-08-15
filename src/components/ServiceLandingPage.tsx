@@ -325,10 +325,10 @@ const ServiceLandingPage = ({
         </section>
 
         {/* Final CTA */}
-        <section className="py-20 bg-primary text-primary-foreground">
+        <section className="py-12 md:py-20 bg-primary text-primary-foreground">
           <div className="container px-4 mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-heading mb-6">Ready to Transform Your Life?</h2>
-            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium">
+            <p className="max-w-xl mx-auto mb-10 text-primary-foreground/90 font-medium text-left md:text-center px-4">
               Get your personalized {serviceTitle} today and step into your destiny.
             </p>
             <Button 
@@ -339,17 +339,53 @@ const ServiceLandingPage = ({
               }}
               variant="secondary" 
               size="lg" 
-              className="px-12 py-8 text-xl font-bold rounded-full"
+              className="px-12 py-8 text-xl font-bold rounded-full w-full md:w-auto"
             >
               GET MY REPORT
             </Button>
-            <div className="mt-8 flex items-center justify-center gap-6 opacity-80">
+            <p className="mt-4 text-xs text-primary-foreground/80 font-medium">
+              PDF report delivered on WhatsApp within 24 hours.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 opacity-80">
               <span className="flex items-center gap-1 text-sm"><ShieldCheck className="w-4 h-4" /> Secure Payment</span>
               <span className="flex items-center gap-1 text-sm"><Clock className="w-4 h-4" /> 24-48h Delivery</span>
             </div>
           </div>
         </section>
       </main>
+
+      {/* Sticky Bottom Bar Mobile Only */}
+      <AnimatePresence>
+        {showSticky && (
+          <motion.div
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            exit={{ y: 100 }}
+            className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] md:hidden safe-area-bottom"
+          >
+            <div className="flex items-center justify-between p-4 gap-4">
+              <div className="flex flex-col">
+                <span className="text-xs text-stone-500 font-bold uppercase tracking-wider">Sawan Offer</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold text-stone-900">₹{price}</span>
+                  {oldPrice && <span className="text-sm text-stone-400 line-through">₹{oldPrice}</span>}
+                </div>
+              </div>
+              <Button 
+                onClick={() => {
+                  const el = document.getElementById("hero-name");
+                  el?.scrollIntoView({ behavior: "smooth" });
+                  el?.focus();
+                }}
+                className="flex-1 py-6 rounded-full font-bold shadow-lg shadow-primary/20"
+              >
+                GET MY REPORT
+              </Button>
+            </div>
+            <div className="h-[env(safe-area-inset-bottom)] w-full"></div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
