@@ -306,7 +306,7 @@ const ServiceLandingPage = ({
                         className="w-full h-full object-cover"
                       />
                       <img 
-                        src={(await import("@/assets/sample-coming-soon.jpg.asset.json")).default.url}
+                        src={samplePlaceholder.url}
                         alt="Sample report preview — coming soon"
                         className="hidden w-full h-full object-cover"
                       />
