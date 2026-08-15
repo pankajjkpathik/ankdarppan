@@ -297,6 +297,7 @@ const ServiceLandingPage = ({
                         alt="Sample Report Excerpt" 
                         width="400"
                         height="533"
+                        loading="lazy"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
                           e.currentTarget.nextElementSibling?.classList.remove('hidden');
