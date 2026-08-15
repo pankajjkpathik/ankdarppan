@@ -1,6 +1,6 @@
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
-import sampleReport from "@/assets/marriage-report-preview.jpg.asset.json";
+import sampleReport from "@/assets/marriage-report-v2.jpg.asset.json";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
