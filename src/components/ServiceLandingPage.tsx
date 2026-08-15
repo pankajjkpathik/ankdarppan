@@ -123,6 +123,13 @@ const ServiceLandingPage = ({
       img: heroImage,
     });
 
+    fbTrack("InitiateCheckout", {
+      value: price,
+      currency: "INR",
+      content_name: serviceTitle,
+      content_category: "Numerology Service",
+    });
+
     toast({
       title: "Added to Cart",
       description: "Redirecting to secure checkout...",
