@@ -293,7 +293,6 @@ const ServiceLandingPage = ({
                   PDF report delivered on WhatsApp within 24 hours.
                 </p>
               </div>
-              </div>
               
               <div className="flex-1 relative order-first md:order-last mb-12 md:mb-0">
                 <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white aspect-[3/4] flex flex-col relative group">
