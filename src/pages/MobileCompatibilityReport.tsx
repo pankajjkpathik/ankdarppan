@@ -1,10 +1,10 @@
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
-
-const sampleReport = { url: "/mobile-report-v2.png" };
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+
+const sampleReport = { url: "/mobile-report-v2.png" };
 
 const MobileCompatibilityReport = () => {
   const [mobile, setMobile] = useState("");
