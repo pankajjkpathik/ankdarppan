@@ -49,6 +49,38 @@ const ServiceLandingPage = ({
     dob: "",
     additionalInfo: ""
   });
+  const [dobError, setDobError] = useState("");
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSection = document.getElementById("hero-section");
+      if (heroSection) {
+        const rect = heroSection.getBoundingClientRect();
+        setShowSticky(rect.bottom < 0);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const validateDob = () => {
+    if (!formData.dob) return;
+    const parts = formData.dob.split("/");
+    if (parts.length !== 3 || parts[2].length !== 4) {
+      setDobError("Please enter date as DD/MM/YYYY");
+      return;
+    }
+    const d = parseInt(parts[0]);
+    const m = parseInt(parts[1]);
+    const y = parseInt(parts[2]);
+    const date = new Date(y, m - 1, d);
+    if (date.getFullYear() !== y || date.getMonth() + 1 !== m || date.getDate() !== d) {
+      setDobError("Invalid date");
+    } else {
+      setDobError("");
+    }
+  };
 
   const handleBuyNow = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -57,6 +89,15 @@ const ServiceLandingPage = ({
       toast({
         title: "Missing Information",
         description: "Please provide your name and date of birth.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (dobError) {
+      toast({
+        title: "Invalid Date",
+        description: "Please fix the date of birth field.",
         variant: "destructive"
       });
       return;
