@@ -7,6 +7,7 @@ const MarriageCompatibility = () => {
     <ServiceLandingPage
       serviceTitle="Marriage Compatibility"
       price={941}
+      matchTitles={["Marriage Compatibility"]}
       oldPrice={2100}
       description="Ensure a harmonious lifetime partnership. Our compatibility report analyzes the numerological alignment between two individuals for a successful marriage."
       sampleReportImage={sampleReport.url}

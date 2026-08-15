@@ -7,6 +7,7 @@ const NameCompatibilityReport = () => {
     <ServiceLandingPage
       serviceTitle="Name Compatibility Report"
       price={891}
+      matchTitles={["Name Compatibility"]}
       oldPrice={2100}
       description="Is your name working for you or against you? Discover how your name's vibration aligns with your birth date for maximum success."
       sampleReportImage={sampleReport.url}

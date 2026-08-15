@@ -11,11 +11,16 @@ import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import { useServicePrice } from "@/hooks/useServicePrice";
+
 
 interface LandingPageProps {
   serviceTitle: string;
   price: number;
   oldPrice?: number;
+  /** Extra title fragments used to match this service in the Admin-managed services table */
+  matchTitles?: string[];
+
   description: string;
   benefits: string[];
   heroImage?: string;
@@ -24,14 +29,21 @@ interface LandingPageProps {
 
 const ServiceLandingPage = ({ 
   serviceTitle, 
-  price, 
-  oldPrice, 
+  price: fallbackPrice, 
+  oldPrice: fallbackOldPrice, 
+  matchTitles,
   description, 
   benefits,
   heroImage = "/logo.png",
   sampleReportImage
 }: LandingPageProps) => {
+  const { price, oldPrice } = useServicePrice(
+    matchTitles && matchTitles.length ? matchTitles : [serviceTitle],
+    fallbackPrice,
+    fallbackOldPrice
+  );
   const { addItem, setIsOpen: openCart } = useCart();
+
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
