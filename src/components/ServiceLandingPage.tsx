@@ -234,15 +234,24 @@ const ServiceLandingPage = ({
                 </Button>
               </div>
               
-              <div className="flex-1 relative">
+              <div className="flex-1 relative order-first md:order-last mb-12 md:mb-0">
                 <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white aspect-[3/4] flex flex-col relative group">
                   {sampleReportImage ? (
                     <div className="relative w-full h-full overflow-hidden">
                       <img 
                         src={sampleReportImage} 
                         alt="Sample Report Excerpt" 
+                        width="400"
+                        height="533"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        }}
                         className="w-full h-full object-cover"
                       />
+                      <div className="hidden absolute inset-0 flex items-center justify-center bg-stone-100 p-8 text-center text-stone-500 font-medium">
+                        Sample report preview — coming soon
+                      </div>
                       <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
                       <div className="absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl border border-primary/20 shadow-lg">
                         <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">Preview Excerpt</p>
@@ -250,28 +259,9 @@ const ServiceLandingPage = ({
                       </div>
                     </div>
                   ) : (
-                    <>
-                      <div className="flex justify-between items-start p-8 mb-8 border-b pb-4">
-                        <img src="/logo.png" alt="Ank Darppan" className="w-16 h-16 grayscale opacity-80" />
-                        <div className="text-right">
-                          <p className="text-[10px] text-stone-400 uppercase tracking-widest">Premium Service</p>
-                          <p className="font-heading text-stone-800">{serviceTitle}</p>
-                        </div>
-                      </div>
-                      <div className="space-y-6 flex-1 px-8">
-                        <div className="h-4 bg-stone-100 rounded w-3/4"></div>
-                        <div className="h-4 bg-stone-50 rounded w-full"></div>
-                        <div className="h-4 bg-stone-50 rounded w-full"></div>
-                        <div className="mt-8 space-y-4">
-                          {[1, 2, 3].map(i => (
-                            <div key={i} className="flex items-center gap-3">
-                              <div className="w-4 h-4 rounded-full bg-primary/20"></div>
-                              <div className="h-3 bg-stone-50 rounded flex-1"></div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </>
+                    <div className="flex items-center justify-center h-full text-stone-400 font-medium border-2 border-dashed border-stone-200">
+                      Sample report preview — coming soon
+                    </div>
                   )}
                 </div>
               </div>
