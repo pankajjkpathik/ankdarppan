@@ -178,31 +178,33 @@ const MobileCompatibilityReport = () => {
               <div className="w-20 h-1 bg-primary mx-auto opacity-50"></div>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               {[
                 {
                   title: "Vibrational Analysis",
-                  desc: "Understand the core energy and frequency your number emits to the universe.",
-                  icon: <Zap className="w-8 h-8 text-primary" />,
+                  desc: "Understand the core energy and frequency your number emits.",
+                  icon: <Zap className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
                 {
                   title: "Success Index",
-                  desc: "Learn how well your number supports your career growth and financial stability.",
-                  icon: <ShieldCheck className="w-8 h-8 text-primary" />,
+                  desc: "Learn how well your number supports your career growth.",
+                  icon: <ShieldCheck className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
                 {
                   title: "Relationship Harmony",
-                  desc: "Discover if your number attracts positive connections or causes misunderstandings.",
-                  icon: <Star className="w-8 h-8 text-primary" />,
+                  desc: "Discover if your number attracts positive connections.",
+                  icon: <Star className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
               ].map((item, i) => (
-                <Card key={i} className="border-stone-200 bg-white hover:border-primary/50 transition-colors shadow-sm">
-                  <CardContent className="pt-8 text-center">
-                    <div className="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-primary/10">
+                <Card key={i} className="border-stone-200 bg-white hover:border-primary/50 transition-colors shadow-sm overflow-hidden">
+                  <CardContent className="p-5 md:pt-8 md:text-center flex md:flex-col items-center md:items-center gap-4 md:gap-0">
+                    <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 md:mb-6 rounded-xl md:rounded-2xl bg-primary/10 shrink-0">
                       {item.icon}
                     </div>
-                    <h3 className="text-xl font-heading mb-3 text-stone-900 font-bold">{item.title}</h3>
-                    <p className="text-stone-950 font-semibold">{item.desc}</p>
+                    <div className="text-left md:text-center">
+                      <h3 className="text-lg md:text-xl font-heading mb-1 md:mb-3 text-stone-900 font-bold leading-tight">{item.title}</h3>
+                      <p className="text-stone-950 font-semibold text-sm md:text-base leading-snug">{item.desc}</p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
