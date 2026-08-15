@@ -201,38 +201,40 @@ const ServiceLandingPage = ({
         </section>
 
         {/* Benefits Section */}
-        <section className="py-20">
+        <section className="py-12 md:py-20">
           <div className="container px-4 mx-auto">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10 md:mb-16">
               <h2 className="text-3xl font-heading md:text-4xl text-stone-900 mb-4">Why Choose This Report?</h2>
               <div className="w-20 h-1 bg-primary mx-auto opacity-50"></div>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               {[
                 {
                   title: "Expert Analysis",
-                  desc: "Every report is meticulously prepared based on authentic numerology principles.",
-                  icon: <Zap className="w-8 h-8 text-primary" />,
+                  desc: "Authentic numerology principles applied to your unique chart.",
+                  icon: <Zap className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
                 {
                   title: "Practical Insights",
                   desc: "Get actionable advice and remedies that you can implement immediately.",
-                  icon: <ShieldCheck className="w-8 h-8 text-primary" />,
+                  icon: <ShieldCheck className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
                 {
                   title: "Life-Changing Results",
                   desc: "Join thousands who have transformed their lives through our guidance.",
-                  icon: <Star className="w-8 h-8 text-primary" />,
+                  icon: <Star className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
               ].map((item, i) => (
-                <Card key={i} className="border-stone-200 bg-white hover:border-primary/50 transition-colors shadow-sm">
-                  <CardContent className="pt-8 text-center">
-                    <div className="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-primary/10">
+                <Card key={i} className="border-stone-200 bg-white hover:border-primary/50 transition-colors shadow-sm overflow-hidden">
+                  <CardContent className="p-5 md:pt-8 md:text-center flex md:flex-col items-center md:items-center gap-4 md:gap-0">
+                    <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 md:mb-6 rounded-xl md:rounded-2xl bg-primary/10 shrink-0">
                       {item.icon}
                     </div>
-                    <h3 className="text-xl font-heading mb-3 text-stone-900 font-bold">{item.title}</h3>
-                    <p className="text-stone-950 font-semibold">{item.desc}</p>
+                    <div className="text-left md:text-center">
+                      <h3 className="text-lg md:text-xl font-heading mb-1 md:mb-3 text-stone-900 font-bold leading-tight">{item.title}</h3>
+                      <p className="text-stone-950 font-semibold text-sm md:text-base leading-snug">{item.desc}</p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -241,16 +243,16 @@ const ServiceLandingPage = ({
         </section>
 
         {/* What's Included */}
-        <section className="py-20 bg-[#f9f6f0]">
+        <section className="py-12 md:py-20 bg-[#f9f6f0]">
           <div className="container px-4 mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-12">
-              <div className="flex-1">
-                <h2 className="text-3xl font-heading text-stone-900 mb-6">What's Included</h2>
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              <div className="flex-1 order-last md:order-first">
+                <h2 className="text-3xl font-heading text-stone-900 mb-6 text-center md:text-left">What's Included</h2>
                 <ul className="space-y-4 mb-8">
                   {benefits.map((text, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-stone-900 font-medium">{text}</span>
+                      <span className="text-stone-900 font-medium text-left">{text}</span>
                     </li>
                   ))}
                 </ul>
@@ -273,7 +275,7 @@ const ServiceLandingPage = ({
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
                     {oldPrice && <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span>}
-                    <span className="text-primary font-bold">Limited Time Offer</span>
+                    <span className="text-primary font-bold">Sawan Offer</span>
                   </div>
                 </div>
 
@@ -287,6 +289,10 @@ const ServiceLandingPage = ({
                 >
                   GET MY REPORT
                 </Button>
+                <p className="mt-3 text-[10px] md:text-xs text-stone-500 text-center md:text-left font-medium">
+                  PDF report delivered on WhatsApp within 24 hours.
+                </p>
+              </div>
               </div>
               
               <div className="flex-1 relative order-first md:order-last mb-12 md:mb-0">
