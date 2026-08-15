@@ -79,9 +79,9 @@ const Navbar = () => {
         <div className="container mx-auto py-2 px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 lg:gap-x-6 gap-y-2 text-primary font-medium">
-              <span className="flex items-center gap-1.5 whitespace-nowrap"><Calendar className="w-3.5 h-3.5" /> {format(new Date(), "do MMMM, yyyy")}</span>
+              <span className="hidden md:flex items-center gap-1.5 whitespace-nowrap"><Calendar className="w-3.5 h-3.5" /> {format(new Date(), "do MMMM, yyyy")}</span>
               <span className="flex items-center gap-1.5 whitespace-nowrap"><Mail className="w-3.5 h-3.5" /> contactus@ankdarppan.com</span>
-              <span className="flex items-center gap-1.5 whitespace-nowrap"><Clock className="w-3.5 h-3.5" /> 11:30 AM to 8:30 PM</span>
+              <span className="hidden md:flex items-center gap-1.5 whitespace-nowrap"><Clock className="w-3.5 h-3.5" /> 11:30 AM to 8:30 PM</span>
               <a href="https://wa.me/919317365025" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 whitespace-nowrap hover:brightness-110 transition-all">
                 <Phone className="w-3.5 h-3.5" /> +(91) 93173-65025
               </a>
