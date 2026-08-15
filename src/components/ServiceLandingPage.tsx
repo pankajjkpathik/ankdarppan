@@ -11,6 +11,8 @@ import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import { useServicePrice } from "@/hooks/useServicePrice";
+
 
 interface LandingPageProps {
   serviceTitle: string;
