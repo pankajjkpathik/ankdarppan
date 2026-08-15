@@ -16,6 +16,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useServicePrice } from "@/hooks/useServicePrice";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { testimonials } from "@/data/testimonials";
+import { fbTrack } from "@/lib/fbpixel";
 
 
 interface LandingPageProps {
@@ -121,6 +122,13 @@ const ServiceLandingPage = ({
       price: `₹${price}`,
       priceNum: price,
       img: heroImage,
+    });
+
+    fbTrack("InitiateCheckout", {
+      value: price,
+      currency: "INR",
+      content_name: serviceTitle,
+      content_category: "Numerology Service",
     });
 
     toast({
@@ -289,6 +297,7 @@ const ServiceLandingPage = ({
                         alt="Sample Report Excerpt" 
                         width="400"
                         height="533"
+                        loading="lazy"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
                           e.currentTarget.nextElementSibling?.classList.remove('hidden');

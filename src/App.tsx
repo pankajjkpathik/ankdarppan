@@ -8,24 +8,28 @@ import { Helmet } from "react-helmet-async";
 import CartDrawer from "@/components/CartDrawer";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
+import { lazy, Suspense } from "react";
+
 // Public Pages
-import Index from "./pages/Index.tsx";
-import BookNow from "./pages/BookNow.tsx";
-import OrderTracking from "./pages/OrderTracking.tsx";
-import ProductDetail from "./pages/ProductDetail.tsx";
-import Shop from "./pages/Shop.tsx";
-import Blog from "./pages/Blog.tsx";
-import BlogPost from "./pages/BlogPost.tsx";
-import AboutUs from "./pages/AboutUs.tsx";
-import Services from "./pages/Services.tsx";
-import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
-import RefundPolicy from "./pages/RefundPolicy.tsx";
-import TermsAndConditions from "./pages/TermsAndConditions.tsx";
-import NotFound from "./pages/NotFound.tsx";
-import MobileCompatibilityReport from "./pages/MobileCompatibilityReport.tsx";
-import LoshuGridReport from "./pages/LoshuGridReport.tsx";
-import MarriageCompatibility from "./pages/MarriageCompatibility.tsx";
-import NameCompatibilityReport from "./pages/NameCompatibilityReport.tsx";
+const Index = lazy(() => import("./pages/Index.tsx"));
+const BookNow = lazy(() => import("./pages/BookNow.tsx"));
+const OrderTracking = lazy(() => import("./pages/OrderTracking.tsx"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail.tsx"));
+const Shop = lazy(() => import("./pages/Shop.tsx"));
+const Blog = lazy(() => import("./pages/Blog.tsx"));
+const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
+const AboutUs = lazy(() => import("./pages/AboutUs.tsx"));
+const Services = lazy(() => import("./pages/Services.tsx"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
+const RefundPolicy = lazy(() => import("./pages/RefundPolicy.tsx"));
+const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions.tsx"));
+const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+
+// Landing Pages
+const MobileCompatibilityReport = lazy(() => import("./pages/MobileCompatibilityReport.tsx"));
+const LoshuGridReport = lazy(() => import("./pages/LoshuGridReport.tsx"));
+const MarriageCompatibility = lazy(() => import("./pages/MarriageCompatibility.tsx"));
+const NameCompatibilityReport = lazy(() => import("./pages/NameCompatibilityReport.tsx"));
 
 // Auth Pages
 import Auth from "./pages/Auth.tsx";
@@ -55,52 +59,54 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <CartDrawer />
-          <Routes>
-            {/* --- Public Routes --- */}
-            <Route path="/" element={<><PageSEO title="Ank Darppan - Expert Numerology Consultant | Unlock Your Destiny" description="India's trusted numerology consultant. Loshu Grid reports, Vedic numerology, marriage compatibility, mobile number consultations & more." /><Index /></>} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/book" element={<BookNow />} />
-            <Route path="/shop" element={<><PageSEO title="Shop Spiritual Products | Ank Darppan" description="Explore our handpicked collection of spiritual products, crystals, and numerology reports." /><Shop /></>} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/order-tracking" element={<OrderTracking />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/refund-policy" element={<RefundPolicy />} />
-            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-            <Route path="/mobile-compatibility-report" element={<MobileCompatibilityReport />} />
-            <Route path="/loshu-grid-report" element={<LoshuGridReport />} />
-            <Route path="/marriage-compatibility" element={<MarriageCompatibility />} />
-            <Route path="/name-compatibility-report" element={<NameCompatibilityReport />} />
+          <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+            <Routes>
+              {/* --- Public Routes --- */}
+              <Route path="/" element={<><PageSEO title="Ank Darppan - Expert Numerology Consultant | Unlock Your Destiny" description="India's trusted numerology consultant. Loshu Grid reports, Vedic numerology, marriage compatibility, mobile number consultations & more." /><Index /></>} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/book" element={<BookNow />} />
+              <Route path="/shop" element={<><PageSEO title="Shop Spiritual Products | Ank Darppan" description="Explore our handpicked collection of spiritual products, crystals, and numerology reports." /><Shop /></>} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/order-tracking" element={<OrderTracking />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/refund-policy" element={<RefundPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+              <Route path="/mobile-compatibility-report" element={<MobileCompatibilityReport />} />
+              <Route path="/loshu-grid-report" element={<LoshuGridReport />} />
+              <Route path="/marriage-compatibility" element={<MarriageCompatibility />} />
+              <Route path="/name-compatibility-report" element={<NameCompatibilityReport />} />
 
-            {/* --- Customer Auth --- */}
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/my-account" element={<MyAccount />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
+              {/* --- Customer Auth --- */}
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/my-account" element={<MyAccount />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
 
-            {/* --- Admin Auth --- */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/signup" element={<AdminSignup />} />
+              {/* --- Admin Auth --- */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/signup" element={<AdminSignup />} />
 
-            {/* --- Protected Admin Routes --- */}
-            {/* This now uses AdminLayout to manage all sub-tabs (Orders, Blogs, etc.) */}
-            <Route 
-              path="/admin" 
-              element={
-                <ProtectedRoute>
-                  <AdminLayout />
-                </ProtectedRoute>
-              } 
-            />
+              {/* --- Protected Admin Routes --- */}
+              {/* This now uses AdminLayout to manage all sub-tabs (Orders, Blogs, etc.) */}
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout />
+                  </ProtectedRoute>
+                } 
+              />
 
-            {/* Redirect legacy specific routes back to the main layout shell */}
-            <Route path="/admin/products" element={<Navigate to="/admin" replace />} />
-            <Route path="/admin/orders" element={<Navigate to="/admin" replace />} />
+              {/* Redirect legacy specific routes back to the main layout shell */}
+              <Route path="/admin/products" element={<Navigate to="/admin" replace />} />
+              <Route path="/admin/orders" element={<Navigate to="/admin" replace />} />
 
-            {/* Catch-all 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+              {/* Catch-all 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </TooltipProvider>
     </CartProvider>
