@@ -32,5 +32,3 @@ const MarriageCompatibility = () => {
 };
 
 export default MarriageCompatibility;
-
-export default MarriageCompatibility;

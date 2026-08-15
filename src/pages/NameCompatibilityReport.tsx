@@ -32,5 +32,3 @@ const NameCompatibilityReport = () => {
 };
 
 export default NameCompatibilityReport;
-
-export default NameCompatibilityReport;

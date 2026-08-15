@@ -32,5 +32,3 @@ const LoshuGridReport = () => {
 };
 
 export default LoshuGridReport;
-
-export default LoshuGridReport;
