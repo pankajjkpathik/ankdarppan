@@ -15,7 +15,7 @@ import sampleReport from "@/assets/mobile-sample.jpg.asset.json";
 import { useServicePrice } from "@/hooks/useServicePrice";
 
 const MobileCompatibilityReport = () => {
-  const { price, oldPrice } = useServicePrice(
+  const { price, oldPrice, coupons } = useServicePrice(
     ["Mobile Number Consultation", "Mobile Compatibility"],
     581,
     1500
@@ -214,16 +214,35 @@ const MobileCompatibilityReport = () => {
                 </ul>
                 
                 <div className="p-6 border border-primary/30 rounded-2xl bg-white mb-8 shadow-md">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="px-3 py-1 bg-primary text-primary-foreground text-xs font-bold rounded">COUPON: FOLLOWER</div>
-                    <span className="text-sm font-semibold text-stone-800">15% Follower Discount</span>
-                  </div>
+                  {coupons && coupons.length > 0 ? (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {coupons.map((c: any) => (
+                        <div key={c.id} className="flex items-center gap-2">
+                          <div className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-bold rounded uppercase tracking-wider">
+                            COUPON: {c.code}
+                          </div>
+                          <span className="text-xs font-semibold text-stone-800">
+                            {c.discount_type === 'percent' ? `${c.discount_value}%` : `₹${c.discount_value}`} OFF
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="px-3 py-1 bg-primary text-primary-foreground text-xs font-bold rounded">COUPON: FOLLOWER</div>
+                      <span className="text-sm font-semibold text-stone-800">15% Follower Discount</span>
+                    </div>
+                  )}
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-stone-900">₹{price.toLocaleString("en-IN")}</span>
                     {oldPrice ? <span className="text-lg text-stone-400 line-through">₹{oldPrice.toLocaleString("en-IN")}</span> : null}
                     <span className="text-primary font-bold">Limited Time Offer</span>
                   </div>
-                  <p className="text-xs text-stone-500 mt-2">*Apply coupon FOLLOWER at checkout for extra 15% discount.</p>
+                  <p className="text-xs text-stone-500 mt-2">
+                    {coupons && coupons.length > 0 
+                      ? `*Apply coupon ${coupons[0].code} at checkout for additional savings.`
+                      : "*Apply coupon FOLLOWER at checkout for extra 15% discount."}
+                  </p>
                 </div>
 
                 <Button 
