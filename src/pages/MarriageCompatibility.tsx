@@ -1,4 +1,3 @@
-/* Standardized Date Formats & Visual Visibility Edits applied */
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
 import sampleReport from "@/assets/marriage-sample.jpg.asset.json";

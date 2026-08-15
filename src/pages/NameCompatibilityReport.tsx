@@ -1,4 +1,3 @@
-/* Standardized Date Formats & Visual Visibility Edits applied */
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
 import sampleReport from "@/assets/name-sample.jpg.asset.json";
@@ -13,7 +12,7 @@ const NameCompatibilityReport = () => {
       />
       <ServiceLandingPage
         serviceTitle="Name Compatibility Report"
-        price={891}
+        price={941}
         matchTitles={["Name Compatibility"]}
         oldPrice={2100}
         description="Is your name working for you or against you? Discover how your name's vibration aligns with your birth date for maximum success."
