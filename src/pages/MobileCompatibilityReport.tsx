@@ -1,11 +1,9 @@
-/* Standardized Date Formats & Visual Visibility Edits applied */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, Star, ShieldCheck, Zap, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
@@ -13,6 +11,9 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import sampleReport from "@/assets/mobile-sample.jpg.asset.json";
 import { useServicePrice } from "@/hooks/useServicePrice";
+import { DobInput } from "@/components/DobInput";
+import { StickyPriceBar } from "@/components/StickyPriceBar";
+import { BenefitCard } from "@/components/BenefitCard";
 
 const MobileCompatibilityReport = () => {
   const { price, oldPrice, coupons } = useServicePrice(
@@ -27,6 +28,25 @@ const MobileCompatibilityReport = () => {
     mobile: "",
     dob: ""
   });
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSection = document.getElementById("hero-section");
+      if (heroSection) {
+        const rect = heroSection.getBoundingClientRect();
+        setShowSticky(rect.bottom < 0);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToHero = () => {
+    const el = document.getElementById("hero-name");
+    el?.scrollIntoView({ behavior: "smooth" });
+    el?.focus();
+  };
 
   const handleBuyNow = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -115,24 +135,10 @@ const MobileCompatibilityReport = () => {
                       required
                     />
                   </div>
-                  <div className="text-left">
-                    <Label htmlFor="hero-dob" className="text-sm font-semibold ml-1 text-stone-900">Date of Birth (DD/MM/YYYY)</Label>
-                    <Input 
-                      id="hero-dob"
-                      placeholder="DD/MM/YYYY"
-                      inputMode="numeric"
-                      className="bg-[#fdfbf7] border-stone-300 text-stone-900 focus:border-primary"
-                      value={formData.dob}
-                      onChange={(e) => {
-                        let value = e.target.value.replace(/\D/g, "");
-                        if (value.length > 8) value = value.slice(0, 8);
-                        if (value.length > 4) value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
-                        else if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
-                        setFormData(prev => ({ ...prev, dob: value }));
-                      }}
-                      required
-                    />
-                  </div>
+                  <DobInput 
+                    value={formData.dob}
+                    onChange={(val) => setFormData(prev => ({ ...prev, dob: val }))}
+                  />
                   <div className="text-left">
                     <Label htmlFor="hero-mobile" className="text-sm font-semibold ml-1 text-stone-900">Mobile Number to Analyze</Label>
                     <Input 
@@ -196,17 +202,7 @@ const MobileCompatibilityReport = () => {
                   icon: <Star className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
               ].map((item, i) => (
-                <Card key={i} className="border-stone-200 bg-white hover:border-primary/50 transition-colors shadow-sm overflow-hidden">
-                  <CardContent className="p-5 md:pt-8 md:text-center flex md:flex-col items-center md:items-center gap-4 md:gap-0">
-                    <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 md:mb-6 rounded-xl md:rounded-2xl bg-primary/10 shrink-0">
-                      {item.icon}
-                    </div>
-                    <div className="text-left md:text-center">
-                      <h3 className="text-lg md:text-xl font-heading mb-1 md:mb-3 text-stone-900 font-bold leading-tight">{item.title}</h3>
-                      <p className="text-stone-950 font-semibold text-sm md:text-base leading-snug">{item.desc}</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <BenefitCard key={i} title={item.title} desc={item.desc} icon={item.icon} />
               ))}
             </div>
           </div>
@@ -266,11 +262,7 @@ const MobileCompatibilityReport = () => {
                 </div>
 
                 <Button 
-                  onClick={() => {
-                    const el = document.getElementById("hero-name");
-                    el?.scrollIntoView({ behavior: "smooth" });
-                    el?.focus();
-                  }} 
+                  onClick={scrollToHero} 
                   className="w-full md:w-auto px-10 py-6 text-lg font-bold"
                 >
                   GET MY REPORT
@@ -342,11 +334,7 @@ const MobileCompatibilityReport = () => {
               Join thousands who have optimized their lives through the power of mobile numerology.
             </p>
             <Button 
-              onClick={() => {
-                const el = document.getElementById("hero-name");
-                el?.scrollIntoView({ behavior: "smooth" });
-                el?.focus();
-              }}
+              onClick={scrollToHero}
               variant="secondary" 
               size="lg" 
               className="px-12 py-8 text-xl font-bold rounded-full w-full md:w-auto"
@@ -363,6 +351,13 @@ const MobileCompatibilityReport = () => {
           </div>
         </section>
       </main>
+
+      <StickyPriceBar 
+        show={showSticky} 
+        price={price} 
+        oldPrice={oldPrice} 
+        onScrollTo={scrollToHero} 
+      />
 
       <Footer />
     </div>
