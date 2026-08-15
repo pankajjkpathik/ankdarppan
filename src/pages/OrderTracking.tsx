@@ -48,6 +48,20 @@ const OrderTracking = () => {
         setNotFound(true);
       } else {
         setOrder(data);
+        
+        // Track Purchase event once per confirmed session
+        if (isConfirmed && data.status === 'paid') {
+          const trackKey = `tracked_purchase_${data.razorpay_order_id}`;
+          if (!sessionStorage.getItem(trackKey)) {
+            fbTrack("Purchase", {
+              value: data.total,
+              currency: "INR",
+              order_id: data.razorpay_order_id,
+              content_type: "product"
+            });
+            sessionStorage.setItem(trackKey, "true");
+          }
+        }
       }
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
