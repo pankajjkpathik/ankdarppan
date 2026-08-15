@@ -16,6 +16,9 @@ interface LandingPageProps {
   serviceTitle: string;
   price: number;
   oldPrice?: number;
+  /** Extra title fragments used to match this service in the Admin-managed services table */
+  matchTitles?: string[];
+
   description: string;
   benefits: string[];
   heroImage?: string;
