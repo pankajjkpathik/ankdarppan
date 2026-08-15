@@ -57,6 +57,7 @@ const ServiceLandingPage = ({
   });
   const [dobError, setDobError] = useState("");
   const [showSticky, setShowSticky] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -221,7 +222,7 @@ const ServiceLandingPage = ({
                 },
                 {
                   title: "Life-Changing Results",
-                  desc: "Join thousands who have transformed their lives through our guidance.",
+                  desc: "Reports based on classical Lo Shu and Vedic numerology principles, prepared personally for your birth chart.",
                   icon: <Star className="w-6 h-6 md:w-8 md:h-8 text-primary" />,
                 },
               ].map((item, i) => (
@@ -311,6 +312,124 @@ const ServiceLandingPage = ({
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-12 md:py-20">
+          <div className="container px-4 mx-auto">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl font-heading md:text-4xl text-stone-900 mb-4">What Our Clients Say</h2>
+              <div className="w-20 h-1 bg-primary mx-auto opacity-50"></div>
+            </div>
+
+            {/* Desktop View */}
+            <div className="hidden md:grid grid-cols-3 gap-8">
+              {testimonials.map((t, i) => (
+                <div key={i} className="p-8 bg-white border border-primary/20 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-primary text-primary" />)}
+                  </div>
+                  <p className="text-stone-700 italic mb-6 leading-relaxed">"{t.quote}"</p>
+                  <div>
+                    <p className="font-bold text-stone-900">{t.name}</p>
+                    <p className="text-sm text-stone-500">{t.city}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile Swipe View */}
+            <div className="md:hidden relative overflow-hidden">
+              <div 
+                className="flex transition-transform duration-300 ease-out" 
+                style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
+              >
+                {testimonials.map((t, i) => (
+                  <div key={i} className="w-full shrink-0 px-2">
+                    <div className="p-6 bg-white border border-primary/20 rounded-3xl shadow-sm min-h-[250px] flex flex-col justify-between">
+                      <div>
+                        <div className="flex gap-1 mb-4">
+                          {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-primary text-primary" />)}
+                        </div>
+                        <p className="text-stone-700 italic mb-6 leading-relaxed text-sm">"{t.quote}"</p>
+                      </div>
+                      <div>
+                        <p className="font-bold text-stone-900">{t.name}</p>
+                        <p className="text-sm text-stone-500">{t.city}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex justify-center gap-2 mt-6">
+                {testimonials.map((_, i) => (
+                  <button 
+                    key={i} 
+                    onClick={() => setActiveTestimonial(i)}
+                    className={`w-2 h-2 rounded-full transition-all ${activeTestimonial === i ? 'bg-primary w-4' : 'bg-primary/20'}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-12 md:py-20 bg-[#f9f6f0]">
+          <div className="container px-4 mx-auto max-w-3xl">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl font-heading md:text-4xl text-stone-900 mb-4">Frequently Asked Questions</h2>
+              <div className="w-20 h-1 bg-primary mx-auto opacity-50"></div>
+            </div>
+
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              <AccordionItem value="item-1" className="bg-white border border-primary/10 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-bold text-stone-900 hover:text-primary transition-colors">
+                  Report कितनी देर में मिलेगी?
+                </AccordionTrigger>
+                <AccordionContent className="text-stone-700 leading-relaxed">
+                  WhatsApp पर 24 घंटे के अंदर, PDF format में।
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-2" className="bg-white border border-primary/10 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-bold text-stone-900 hover:text-primary transition-colors">
+                  Report Hindi में होगी या English में?
+                </AccordionTrigger>
+                <AccordionContent className="text-stone-700 leading-relaxed">
+                  Report Hinglish में होती है, ताकि पढ़ने और समझने में आसान रहे।
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-3" className="bg-white border border-primary/10 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-bold text-stone-900 hover:text-primary transition-colors">
+                  मुझे अपना birth time नहीं पता, क्या फिर भी report बन सकती है?
+                </AccordionTrigger>
+                <AccordionContent className="text-stone-700 leading-relaxed">
+                  हाँ। Lo Shu Grid सिर्फ जन्मतिथि पर आधारित है, birth time की ज़रूरत नहीं।
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-4" className="bg-white border border-primary/10 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-bold text-stone-900 hover:text-primary transition-colors">
+                  Payment कैसे करें?
+                </AccordionTrigger>
+                <AccordionContent className="text-stone-700 leading-relaxed">
+                  UPI, card या net banking — checkout पर सभी options मिलेंगे।
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-5" className="bg-white border border-primary/10 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-bold text-stone-900 hover:text-primary transition-colors">
+                  क्या report refundable है?
+                </AccordionTrigger>
+                <AccordionContent className="text-stone-700 leading-relaxed">
+                  Report personally तैयार होती है, इसलिए delivery के बाद refund नहीं मिलता। कोई भी सवाल हो तो WhatsApp पर पूछ सकते हैं।
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </section>
 

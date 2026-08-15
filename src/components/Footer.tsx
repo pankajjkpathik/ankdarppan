@@ -50,7 +50,12 @@ const Footer = () => (
         </div>
       </div>
       <div className="border-t border-border/30 mt-8 pt-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Ank Darppan. All Rights Reserved.
+        <p className="mb-4">© {new Date().getFullYear()} Ank Darppan. All Rights Reserved.</p>
+        {window.location.pathname !== '/' && (
+          <p className="italic opacity-70">
+            Numerology reports are provided for guidance and self-reflection purposes and are not a substitute for professional medical, legal or financial advice.
+          </p>
+        )}
       </div>
     </div>
   </footer>
