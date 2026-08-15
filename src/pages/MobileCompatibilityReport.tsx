@@ -12,9 +12,16 @@ import { toast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import sampleReport from "@/assets/mobile-sample.jpg.asset.json";
+import { useServicePrice } from "@/hooks/useServicePrice";
 
 const MobileCompatibilityReport = () => {
+  const { price, oldPrice } = useServicePrice(
+    ["Mobile Number Consultation", "Mobile Compatibility"],
+    581,
+    1500
+  );
   const { addItem, setIsOpen: openCart } = useCart();
+
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
