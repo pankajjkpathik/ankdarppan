@@ -27,6 +27,7 @@ interface LandingPageProps {
   benefits: string[];
   heroImage?: string;
   sampleReportImage?: string;
+  extraHeroFields?: React.ReactNode;
 }
 
 const ServiceLandingPage = ({ 
@@ -37,7 +38,8 @@ const ServiceLandingPage = ({
   description, 
   benefits,
   heroImage = "/logo.png",
-  sampleReportImage
+  sampleReportImage,
+  extraHeroFields
 }: LandingPageProps) => {
   const { price, oldPrice, coupons } = useServicePrice(
     matchTitles && matchTitles.length ? matchTitles : [serviceTitle],
@@ -169,6 +171,7 @@ const ServiceLandingPage = ({
                     onBlur={validateDob}
                     error={dobError}
                   />
+                  {extraHeroFields}
                 </div>
 
                 <div className="mb-4 text-center">
