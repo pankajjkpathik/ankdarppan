@@ -4,7 +4,7 @@ import { Sparkles, CalendarClock, Timer, ArrowRight, Check } from "lucide-react"
 import { useOffer } from "@/hooks/useOffer";
 import { OFFER_PRICES } from "@/config/offer";
 
-const ROWS = [
+const ROWS: { label: string; regular: number; ashtami: number; off: number; best?: boolean }[] = [
   { label: "Mobile Number Report", ...OFFER_PRICES.mobile },
   { label: "Loshu Grid Report", ...OFFER_PRICES.loshu },
   { label: "Krishna Kripa Combo", ...OFFER_PRICES.combo, best: true },
