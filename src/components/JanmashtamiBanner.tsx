@@ -11,7 +11,7 @@ const JanmashtamiBanner = () => {
   const combo = OFFER_PRICES.combo;
 
   return (
-    <section className="sticky top-0 z-40 relative overflow-hidden border-b border-[rgba(200,154,62,0.4)] bg-[#061229]">
+    <section className="sticky top-[64px] z-40 relative overflow-hidden border-b border-[rgba(200,154,62,0.4)] bg-[#061229]">
       <div className="absolute inset-0 cosmic-bg opacity-30" />
       <div className="absolute top-0 right-0 w-64 h-64 bg-[#C89A3E]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 

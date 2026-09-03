@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import JanmashtamiBanner from "@/components/JanmashtamiBanner";
+import JanmashtamiPoster from "@/components/JanmashtamiPoster";
+
 import ServicesSection from "@/components/ServicesSection";
 import CalculatorsSection from "@/components/CalculatorsSection";
 import ProductsSection from "@/components/ProductsSection";
@@ -16,7 +18,9 @@ const Index = () => (
     <Navbar />
     <JanmashtamiBanner />
     <HeroSection />
+    <JanmashtamiPoster />
     <ServicesSection />
+
     <CalculatorsSection />
     <ProductsSection />
     <BlogSection />
