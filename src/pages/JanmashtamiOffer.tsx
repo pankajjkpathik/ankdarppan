@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, Copy, Sparkles, ShieldCheck, Clock } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -63,6 +63,7 @@ const OFFERS: Offer[] = [
 const JanmashtamiOffer = () => {
   const { addItem, setIsOpen } = useCart();
   const [params, setParams] = useSearchParams();
+  const { slug: routeSlug } = useParams();
 
   const buy = (offer: Offer) => {
     addItem({
@@ -82,13 +83,15 @@ const JanmashtamiOffer = () => {
 
   // Direct payment link support: /janmashtami?buy=mobile | loshu | combo
   useEffect(() => {
-    const slug = params.get("buy");
+    const slug = routeSlug || params.get("buy");
     if (!slug) return;
     const offer = OFFERS.find((o) => o.slug === slug);
     if (offer) {
       buy(offer);
-      params.delete("buy");
-      setParams(params, { replace: true });
+      if (params.get("buy")) {
+        params.delete("buy");
+        setParams(params, { replace: true });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
