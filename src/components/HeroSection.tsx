@@ -1,14 +1,18 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
+import { useOffer } from "@/hooks/useOffer";
 
 const stats = [
   { value: "5+", label: "Years Experience" },
   { value: "1000+", label: "Reports Delivered" },
-  { value: "48 hr", label: "Report Delivery" },
+  { value: "24–36 hr", label: "Report Delivery" },
 ];
 
-const HeroSection = () => (
+const HeroSection = () => {
+  const { isLive } = useOffer();
+
+  return (
   <section id="home" className="relative min-h-[90vh] flex items-center overflow-hidden">
     <div className="absolute inset-0">
       <img
@@ -29,7 +33,9 @@ const HeroSection = () => (
         transition={{ duration: 0.8 }}
         className="max-w-3xl"
       >
-        <p className="text-primary font-display text-xl md:text-2xl italic mb-4">India's Trusted Numerology Consultant</p>
+        <p className="text-primary font-display text-xl md:text-2xl italic mb-4">
+          {isLive ? "Krishna Janmashtami Special · 48 ghante" : "India's Trusted Numerology Consultant"}
+        </p>
         <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight mb-6">
           Take Control of Your <span className="gold-text animate-shimmer">Destiny</span>
         </h1>
@@ -40,20 +46,21 @@ const HeroSection = () => (
 
         <div className="flex flex-col gap-4 mb-12">
           <Link
-            to="/book"
+            to={isLive ? "/janmashtami" : "/book"}
             className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-base hover:brightness-110 transition-all shadow-[0_4px_20px_-5px_hsl(var(--primary)/0.4)] w-fit"
           >
-            GET MY REPORT
+            {isLive ? "Janmashtami Offer Dekhein →" : "GET MY REPORT"}
           </Link>
           <div className="flex items-center gap-2 text-xs text-muted-foreground opacity-80">
             <span>🔒 Secure Razorpay Payments</span>
             <span>·</span>
             <span>WhatsApp Support</span>
             <span>·</span>
-            <span>Reports within 48 hours</span>
+            <span>Reports within 24–36 hours</span>
           </div>
         </div>
       </motion.div>
+
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
