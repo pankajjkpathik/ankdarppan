@@ -3,12 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Grid3X3, BookOpen, Heart, Smartphone, Gem, FileText, Star, Sparkles, Eye, Moon, Loader2, LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useOffer } from "@/hooks/useOffer";
+import { OFFER_PRICES } from "@/config/offer";
+
 
 const iconMap: Record<string, LucideIcon> = {
   Grid3X3, BookOpen, Heart, Smartphone, Gem, FileText, Star, Sparkles, Eye, Moon,
 };
 
 const ServicesSection = () => {
+  const { isLive } = useOffer();
+
   const { data: services, isLoading } = useQuery({
     queryKey: ["services-home"],
     queryFn: async () => {
