@@ -30,6 +30,7 @@ const MobileCompatibilityReport = lazy(() => import("./pages/MobileCompatibility
 const LoshuGridReport = lazy(() => import("./pages/LoshuGridReport.tsx"));
 const MarriageCompatibility = lazy(() => import("./pages/MarriageCompatibility.tsx"));
 const NameCompatibilityReport = lazy(() => import("./pages/NameCompatibilityReport.tsx"));
+const JanmashtamiOffer = lazy(() => import("./pages/JanmashtamiOffer.tsx"));
 
 // Auth Pages
 import Auth from "./pages/Auth.tsx";
@@ -78,6 +79,9 @@ const App = () => (
               <Route path="/loshu-grid-report" element={<LoshuGridReport />} />
               <Route path="/marriage-compatibility" element={<MarriageCompatibility />} />
               <Route path="/name-compatibility-report" element={<NameCompatibilityReport />} />
+              <Route path="/janmashtami" element={<JanmashtamiOffer />} />
+              <Route path="/ashtami" element={<JanmashtamiOffer />} />
+              <Route path="/pay/:slug" element={<JanmashtamiOffer />} />
 
               {/* --- Customer Auth --- */}
               <Route path="/auth" element={<Auth />} />
