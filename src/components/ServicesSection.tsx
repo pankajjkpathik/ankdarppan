@@ -3,12 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Grid3X3, BookOpen, Heart, Smartphone, Gem, FileText, Star, Sparkles, Eye, Moon, Loader2, LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useOffer } from "@/hooks/useOffer";
+import { OFFER_PRICES } from "@/config/offer";
+
 
 const iconMap: Record<string, LucideIcon> = {
   Grid3X3, BookOpen, Heart, Smartphone, Gem, FileText, Star, Sparkles, Eye, Moon,
 };
 
 const ServicesSection = () => {
+  const { isLive } = useOffer();
+
   const { data: services, isLoading } = useQuery({
     queryKey: ["services-home"],
     queryFn: async () => {
@@ -41,6 +46,13 @@ const ServicesSection = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services?.map((service, i) => {
               const Icon = iconMap[service.icon || "FileText"] || FileText;
+              const t = service.title.toLowerCase();
+              const offerSlug = t.includes("loshu grid")
+                ? "loshu"
+                : t.includes("mobile number consultation") || t.includes("mobile compatibility")
+                ? "mobile"
+                : null;
+              const offer = isLive && offerSlug ? OFFER_PRICES[offerSlug] : null;
               return (
                 <motion.div
                   key={service.id}
@@ -51,36 +63,53 @@ const ServicesSection = () => {
                   className="glass-card p-6 group hover:border-primary/40 transition-all duration-300"
                 >
                   <Icon className="w-10 h-10 text-primary mb-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
-                  <h3 className="text-lg font-heading font-semibold mb-2 text-foreground">{service.title}</h3>
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h3 className="text-lg font-heading font-semibold text-foreground">{service.title}</h3>
+                    {offer && (
+                      <span className="shrink-0 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full border border-[rgba(200,154,62,0.5)] text-[#F4C542]">
+                        Janmashtami
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{service.description}</p>
                   <div className="flex items-center justify-between mt-auto">
-                    <div className="flex flex-col">
-                      <span className="text-2xl font-heading font-bold text-primary">₹{service.price.toLocaleString("en-IN")}</span>
-                      {service.old_price && <span className="text-muted-foreground line-through text-xs">₹{service.old_price.toLocaleString("en-IN")}</span>}
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-heading font-bold text-primary">
+                        ₹{(offer ? offer.ashtami : service.price).toLocaleString("en-IN")}
+                      </span>
+                      {offer && (
+                        <span className="text-muted-foreground line-through text-xs">
+                          ₹{offer.regular.toLocaleString("en-IN")}
+                        </span>
+                      )}
                     </div>
                     <a
-                      href={service.title.toLowerCase().includes('mobile number consultation') || service.title.toLowerCase().includes('mobile compatibility')
+                      href={offer
+                        ? "/janmashtami"
+                        : t.includes('mobile number consultation') || t.includes('mobile compatibility')
                         ? "/mobile-compatibility-report" 
-                        : service.title.toLowerCase().includes('loshu grid')
+                        : t.includes('loshu grid')
                         ? "/loshu-grid-report"
-                        : service.title.toLowerCase().includes('marriage compatibility')
+                        : t.includes('marriage compatibility')
                         ? "/marriage-compatibility"
-                        : service.title.toLowerCase().includes('name compatibility')
+                        : t.includes('name compatibility')
                         ? "/name-compatibility-report"
                         : `/book?service=${encodeURIComponent(service.title)}`}
                       className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:brightness-110 transition-all"
                     >
-                      {service.title.toLowerCase().includes('mobile number consultation') || 
-                       service.title.toLowerCase().includes('mobile compatibility') ||
-                       service.title.toLowerCase().includes('loshu grid') ||
-                       service.title.toLowerCase().includes('marriage compatibility') ||
-                       service.title.toLowerCase().includes('name compatibility') 
+                      {offer ||
+                       t.includes('mobile number consultation') || 
+                       t.includes('mobile compatibility') ||
+                       t.includes('loshu grid') ||
+                       t.includes('marriage compatibility') ||
+                       t.includes('name compatibility') 
                        ? "View Offer" : "Order Now"}
                     </a>
                   </div>
                 </motion.div>
               );
             })}
+
           </div>
         )}
 
