@@ -50,7 +50,7 @@ const JanmashtamiPoster = () => {
                   <CalendarClock className="w-4 h-4 mt-0.5 text-[#C89A3E] shrink-0" />
                   <div>
                     <p className="font-semibold text-[#FAFAF7]">Offer window</p>
-                    <p>04-09-2026 (12 PM) se 06-09-2026 (12 PM) tak — 48 ghante</p>
+                    <p>04-09-2026 (11:59 PM) se 06-09-2026 (11:59 PM) tak — 48 ghante</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 text-sm text-[#E8DFC8]">
@@ -60,7 +60,7 @@ const JanmashtamiPoster = () => {
                       {isLive ? "Offer band hone mein" : "Offer live hone mein"}
                     </p>
                     <p className="tabular-nums font-bold text-[#F4C542]">
-                      {isLive ? countdown : "4 September, 12 PM"}
+                      {isLive ? countdown : "4 September, 11:59 PM"}
                     </p>
                   </div>
                 </div>
