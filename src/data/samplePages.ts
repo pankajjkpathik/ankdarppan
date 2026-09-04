@@ -22,17 +22,14 @@ import m8 from "@/assets/samples/mobile-08.jpg.asset.json";
 import m9 from "@/assets/samples/mobile-09.jpg.asset.json";
 
 /**
- * CDN assets are served by Lovable infrastructure at /__l5e/...
- * When the site runs on an external host (e.g. Hostinger / www.ankdarppan.com)
- * that path does not exist, so we point those requests at the Lovable origin.
+ * Always use the published Lovable origin for CDN assets. Relative /__l5e URLs
+ * are not handled by localhost or external hosts and return the app HTML.
  */
 const CDN_ORIGIN = "https://ankdarppan.lovable.app";
 
 const assetUrl = (url: string): string => {
-  if (typeof window === "undefined") return url;
-  const host = window.location.hostname;
-  const isLovableHost = host.endsWith("lovable.app") || host === "localhost" || host === "127.0.0.1";
-  return isLovableHost ? url : `${CDN_ORIGIN}${url}`;
+  if (/^https?:\/\//.test(url)) return url;
+  return `${CDN_ORIGIN}${url.startsWith("/") ? url : `/${url}`}`;
 };
 
 export const loshuSamplePages: string[] = [lc, l1, l2, l3, l4, l5, l6, l7, l8, l9].map((a) =>
