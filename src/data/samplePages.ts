@@ -1,4 +1,5 @@
-// First 10 pages of the actual sample reports. Remaining pages stay locked.
+// Cover + first pages of the actual sample reports. Remaining pages stay locked.
+import lc from "@/assets/samples/loshu-cover.jpg.asset.json";
 import l1 from "@/assets/samples/loshu-01.jpg.asset.json";
 import l2 from "@/assets/samples/loshu-02.jpg.asset.json";
 import l3 from "@/assets/samples/loshu-03.jpg.asset.json";
@@ -8,8 +9,8 @@ import l6 from "@/assets/samples/loshu-06.jpg.asset.json";
 import l7 from "@/assets/samples/loshu-07.jpg.asset.json";
 import l8 from "@/assets/samples/loshu-08.jpg.asset.json";
 import l9 from "@/assets/samples/loshu-09.jpg.asset.json";
-import l10 from "@/assets/samples/loshu-10.jpg.asset.json";
 
+import mc from "@/assets/samples/mobile-cover.jpg.asset.json";
 import m1 from "@/assets/samples/mobile-01.jpg.asset.json";
 import m2 from "@/assets/samples/mobile-02.jpg.asset.json";
 import m3 from "@/assets/samples/mobile-03.jpg.asset.json";
@@ -19,10 +20,27 @@ import m6 from "@/assets/samples/mobile-06.jpg.asset.json";
 import m7 from "@/assets/samples/mobile-07.jpg.asset.json";
 import m8 from "@/assets/samples/mobile-08.jpg.asset.json";
 import m9 from "@/assets/samples/mobile-09.jpg.asset.json";
-import m10 from "@/assets/samples/mobile-10.jpg.asset.json";
 
-export const loshuSamplePages: string[] = [l1, l2, l3, l4, l5, l6, l7, l8, l9, l10].map((a) => a.url);
-export const mobileSamplePages: string[] = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10].map((a) => a.url);
+/**
+ * CDN assets are served by Lovable infrastructure at /__l5e/...
+ * When the site runs on an external host (e.g. Hostinger / www.ankdarppan.com)
+ * that path does not exist, so we point those requests at the Lovable origin.
+ */
+const CDN_ORIGIN = "https://ankdarppan.lovable.app";
+
+const assetUrl = (url: string): string => {
+  if (typeof window === "undefined") return url;
+  const host = window.location.hostname;
+  const isLovableHost = host.endsWith("lovable.app") || host === "localhost" || host === "127.0.0.1";
+  return isLovableHost ? url : `${CDN_ORIGIN}${url}`;
+};
+
+export const loshuSamplePages: string[] = [lc, l1, l2, l3, l4, l5, l6, l7, l8, l9].map((a) =>
+  assetUrl(a.url)
+);
+export const mobileSamplePages: string[] = [mc, m1, m2, m3, m4, m5, m6, m7, m8, m9].map((a) =>
+  assetUrl(a.url)
+);
 
 /** Total page count of the full report (only the first 10 are shown publicly) */
 export const LOSHU_TOTAL_PAGES = 45;
