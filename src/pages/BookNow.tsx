@@ -94,16 +94,13 @@ const BookNow = () => {
     if (!code) return;
     setCouponLoading(true);
     try {
-      const { data, error } = await supabase.from("coupons").select("*").eq("code", code).eq("is_active", true).maybeSingle();
+      const { data: result, error } = await supabase.functions.invoke("validate-coupon", { body: { code } });
       if (error) throw error;
-      if (!data) {
-        toast({ title: "Invalid coupon", variant: "destructive" });
+      if (!result?.valid) {
+        toast({ title: "Invalid coupon", description: result?.reason || "This code is not valid", variant: "destructive" });
         return;
       }
-      if (data.expires_at && new Date(data.expires_at) < new Date()) {
-        toast({ title: "Coupon expired", variant: "destructive" });
-        return;
-      }
+      const data = result.coupon;
       if (subtotal < (data.min_order_amount || 0)) {
         toast({ title: "Min order not met", description: `Minimum ₹${data.min_order_amount} required`, variant: "destructive" });
         return;

@@ -27,15 +27,21 @@ export const useServicePrice = (
 
       if (!service) return null;
 
-      // Fetch coupons if there are coupon codes associated
-      let coupons = [];
+      // Validate associated coupon codes server-side (coupons table is not publicly readable)
+      let coupons: any[] = [];
       if (service.coupon_codes && service.coupon_codes.length > 0) {
-        const { data: couponData } = await supabase
-          .from("coupons")
-          .select("*")
-          .in("code", service.coupon_codes)
-          .eq("is_active", true);
-        coupons = couponData || [];
+        const results = await Promise.all(
+          service.coupon_codes.map((code: string) =>
+            supabase.functions.invoke("validate-coupon", { body: { code } })
+          )
+        );
+        coupons = results
+          .map((r, i) =>
+            r.data?.valid
+              ? { id: r.data.coupon.code, ...r.data.coupon }
+              : null
+          )
+          .filter(Boolean) as any[];
       }
 
       return { ...service, coupons };
