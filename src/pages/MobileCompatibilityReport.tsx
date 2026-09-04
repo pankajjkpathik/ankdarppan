@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { mobileSamplePages, MOBILE_TOTAL_PAGES } from "@/data/samplePages";
 
-const sampleReport = { url: "/mobile-report-v2.png" };
+const sampleReport = { url: mobileSamplePages[0] };
 
 const MobileCompatibilityReport = () => {
   const [mobile, setMobile] = useState("");

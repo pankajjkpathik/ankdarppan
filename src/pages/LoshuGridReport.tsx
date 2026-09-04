@@ -2,7 +2,7 @@ import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
 import { loshuSamplePages, LOSHU_TOTAL_PAGES } from "@/data/samplePages";
 
-const sampleReport = { url: "/loshu-report-v2.png" };
+const sampleReport = { url: loshuSamplePages[0] };
 
 const LoshuGridReport = () => {
   return (
