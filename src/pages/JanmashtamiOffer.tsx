@@ -297,7 +297,7 @@ const JanmashtamiOffer = () => {
                         </>
                       ) : (
                         <p className="text-sm font-semibold text-center text-stone-500">
-                          4 September, 12 PM se available
+                          4 September, 11:59 PM se available
                         </p>
                       )}
                     </div>
