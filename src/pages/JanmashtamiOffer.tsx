@@ -66,14 +66,8 @@ const PAGE_TESTIMONIALS = [
   {
     quote:
       "Loshu Grid report padhkar samajh aaya ki mere missing numbers kyun problem kar rahe the. Remedies simple the aur 3 hafte mein farq dikha.",
-    name: "Anamika Sharma",
+    name: "Roheika Verma",
     city: "Loshu Grid Report",
-  },
-  {
-    quote:
-      "Mobile Number Report ke baad number change kiya. Business calls ka response pehle se kaafi behtar hai. Guidance bilkul clear thi.",
-    name: "Rakesh Gupta",
-    city: "Mobile Number Report",
   },
   {
     quote:
@@ -85,7 +79,7 @@ const PAGE_TESTIMONIALS = [
     quote:
       "Krishna Kripa Combo lene ka decision bilkul sahi tha. Dono reports detail mein thi aur upay bhi practical hain. Website se order karna bahut easy tha.",
     name: "G.D. Charan",
-    city: "Krishna Kripa Combo · Jodhpur · via Website",
+    city: "Mobile Number Report · Jodhpur · via Website",
   },
 ];
 
