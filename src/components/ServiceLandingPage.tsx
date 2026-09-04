@@ -18,6 +18,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { testimonials } from "@/data/testimonials";
 import { fbTrack } from "@/lib/fbpixel";
 import samplePlaceholder from "@/assets/sample-coming-soon.jpg.asset.json";
+import SampleReportPages from "@/components/SampleReportPages";
 
 
 interface LandingPageProps {
@@ -31,6 +32,10 @@ interface LandingPageProps {
   benefits: string[];
   heroImage?: string;
   sampleReportImage?: string;
+  /** First pages of the real report to display publicly (rest stay hidden) */
+  samplePages?: string[];
+  /** Total number of pages in the full report */
+  sampleTotalPages?: number;
   extraHeroFields?: React.ReactNode;
 }
 
@@ -43,6 +48,8 @@ const ServiceLandingPage = ({
   benefits,
   heroImage = "/logo.png",
   sampleReportImage,
+  samplePages,
+  sampleTotalPages,
   extraHeroFields
 }: LandingPageProps) => {
   const { price, oldPrice, coupons } = useServicePrice(
@@ -330,6 +337,16 @@ const ServiceLandingPage = ({
             </div>
           </div>
         </section>
+
+        {samplePages && samplePages.length > 0 && (
+          <SampleReportPages
+            pages={samplePages}
+            totalPages={sampleTotalPages ?? samplePages.length}
+            title={`${serviceTitle} — Sample Pages`}
+          />
+        )}
+
+
 
         {/* Testimonials Section */}
         <section className="py-12 md:py-20">

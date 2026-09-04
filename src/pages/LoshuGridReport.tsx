@@ -1,5 +1,6 @@
 import ServiceLandingPage from "@/components/ServiceLandingPage";
 import SEO from "@/components/SEO";
+import { loshuSamplePages, LOSHU_TOTAL_PAGES } from "@/data/samplePages";
 
 const sampleReport = { url: "/loshu-report-v2.png" };
 
@@ -18,6 +19,8 @@ const LoshuGridReport = () => {
         oldPrice={2100}
         description="Discover the secret map of your destiny. Our detailed Lo Shu Grid report identifies missing numbers, hidden strengths, and powerful remedies based on your birth date."
         sampleReportImage={sampleReport.url}
+        samplePages={loshuSamplePages}
+        sampleTotalPages={LOSHU_TOTAL_PAGES}
         benefits={[
           "Complete analysis of all 8 planes of life",
           "Identification of missing numbers and their impact",

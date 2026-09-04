@@ -3,6 +3,7 @@ import SEO from "@/components/SEO";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { mobileSamplePages, MOBILE_TOTAL_PAGES } from "@/data/samplePages";
 
 const sampleReport = { url: "/mobile-report-v2.png" };
 
@@ -23,6 +24,8 @@ const MobileCompatibilityReport = () => {
         oldPrice={1100}
         description="Unlock the hidden vibration of your mobile number. Discover if your number aligns with your success, health, and prosperity."
         sampleReportImage={sampleReport.url}
+        samplePages={mobileSamplePages}
+        sampleTotalPages={MOBILE_TOTAL_PAGES}
         extraHeroFields={
           <div className="text-left">
             <Label htmlFor="hero-mobile" className="text-sm font-semibold ml-1 text-stone-900">Mobile Number to Analyze</Label>
