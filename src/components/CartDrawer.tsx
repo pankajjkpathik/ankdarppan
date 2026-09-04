@@ -66,26 +66,14 @@ const CartDrawer = () => {
     if (!code) return;
     setCouponLoading(true);
     try {
-      const { data, error } = await supabase
-        .from("coupons")
-        .select("*")
-        .eq("code", code)
-        .eq("is_active", true)
-        .maybeSingle();
+      const { data: result, error } = await supabase.functions.invoke("validate-coupon", { body: { code } });
 
       if (error) throw error;
-      if (!data) {
-        toast({ title: "Invalid coupon", description: "This code doesn't exist or is no longer active", variant: "destructive" });
+      if (!result?.valid) {
+        toast({ title: "Invalid coupon", description: result?.reason || "This code doesn't exist or is no longer active", variant: "destructive" });
         return;
       }
-      if (data.expires_at && new Date(data.expires_at) < new Date()) {
-        toast({ title: "Coupon expired", variant: "destructive" });
-        return;
-      }
-      if (data.usage_limit != null && data.times_used >= data.usage_limit) {
-        toast({ title: "Coupon limit reached", variant: "destructive" });
-        return;
-      }
+      const data = result.coupon;
       if (total < (data.min_order_amount || 0)) {
         toast({ title: "Minimum order not met", description: `This coupon needs a subtotal of ₹${data.min_order_amount}`, variant: "destructive" });
         return;
