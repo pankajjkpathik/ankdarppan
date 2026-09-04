@@ -225,7 +225,7 @@ const JanmashtamiOffer = () => {
                 <div className="max-w-2xl p-8 mx-auto text-center bg-white border rounded-3xl border-primary/20">
                   <h2 className="mb-3 text-2xl font-heading text-stone-900">Janmashtami offer band ho gaya</h2>
                   <p className="mb-6 text-stone-700">
-                    Ye daam 6 September, 12 PM tak the. Ab Mobile Number Report ₹581 aur Loshu Grid Report ₹941 par uplabdh hai.
+                    Ye daam 6 September, raat 11:59 baje tak the. Ab Mobile Number Report ₹581 aur Loshu Grid Report ₹941 par uplabdh hai.
                   </p>
                   <Link
                     to="/services"
