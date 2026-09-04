@@ -1,8 +1,8 @@
 // Single source of truth for the Krishna Janmashtami offer.
-// Window: 4 Sep 2026 12:00 PM IST -> 6 Sep 2026 12:00 PM IST (48 hours)
+// Window: 4 Sep 2026 11:59 PM IST -> 6 Sep 2026 11:59 PM IST
 
-export const OFFER_START = new Date("2026-09-04T12:00:00+05:30");
-export const OFFER_END = new Date("2026-09-06T12:00:00+05:30");
+export const OFFER_START = new Date("2026-09-04T23:59:00+05:30");
+export const OFFER_END = new Date("2026-09-06T23:59:00+05:30");
 
 export type OfferSlug = "mobile" | "loshu" | "combo";
 
