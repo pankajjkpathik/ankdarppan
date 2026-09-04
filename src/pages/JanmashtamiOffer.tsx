@@ -77,7 +77,7 @@ const PAGE_TESTIMONIALS = [
   },
   {
     quote:
-      "Krishna Kripa Combo lene ka decision bilkul sahi tha. Dono reports detail mein thi aur upay bhi practical hain. Website se order karna bahut easy tha.",
+      "Mobile Number Compatibility Report lene ka decision bilkul sahi tha. Report detail mein thi aur upay bhi practical hain. Website se order karna bahut easy tha.",
     name: "G.D. Charan",
     city: "Mobile Number Report · Jodhpur · via Website",
   },
@@ -160,8 +160,8 @@ const JanmashtamiOffer = () => {
                   <span className="text-primary">aapke numbers ka darshan</span>
                 </h1>
                 <p className="max-w-2xl mx-auto text-base md:text-lg text-stone-700 font-medium">
-                  Sirf Janmashtami ke liye — Mobile Number Report, Loshu Grid Report aur dono ka
-                  Krishna Kripa Combo, 42% tak ki chhoot par.
+                  Sirf Janmashtami ke liye — Mobile Number Report, Loshu Grid Report aur dono ka Krishna Kripa Combo,
+                  42% tak ki chhoot par.
                 </p>
               </motion.div>
             </div>
@@ -212,7 +212,8 @@ const JanmashtamiOffer = () => {
 
               {phase === "before" && (
                 <div className="p-4 mt-5 text-sm font-semibold text-center border rounded-2xl border-primary/40 bg-primary/5 text-stone-800">
-                  Offer 4 September, raat 12 baje se live hoga. Abhi Mobile Number Report ₹581 aur Loshu Grid Report ₹941 par uplabdh hai.
+                  Offer 4 September, raat 12 baje se live hoga. Abhi Mobile Number Report ₹581 aur Loshu Grid Report
+                  ₹941 par uplabdh hai.
                 </div>
               )}
             </div>
@@ -225,7 +226,8 @@ const JanmashtamiOffer = () => {
                 <div className="max-w-2xl p-8 mx-auto text-center bg-white border rounded-3xl border-primary/20">
                   <h2 className="mb-3 text-2xl font-heading text-stone-900">Janmashtami offer band ho gaya</h2>
                   <p className="mb-6 text-stone-700">
-                    Ye daam 6 September, raat 11:59 baje tak the. Ab Mobile Number Report ₹581 aur Loshu Grid Report ₹941 par uplabdh hai.
+                    Ye daam 6 September, raat 11:59 baje tak the. Ab Mobile Number Report ₹581 aur Loshu Grid Report
+                    ₹941 par uplabdh hai.
                   </p>
                   <Link
                     to="/services"
@@ -253,7 +255,9 @@ const JanmashtamiOffer = () => {
                       </h2>
                       <div className="flex items-baseline gap-2 mb-4">
                         <span className="text-3xl font-bold text-stone-900">₹{o.ashtami.toLocaleString("en-IN")}</span>
-                        <span className="text-base text-stone-400 line-through">₹{o.regular.toLocaleString("en-IN")}</span>
+                        <span className="text-base text-stone-400 line-through">
+                          ₹{o.regular.toLocaleString("en-IN")}
+                        </span>
                         <span className="text-sm font-bold text-primary">{o.off}% off</span>
                       </div>
                       <ul className="mb-5 space-y-3">
@@ -306,9 +310,15 @@ const JanmashtamiOffer = () => {
               )}
 
               <div className="flex flex-wrap items-center justify-center gap-6 mt-10 text-sm text-stone-600">
-                <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-primary" /> Secure UPI / Card payment</span>
-                <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-primary" /> Report email aur WhatsApp dono par</span>
-                <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-primary" /> Delivery 24–36 hours mein</span>
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-primary" /> Secure UPI / Card payment
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Check className="w-4 h-4 text-primary" /> Report email aur WhatsApp dono par
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-primary" /> Delivery 24–36 hours mein
+                </span>
               </div>
             </div>
           </section>
@@ -316,9 +326,7 @@ const JanmashtamiOffer = () => {
           {/* Testimonials */}
           <section className="py-12 bg-[#f9f6f0]">
             <div className="container px-4 mx-auto">
-              <h2 className="mb-8 text-2xl md:text-3xl font-heading text-center text-stone-900">
-                Log kya kehte hain
-              </h2>
+              <h2 className="mb-8 text-2xl md:text-3xl font-heading text-center text-stone-900">Log kya kehte hain</h2>
               <div className="grid gap-6 md:grid-cols-3">
                 {PAGE_TESTIMONIALS.map((t) => (
                   <div key={t.name} className="p-6 bg-white border rounded-3xl border-primary/20 shadow-sm">
@@ -349,12 +357,7 @@ const JanmashtamiOffer = () => {
                     onClick={() => setLightbox(src)}
                     className="overflow-hidden bg-white border rounded-2xl border-primary/20 hover:border-primary transition-colors"
                   >
-                    <img
-                      src={src}
-                      alt={`Sample report page ${i + 1}`}
-                      loading="lazy"
-                      className="w-full h-auto"
-                    />
+                    <img src={src} alt={`Sample report page ${i + 1}`} loading="lazy" className="w-full h-auto" />
                   </button>
                 ))}
               </div>
