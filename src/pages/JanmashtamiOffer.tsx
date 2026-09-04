@@ -77,9 +77,15 @@ const PAGE_TESTIMONIALS = [
   },
   {
     quote:
-      "Combo liya tha — dono reports detail mein thi aur WhatsApp par time par mil gayi. Paise vasool.",
-    name: "Sneha Verma",
-    city: "Krishna Kripa Combo",
+      "The report was very well detailed and comprehensive. It was highly informative and covered all the aspects of the mobile number. True value for money!!",
+    name: "Saiff M Wahid",
+    city: "Mobile Number Report · via WhatsApp",
+  },
+  {
+    quote:
+      "Krishna Kripa Combo lene ka decision bilkul sahi tha. Dono reports detail mein thi aur upay bhi practical hain. Website se order karna bahut easy tha.",
+    name: "G.D. Charan",
+    city: "Krishna Kripa Combo · Jodhpur · via Website",
   },
 ];
 
