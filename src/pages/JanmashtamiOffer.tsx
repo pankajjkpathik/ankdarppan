@@ -205,14 +205,14 @@ const JanmashtamiOffer = () => {
                     <Timer className="w-4 h-4" /> <span className="tabular-nums">{countdown}</span>
                   </span>
                   <span className="text-sm text-stone-700">
-                    Ye daam 6 September, dopahar 12 baje tak. Uske baad wapas ₹581 aur ₹941.
+                    Ye daam 6 September, raat 11:59 baje tak. Uske baad wapas ₹581 aur ₹941.
                   </span>
                 </div>
               )}
 
               {phase === "before" && (
                 <div className="p-4 mt-5 text-sm font-semibold text-center border rounded-2xl border-primary/40 bg-primary/5 text-stone-800">
-                  Offer 4 September, 12 PM se live hoga. Abhi Mobile Number Report ₹581 aur Loshu Grid Report ₹941 par uplabdh hai.
+                  Offer 4 September, raat 12 baje se live hoga. Abhi Mobile Number Report ₹581 aur Loshu Grid Report ₹941 par uplabdh hai.
                 </div>
               )}
             </div>
@@ -225,7 +225,7 @@ const JanmashtamiOffer = () => {
                 <div className="max-w-2xl p-8 mx-auto text-center bg-white border rounded-3xl border-primary/20">
                   <h2 className="mb-3 text-2xl font-heading text-stone-900">Janmashtami offer band ho gaya</h2>
                   <p className="mb-6 text-stone-700">
-                    Ye daam 6 September, 12 PM tak the. Ab Mobile Number Report ₹581 aur Loshu Grid Report ₹941 par uplabdh hai.
+                    Ye daam 6 September, raat 11:59 baje tak the. Ab Mobile Number Report ₹581 aur Loshu Grid Report ₹941 par uplabdh hai.
                   </p>
                   <Link
                     to="/services"
@@ -297,7 +297,7 @@ const JanmashtamiOffer = () => {
                         </>
                       ) : (
                         <p className="text-sm font-semibold text-center text-stone-500">
-                          4 September, 12 PM se available
+                          4 September, 11:59 PM se available
                         </p>
                       )}
                     </div>
