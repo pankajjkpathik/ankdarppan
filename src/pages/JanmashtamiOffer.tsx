@@ -278,12 +278,6 @@ const JanmashtamiOffer = () => {
                               <span>{b}</span>
                             </li>
                           ))}
-                          {o.slug === "combo" && (
-                            <li className="flex items-start gap-2 p-2.5 text-sm font-semibold rounded-xl bg-primary/10 text-stone-900">
-                              <Mic className="w-4 h-4 mt-0.5 text-primary shrink-0" />
-                              <span>Mera 5 minute ka personal voice note — WhatsApp par, aapki report padhkar</span>
-                            </li>
-                          )}
                         </ul>
                       </div>
 
